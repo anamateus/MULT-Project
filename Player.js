@@ -4,10 +4,10 @@ class Player{
 	var tasks = [];
 
 	//	~~~CONSTRUCTORS~~
-	constructor(points, level, x, y){
+	constructor(points, nLevel, x, y){
 		this.points = points;
-		this.level = level;
-		if (this.level <= 7){
+		this.nLevel = nLevel;
+		if (this.nLevel <= 7){
 			this.endingFlag = 0;
 		} else {
 			this.endingFlag = 1;
@@ -16,9 +16,9 @@ class Player{
 		this.y = y;
 	}
 
-	constructor(points, level, x, y, tasks){
+	constructor(points, nLevel, x, y, tasks){
 		this.points = points;
-		this.level = level;
+		this.nLevel = nLevel;
 		this.x = x;
 		this.y = y;
 		this.tasks = tasks;
@@ -33,8 +33,8 @@ class Player{
 		return points;
 	}
 
-	getLevel(){		//get player's current level
-		return level;
+	getNLevel(){		//get player's current level
+		return nLevel;
 	}
 
 	getTasks(){
@@ -51,9 +51,9 @@ class Player{
 		this.points = points;
 	}
 
-	setLevel(){
-		this.level++;
-		if (this.level <= 7){
+	setNLevel(){
+		this.nLevel++;
+		if (this.nLevel <= 7){
 			this.endingFlag = 0;
 		} else {
 			this.endingFlag = 1;
@@ -85,36 +85,36 @@ class Player{
 
 class Student extends Player{
 
-	constructor(points, level, x, y){
-		super(points, level, x, y);
+	constructor(points, nLevel, x, y){
+		super(points, nLevel, x, y);
 	}
 
-	constructor(points, level, x, y, tasks){
-		super(points, level, x, y, tasks);
+	constructor(points, nLevel, x, y, tasks){
+		super(points, nLevel, x, y, tasks);
 	}
 
 }
 
 class Father extends Player{
 
-	constructor(points, level, x, y){
-		super(points, level, x, y);
+	constructor(points, nLevel, x, y){
+		super(points, nLevel, x, y);
 	}
 
-	constructor(points, level, x, y, tasks){
-		super(points, level, x, y, tasks);
+	constructor(points, nLevel, x, y, tasks){
+		super(points, nLevel, x, y, tasks);
 	}
 	
 }
 
 class Turist extends Player{
 
-	constructor(points, level, x, y){
-		super(points, level, x, y);
+	constructor(points, nLevel, x, y){
+		super(points, nLevel, x, y);
 	}
 
-	constructor(points, level, x, y, tasks){
-		super(points, level, x, y, tasks);
+	constructor(points, nLevel, x, y, tasks){
+		super(points, nLevel, x, y, tasks);
 	}
 	
 }
