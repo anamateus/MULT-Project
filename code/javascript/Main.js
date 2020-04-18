@@ -6,9 +6,9 @@ var config = {
 };
 
 /* Start game right after the browser loads*/
-(() => {
-    window.onload = main;
-})();
+(function () {
+    window.addEventListener("load", main);
+}());
 
 class Main extends Phaser.Game {
     constructor() {
