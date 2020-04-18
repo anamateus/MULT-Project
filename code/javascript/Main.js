@@ -1,7 +1,8 @@
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600
+    width: 1000,
+    height: 600,
+    autoCenter: true
 };
 
 /* Start game right after the browser loads*/
