@@ -1,3 +1,5 @@
+"use strict";
+
 class Place extends Phaser.Scene {
     constructor(openTime, closeTime) {
         super({key: "Place"});
