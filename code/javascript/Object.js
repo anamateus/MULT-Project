@@ -1,5 +1,6 @@
-class Object {
+"use strict";
 
+class Object {
     constructor(x, y) {
         this.x = x;
         this.y = y;
