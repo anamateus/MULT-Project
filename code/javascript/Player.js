@@ -1,7 +1,8 @@
 "use strict";
 
+var tasks = [];
+
 class Player{
-	var tasks = [];
 
 	//	~~~CONSTRUCTORS~~
 	constructor(points, nLevel, x, y){
@@ -16,12 +17,16 @@ class Player{
 		this.y = y;
 	}
 
-	constructor(points, nLevel, x, y, tasks){
-		this.points = points;
-		this.nLevel = nLevel;
-		this.x = x;
-		this.y = y;
-		this.tasks = tasks;
+	addTask(task){
+		this.tasks.push(task);
+	}
+
+	removeTask(task){
+		for (i = 0; i < this.tasks.length; i++){
+			if (this.tasks[i] == task){
+				this.tasks.splice(i, 1);	//splice(i, 1) -> removes 1 element in position i
+			}
+		}
 	}
 
 	//	~~~GETTERS~~~
@@ -60,10 +65,6 @@ class Player{
 		}
 	}
 
-	setTasks(tasks){
-		this.tasks = tasks;
-	}
-
 	//	~~~METHODS~~~
 	move(x, y){		//move to pos (var) x and (var) y
 
@@ -87,10 +88,7 @@ class Student extends Player{
 
 	constructor(points, nLevel, x, y){
 		super(points, nLevel, x, y);
-	}
-
-	constructor(points, nLevel, x, y, tasks){
-		super(points, nLevel, x, y, tasks);
+		this.flag = 1;
 	}
 
 }
@@ -99,10 +97,7 @@ class Father extends Player{
 
 	constructor(points, nLevel, x, y){
 		super(points, nLevel, x, y);
-	}
-
-	constructor(points, nLevel, x, y, tasks){
-		super(points, nLevel, x, y, tasks);
+		this.flag = 2;
 	}
 	
 }
@@ -111,10 +106,7 @@ class Turist extends Player{
 
 	constructor(points, nLevel, x, y){
 		super(points, nLevel, x, y);
-	}
-
-	constructor(points, nLevel, x, y, tasks){
-		super(points, nLevel, x, y, tasks);
+		this.flag = 3;
 	}
 	
 }
