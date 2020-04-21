@@ -5,6 +5,7 @@ let config = {
     autoCenter: true
 };
 
+//FIXME
 class mainMenu extends Phaser.Scene {
     constructor() {
         super({key: "mainMenu"});
@@ -22,11 +23,22 @@ class mainMenu extends Phaser.Scene {
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#57cfdb");
         this.logo = this.add.image(config.width/2,config.width * 0.1, "logo").setScale(0.15);
         this.tickboxes = [];
+        this.ticks = [];
         this.options = ["Play Game", "How to Play", "Credits", "Exit"];
         for (let i = 0; i < 4; i++) {
-            this.tickboxes.push(this.add.image(config.width/2 * 0.7, config.height/2 * (1.1 + 0.2*i), "tickbox").setScale(0.3));
+            this.tickboxes.push(this.add.sprite(config.width/2 * 0.7, config.height/2 * (1.1 + 0.2*i), "tickbox").setScale(0.3).setInteractive({ useHandCursor: true}));
+            this.ticks.push(this.add.sprite(config.width/2 * 0.71, config.height/2 * (1.09 + 0.2*i), "tick").setScale(0.5).setVisible(false));
             this.add.text(config.width/2 * 0.8,config.height/2 * (1.05 + 0.2*i) , this.options[i], textConfigs)
         }
+
+        for (let i = 0; i < this.tickboxes.length; i++) {
+            let button = this.tickboxes[i];
+            button.on('pointerover',function(pointer){
+                this.ticks[i].setVisible(true);
+            });
+        }
+
+
     }
 }
 
