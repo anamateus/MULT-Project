@@ -90,7 +90,19 @@ class Student extends Player{
 		super(points, nLevel, x, y);
 		this.flag = 1;
 	}
+	
+	preload(){
+		this.load.spritesheet("student", "studentSprite.png", {frameWidth: 322, frameHeight: 322});
+	}
 
+	create(){
+		const student = this.add.sprite(100, 100, 'student', 0); //0 to start with the first frame
+		this.anims.create({
+				key: 'walkLeft', 
+				frames: this.anims.generateFrameNames('student', {start:1, end: 2}),
+				zeroPad:2
+		});
+	}
 }
 
 class Father extends Player{
