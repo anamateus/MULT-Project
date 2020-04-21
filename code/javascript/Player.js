@@ -16,6 +16,19 @@ class Player{
 		this.x = x;
 		this.y = y;
 	}
+	
+	preload(filename){
+		this.load.spritesheet("character", filename, {frameWidth: 322, frameHeight: 322});
+	}
+
+	create(){
+		const character = this.add.sprite(100, 100, character, 0); //0 to start with the first frame
+		this.anims.create({
+				key: 'walkLeft', 
+				frames: this.anims.generateFrameNames(character, {start:2, end: 3}),
+				zeroPad:2
+		});
+	}
 
 	addTask(task){
 		this.tasks.push(task);
@@ -86,39 +99,26 @@ class Player{
 
 class Student extends Player{
 
-	constructor(points, nLevel, x, y){
+	constructor(points, nLevel, x, y, filename){
 		super(points, nLevel, x, y);
-		this.flag = 1;
-	}
-	
-	preload(){
-		this.load.spritesheet("student", "studentSprite.png", {frameWidth: 322, frameHeight: 322});
-	}
-
-	create(){
-		const student = this.add.sprite(100, 100, 'student', 0); //0 to start with the first frame
-		this.anims.create({
-				key: 'walkLeft', 
-				frames: this.anims.generateFrameNames('student', {start:1, end: 2}),
-				zeroPad:2
-		});
+		super.preload(filename);
 	}
 }
 
 class Father extends Player{
 
-	constructor(points, nLevel, x, y){
+	constructor(points, nLevel, x, y, filename){
 		super(points, nLevel, x, y);
-		this.flag = 2;
+		super.preload(filename);
 	}
 	
 }
 
 class Turist extends Player{
 
-	constructor(points, nLevel, x, y){
+	constructor(points, nLevel, x, y, filename){
 		super(points, nLevel, x, y);
-		this.flag = 3;
+		super.preload(filename);
 	}
 	
 }
