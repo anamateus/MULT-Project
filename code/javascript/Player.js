@@ -3,7 +3,6 @@
 		-> if when moving left and right it decresases/increases by 10 or not
 		-> sprite velocity (needs to be faster or not)
 		-> starting point
-		-> if sprite frames are correct on each movement (RITAAAAA)
 */
 
 "use strict";
@@ -33,31 +32,31 @@ class Player{
 
 		this.anims.create({
 			key: 'front',
-			frames: this.anims.generateFrameNames(character, {start:1, end: 1}),
+			frames: this.anims.generateFrameNames(character, {start:0, end: 0}),
 			zeroPad:2
 		});
 
 		this.anims.create({
 			key: 'moveLeft', 
-			frames: this.anims.generateFrameNames(character, {start:3, end: 4}),
+			frames: this.anims.generateFrameNames(character, {start:2, end: 3}),
 			zeroPad:2
 		});
 
 		this.anims.create({
 			key: 'standLeft', 
-			frames: this.anims.generateFrameNames(character, {start:2, end: 2}),
+			frames: this.anims.generateFrameNames(character, {start:1, end: 1}),
 			zeroPad:2
 		});
 
 		this.anims.create({
 			key: 'moveRight', 
-			frames: this.anims.generateFrameNames(character, {start:6, end: 7}),
+			frames: this.anims.generateFrameNames(character, {start:5, end: 6}),
 			zeroPad:2
 		});
 
 		this.anims.create({
 			key: 'standRight', 
-			frames: this.anims.generateFrameNames(character, {start:5, end: 5}),
+			frames: this.anims.generateFrameNames(character, {start:4, end: 4}),
 			zeroPad:2
 		});
 
@@ -92,15 +91,15 @@ class Player{
 		}
 	}
 
-	getPos(){	//get position: return the current x and y
+	getPos(){	
 		return [this.x, this.y];
 	}
 
-	getPoints(){	//get player's current points
+	getPoints(){	
 		return points;
 	}
 
-	getNLevel(){		//get player's current level
+	getNLevel(){		
 		return nLevel;
 	}
 
