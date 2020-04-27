@@ -95,7 +95,7 @@ class chooseCharacterScreen extends Phaser.Scene {
 
             /* Character selection */
             chosenCharacter.on('pointerdown', function (event) {
-                switch (i) {
+                switch (i) { // create objects and start game (go to phone screen)
                     case 0:
                     // father phone screen
                     case 1:
@@ -105,6 +105,21 @@ class chooseCharacterScreen extends Phaser.Scene {
                 }
             }, this);
         }
+    }
+}
+
+class phoneScreen extends Phaser.Scene {
+    constructor() {
+        super({key: "phoneScreen"});
+
+    }
+
+    preload() {
+
+    }
+
+    create() {
+
     }
 }
 
