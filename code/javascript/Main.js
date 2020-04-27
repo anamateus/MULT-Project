@@ -95,7 +95,7 @@ class chooseCharacterScreen extends Phaser.Scene {
             let chosenCharacter = characters[i];
 
             chosenCharacter.on('pointerdown', function (event) {
-                let player = new Player(chosenCharacter);
+                let player = new Player(chosenCharacter, 0, 1, 0, 0); // character, points, level, x, y
                 this.scene.start("phoneScreen", player);
             }, this);
         }
@@ -103,9 +103,9 @@ class chooseCharacterScreen extends Phaser.Scene {
 }
 
 class phoneScreen extends Phaser.Scene {
-    constructor() {
+    constructor(character) { // not sure yet
         super({key: "phoneScreen"});
-
+        this.character = character; // not sure yet
     }
 
     preload() {
