@@ -90,19 +90,13 @@ class chooseCharacterScreen extends Phaser.Scene {
             characters.push(character.setInteractive({useHandCursor: true, pixelPerfect: true}));
         }
 
+        /* Character selection */
         for (let i = 0; i < characters.length; i++) {
             let chosenCharacter = characters[i];
 
-            /* Character selection */
             chosenCharacter.on('pointerdown', function (event) {
-                switch (i) { // create objects and start game (go to phone screen)
-                    case 0:
-                    // father phone screen
-                    case 1:
-                    // student phone screen
-                    case 2:
-                    // tourist phone screen
-                }
+                let player = new Player(chosenCharacter);
+                this.scene.start("phoneScreen", player);
             }, this);
         }
     }
