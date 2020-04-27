@@ -11,6 +11,7 @@ class mainMenu extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image("backgroundMainMenu", "../../resources/scenarios/main-menu.png");
         this.load.image("logo", "../../resources/others/logo.png");
         this.load.image("tickbox", "../../resources/others/tickbox.png");
         this.load.image("tick", "../../resources/others/tick.png");
@@ -21,16 +22,16 @@ class mainMenu extends Phaser.Scene {
             font: "18pt Comic Sans",
             color: "black"
         };
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#57cfdb");
-        this.logo = this.add.image(config.width / 2, config.width * 0.1, "logo").setScale(0.15);
+        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundMainMenu");
+        this.logo = this.add.image(config.width / 2, config.width * 0.12, "logo").setScale(0.12);
         let tickboxes = [];
         let ticks = [];
         this.options = ["Play Game", "How to Play", "Credits", "Exit"];
         for (let i = 0; i < 4; i++) {
-            let tickbox = this.add.sprite(config.width / 2 * 0.7, config.height / 2 * (1.1 + 0.2 * i), "tickbox").setScale(0.3);
+            let tickbox = this.add.sprite(config.width / 2 * 0.83, config.height / 2 * (1.05 + 0.2 * i), "tickbox").setScale(0.3);
             tickboxes.push(tickbox.setInteractive({useHandCursor: true}));
-            ticks.push(this.add.sprite(config.width / 2 * 0.71, config.height / 2 * (1.09 + 0.2 * i), "tick").setScale(0.5).setVisible(false));
-            this.add.text(config.width / 2 * 0.8, config.height / 2 * (1.05 + 0.2 * i), this.options[i], textConfigs)
+            ticks.push(this.add.sprite(config.width / 2 * 0.84, config.height / 2 * (1.04 + 0.2 * i), "tick").setScale(0.5).setVisible(false));
+            this.add.text(config.width / 2 * 0.93, config.height / 2 * (1 + 0.2 * i), this.options[i], textConfigs)
         }
 
         /* Tickbox interaction */
@@ -70,7 +71,7 @@ class chooseCharacterScreen extends Phaser.Scene {
     }
 
     preload() {
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#fc03b6");
+        this.load.image("backgroundChooseCharacter", "../../resources/scenarios/street.png");
         this.load.image("father", "../../resources/characters/father-front.png");
         this.load.image("student", "../../resources/characters/student-front.png");
         this.load.image("tourist", "../../resources/characters/tourist-front.png");
@@ -83,10 +84,11 @@ class chooseCharacterScreen extends Phaser.Scene {
         };
         let characters = [];
         let images = ["father", "student", "tourist"];
+        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundChooseCharacter");
         this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character", textConfigs);
 
         for (let i = 0; i < 3; i++) {
-            let character = this.add.sprite(config.width / 2 + 250 * (i - 1), config.height / 2 + 50, images[i]).setScale(0.45);
+            let character = this.add.sprite(config.width / 2 + 250 * (i - 1), config.height / 2 + 150, images[i]).setScale(0.35);
             characters.push(character.setInteractive({useHandCursor: true, pixelPerfect: true}));
         }
 
@@ -141,7 +143,7 @@ class creditsScreen extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("background", "../../resources/scenarios/university.png");
+        this.load.image("backgroundCredits", "../../resources/scenarios/university.png");
         this.load.image("anaCredits", "../../resources/characters/ana-credits.png");
         this.load.image("lauraCredits", "../../resources/characters/laura-credits.png");
         this.load.image("ritaCredits", "../../resources/characters/rita-credits.png");
@@ -153,7 +155,7 @@ class creditsScreen extends Phaser.Scene {
             color: "black"
         };
 
-        this.background = this.add.image(config.width / 2, config.height / 2, "background");
+        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundCredits");
         this.add.text(config.width / 2, config.height / 4, "This game is amazing!!!!", textConfigs);
         this.add.image(config.width / 2 - 150, config.height / 2 + 175, "anaCredits").setScale(0.35);
         this.add.image(config.width / 2, config.height / 2 + 175, "lauraCredits").setScale(0.3);
