@@ -91,7 +91,7 @@ class chooseCharacterScreen extends Phaser.Scene{
     }
 
     preload() {
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#abc123");
+        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#fc03b6");
         this.load.image("father", "../../resources/characters/father-front.png");
         this.load.image("student", "../../resources/characters/student-front.png");
         this.load.image("tourist", "../../resources/characters/tourist-front.png");
