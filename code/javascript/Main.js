@@ -39,8 +39,8 @@ class mainMenu extends Phaser.Scene {
             button.on('pointerover', function (pointer) {
                 ticks[i].setVisible(true);
             });
+
             button.on('pointerout', function (pointer) {
-                pointer.useHandCursor = false;
                 ticks[i].setVisible(false);
             });
 
@@ -82,27 +82,26 @@ class chooseCharacterScreen extends Phaser.Scene {
             color: "black"
         };
         let characters = [];
+        let images = ["father", "student", "tourist"];
         this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character", textConfigs);
 
-        characters.push(this.add.sprite(config.width / 2 - 250, config.height / 2 + 50, "father").setScale(0.45).setInteractive({useHandCursor: true, pixelPerfect: true}));
-        characters.push(this.add.sprite(config.width / 2, config.height / 2 + 50, "student").setScale(0.45).setInteractive({useHandCursor: true, pixelPerfect: true}));
-        characters.push(this.add.sprite(config.width / 2 + 250, config.height / 2 + 50, "tourist").setScale(0.45).setInteractive({useHandCursor: true, pixelPerfect: true}));
+        for (let i = 0; i < 3; i++) {
+            let character = this.add.sprite(config.width / 2 + 250 * (i - 1), config.height / 2 + 50, images[i]).setScale(0.45);
+            characters.push(character.setInteractive({useHandCursor: true, pixelPerfect: true}));
+        }
 
         for (let i = 0; i < characters.length; i++) {
             let chosenCharacter = characters[i];
-            chosenCharacter.on('pointerout', function (pointer) {
-                pointer.useHandCursor = false;
-            });
 
             /* Character selection */
             chosenCharacter.on('pointerdown', function (event) {
                 switch (i) {
                     case 0:
-                        // father phone screen
+                    // father phone screen
                     case 1:
-                        // student phone screen
+                    // student phone screen
                     case 2:
-                        // tourist phone screen
+                    // tourist phone screen
                 }
             }, this);
         }
