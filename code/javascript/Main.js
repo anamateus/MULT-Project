@@ -31,6 +31,7 @@ class mainMenu extends Phaser.Scene {
             this.add.text(config.width/2 * 0.8,config.height/2 * (1.05 + 0.2*i) , this.options[i], textConfigs)
         }
 
+        /* Tickbox interaction */
         for (let i = 0; i < tickboxes.length; i++) {
             let button = tickboxes[i];
             button.on('pointerover',function(pointer){
@@ -39,10 +40,41 @@ class mainMenu extends Phaser.Scene {
             button.on('pointerout', function (pointer) {
                 pointer.useHandCursor = false;
                 ticks[i].setVisible(false);
-            })
+            });
+            button.on('pointerdown', function (event) {
+                switch (i) {
+                    case 2:
+                        this.scene.start("credits");
+                        break;
+                }
+            }, this);
         }
+    }
+}
 
+class creditsScreen extends Phaser.Scene{
+    constructor() {
+        super({key: "credits"});
+    }
+    preload() {
+        this.load.image("background", "../../resources/scenarios/university.png");
+        this.load.image("anaCredits", "../../resources/characters/ana-credits.png");
+        this.load.image("lauraCredits", "../../resources/characters/laura-credits.png");
+        this.load.image("ritaCredits", "../../resources/characters/rita-credits.png");
+    }
+    create() {
+        let textConfigs = {
+            font: "14pt Comic Sans",
+            color: "black"
+        };
 
+        this.background = this.add.image(config.width/2,config.height/2, "background");
+        this.add.text(config.width/2, config.height/4, "This game is amazing!!!!", textConfigs);
+        for (let i = 0; i < 3; i++) {
+            this.add.image(config.width/2 - 150, config.height / 2 + 175, "anaCredits").setScale(0.35);
+            this.add.image(config.width/2 , config.height / 2 + 175, "lauraCredits").setScale(0.3);
+            this.add.image(config.width/2 + 150, config.height / 2 + 175, "ritaCredits").setScale(0.33);
+        }
     }
 }
 
@@ -57,7 +89,7 @@ class Main extends Phaser.Game {
 
         /* Game scenes */
         this.scene.add("mainMenu", mainMenu);
-        //this.scene.add("credits", credits);
+        this.scene.add("credits", creditsScreen);
         // add the rest
     }
     
