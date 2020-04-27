@@ -81,12 +81,31 @@ class chooseCharacterScreen extends Phaser.Scene {
             font: "18pt Comic Sans",
             color: "black"
         };
-
+        let characters = [];
         this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character", textConfigs);
-        this.add.sprite(config.width / 2 - 250, config.height / 2 + 50, "father").setScale(0.45);
-        this.add.sprite(config.width / 2, config.height / 2 + 50, "student").setScale(0.45);
-        this.add.sprite(config.width / 2 + 250, config.height / 2 + 50, "tourist").setScale(0.45);
 
+        characters.push(this.add.sprite(config.width / 2 - 250, config.height / 2 + 50, "father").setScale(0.45).setInteractive({useHandCursor: true, pixelPerfect: true}));
+        characters.push(this.add.sprite(config.width / 2, config.height / 2 + 50, "student").setScale(0.45).setInteractive({useHandCursor: true, pixelPerfect: true}));
+        characters.push(this.add.sprite(config.width / 2 + 250, config.height / 2 + 50, "tourist").setScale(0.45).setInteractive({useHandCursor: true, pixelPerfect: true}));
+
+        for (let i = 0; i < characters.length; i++) {
+            let chosenCharacter = characters[i];
+            chosenCharacter.on('pointerout', function (pointer) {
+                pointer.useHandCursor = false;
+            });
+
+            /* Character selection */
+            chosenCharacter.on('pointerdown', function (event) {
+                switch (i) {
+                    case 0:
+                        // father phone screen
+                    case 1:
+                        // student phone screen
+                    case 2:
+                        // tourist phone screen
+                }
+            }, this);
+        }
     }
 }
 
