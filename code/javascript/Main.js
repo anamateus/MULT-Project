@@ -43,49 +43,28 @@ class mainMenu extends Phaser.Scene {
                 pointer.useHandCursor = false;
                 ticks[i].setVisible(false);
             });
+
+            /* Screen selection */
             button.on('pointerdown', function (event) {
                 switch (i) {
                     case 0:
                         this.scene.start("chooseCharacter");
                         break;
+                    case 1:
+                        this.scene.start("howToPlay");
+                        break;
                     case 2:
                         this.scene.start("credits");
                         break;
+                    case 3:
+                        // close game
                 }
             }, this);
         }
     }
 }
 
-class creditsScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "credits"});
-    }
-
-    preload() {
-        this.load.image("background", "../../resources/scenarios/university.png");
-        //FIXME: can we make all the characters' images the same size?
-        this.load.image("anaCredits", "../../resources/characters/ana-credits.png");
-        this.load.image("lauraCredits", "../../resources/characters/laura-credits.png");
-        this.load.image("ritaCredits", "../../resources/characters/rita-credits.png");
-    }
-
-    create() {
-        let textConfigs = {
-            font: "14pt Comic Sans",
-            color: "black"
-        };
-
-        this.background = this.add.image(config.width / 2, config.height / 2, "background");
-        this.add.text(config.width / 2, config.height / 4, "This game is amazing!!!!", textConfigs);
-        this.add.image(config.width / 2 - 150, config.height / 2 + 175, "anaCredits").setScale(0.35);
-        this.add.image(config.width / 2, config.height / 2 + 175, "lauraCredits").setScale(0.3);
-        this.add.image(config.width / 2 + 150, config.height / 2 + 175, "ritaCredits").setScale(0.33);
-
-    }
-}
-
-class chooseCharacterScreen extends Phaser.Scene{
+class chooseCharacterScreen extends Phaser.Scene {
     constructor() {
         super({key: "chooseCharacter"});
     }
@@ -111,6 +90,52 @@ class chooseCharacterScreen extends Phaser.Scene{
     }
 }
 
+class howToPlayScreen extends Phaser.Scene {
+    constructor() {
+        super({key: "howToPlay"});
+    }
+
+    preload() {
+        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#ff8c00");
+    }
+
+    create() {
+        let textConfigs = {
+            font: "18pt Comic Sans",
+            color: "black"
+        };
+        this.add.text(config.width / 2 - 100, config.height / 5, "< insert How to play screen here >", textConfigs);
+    }
+}
+
+class creditsScreen extends Phaser.Scene {
+    constructor() {
+        super({key: "credits"});
+    }
+
+    preload() {
+        this.load.image("background", "../../resources/scenarios/university.png");
+        this.load.image("anaCredits", "../../resources/characters/ana-credits.png");
+        this.load.image("lauraCredits", "../../resources/characters/laura-credits.png");
+        this.load.image("ritaCredits", "../../resources/characters/rita-credits.png");
+    }
+
+    create() {
+        let textConfigs = {
+            font: "14pt Comic Sans",
+            color: "black"
+        };
+
+        this.background = this.add.image(config.width / 2, config.height / 2, "background");
+        this.add.text(config.width / 2, config.height / 4, "This game is amazing!!!!", textConfigs);
+        this.add.image(config.width / 2 - 150, config.height / 2 + 175, "anaCredits").setScale(0.35);
+        this.add.image(config.width / 2, config.height / 2 + 175, "lauraCredits").setScale(0.3);
+        this.add.image(config.width / 2 + 150, config.height / 2 + 175, "ritaCredits").setScale(0.33);
+
+    }
+}
+
+
 /* Start game right after the browser loads*/
 (function () {
     window.addEventListener("load", main);
@@ -123,6 +148,7 @@ class Main extends Phaser.Game {
         /* Game scenes */
         this.scene.add("mainMenu", mainMenu);
         this.scene.add("chooseCharacter", chooseCharacterScreen);
+        this.scene.add("howToPlay", howToPlayScreen);
         this.scene.add("credits", creditsScreen);
         // add the rest
     }
