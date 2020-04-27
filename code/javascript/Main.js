@@ -57,7 +57,7 @@ class mainMenu extends Phaser.Scene {
                         this.scene.start("credits");
                         break;
                     case 3:
-                        // close game
+                        this.game.close();
                 }
             }, this);
         }
@@ -163,7 +163,7 @@ class Main extends Phaser.Game {
     }
 
     close() {
-
+        window.close();
     }
 }
 
