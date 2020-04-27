@@ -45,6 +45,9 @@ class mainMenu extends Phaser.Scene {
             });
             button.on('pointerdown', function (event) {
                 switch (i) {
+                    case 0:
+                        this.scene.start("chooseCharacter");
+                        break;
                     case 2:
                         this.scene.start("credits");
                         break;
@@ -82,8 +85,30 @@ class creditsScreen extends Phaser.Scene {
     }
 }
 
-class chooseCharacterScreen {
+class chooseCharacterScreen extends Phaser.Scene{
+    constructor() {
+        super({key: "chooseCharacter"});
+    }
 
+    preload() {
+        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#abc123");
+        this.load.image("father", "../../resources/characters/father-front.png");
+        this.load.image("student", "../../resources/characters/student-front.png");
+        this.load.image("tourist", "../../resources/characters/tourist-front.png");
+    }
+
+    create() {
+        let textConfigs = {
+            font: "18pt Comic Sans",
+            color: "black"
+        };
+
+        this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character", textConfigs);
+        this.add.sprite(config.width / 2 - 250, config.height / 2 + 50, "father").setScale(0.45);
+        this.add.sprite(config.width / 2, config.height / 2 + 50, "student").setScale(0.45);
+        this.add.sprite(config.width / 2 + 250, config.height / 2 + 50, "tourist").setScale(0.45);
+
+    }
 }
 
 /* Start game right after the browser loads*/
@@ -97,6 +122,7 @@ class Main extends Phaser.Game {
 
         /* Game scenes */
         this.scene.add("mainMenu", mainMenu);
+        this.scene.add("chooseCharacter", chooseCharacterScreen);
         this.scene.add("credits", creditsScreen);
         // add the rest
     }
