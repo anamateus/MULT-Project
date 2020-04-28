@@ -99,25 +99,28 @@ class chooseCharacterScreen extends Phaser.Scene {
             let type = characters[i]; // corresponding string/tag
 
             chosenCharacter.on('pointerdown', function (event) {
-                let player = new Player(type, 0, 1, 0, 0); // character, points, level, x, y
-                this.scene.start("phoneScreen", player);
+                //let player = new Player(type, 0, 1, 0, 0); // character, points, level, x, y
+                this.scene.start("phoneScreen", {phone: type});
             }, this);
         }
     }
 }
 
 class phoneScreen extends Phaser.Scene {
-    constructor(character) { // not sure yet
+    constructor() {
         super({key: "phoneScreen"});
-        this.character = character; // not sure yet
+    }
+
+    init(data) {
+        this.character = data.phone;
     }
 
     preload() {
-
+        this.load.image("backgroundPhone", "../../resources/others/phone-screen-" + this.character + ".png");
     }
 
     create() {
-
+        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone");
     }
 }
 
@@ -179,6 +182,7 @@ class Main extends Phaser.Game {
         /* Game scenes */
         this.scene.add("mainMenu", mainMenu);
         this.scene.add("chooseCharacter", chooseCharacterScreen);
+        this.scene.add("phoneScreen", phoneScreen);
         this.scene.add("howToPlay", howToPlayScreen);
         this.scene.add("credits", creditsScreen);
         // add the rest
