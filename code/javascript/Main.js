@@ -82,22 +82,24 @@ class chooseCharacterScreen extends Phaser.Scene {
             font: "18pt Comic Sans",
             color: "black"
         };
-        let characters = [];
-        let images = ["father", "student", "tourist"];
+
+        let characters = ["father", "student", "tourist"];
+        let images = [];
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundChooseCharacter");
         this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character", textConfigs);
 
         for (let i = 0; i < 3; i++) {
-            let character = this.add.sprite(config.width / 2 + 250 * (i - 1), config.height / 2 + 150, images[i]).setScale(0.35);
-            characters.push(character.setInteractive({useHandCursor: true, pixelPerfect: true}));
+            let character = this.add.sprite(config.width / 2 + 250 * (i - 1), config.height / 2 + 150, characters[i]).setScale(0.35);
+            images.push(character.setInteractive({useHandCursor: true, pixelPerfect: true}));
         }
 
         /* Character selection */
-        for (let i = 0; i < characters.length; i++) {
-            let chosenCharacter = characters[i];
+        for (let i = 0; i < images.length; i++) {
+            let chosenCharacter = images[i];
+            let type = characters[i]; // corresponding string/tag
 
             chosenCharacter.on('pointerdown', function (event) {
-                let player = new Player(chosenCharacter, 0, 1, 0, 0); // character, points, level, x, y
+                let player = new Player(type, 0, 1, 0, 0); // character, points, level, x, y
                 this.scene.start("phoneScreen", player);
             }, this);
         }
