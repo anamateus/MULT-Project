@@ -8,10 +8,13 @@
 "use strict";
 
 var tasks = [];
+var keyLeft = scene.input.keyboard.addKey("LEFT");
+var keyRight = scene.input.keyboard.addKey("RIGHT");
 
 class Player{
 
-	constructor(points, nLevel, x, y){
+	constructor(filename, points, nLevel, x, y){
+		this.filename = filename;
 		this.points = points;
 		this.nLevel = nLevel;
 		if (this.nLevel <= 7){
@@ -24,12 +27,13 @@ class Player{
 	}
 	
 	preload(filename){
-		this.load.spritesheet("character", filename, {frameWidth: 322, frameHeight: 322});
+		this.load.spritesheet("character", "../resources/others/phone-screen-" + filename + ".png", {frameWidth: 322, frameHeight: 322});
 	}
 
 	create(){
 		const character = this.add.sprite(100, 100, character, 0); //0 to start with the first frame
 
+		//definition of each position of the sprite
 		this.anims.create({
 			key: 'front',
 			frames: this.anims.generateFrameNames(character, {start:0, end: 0}),
@@ -60,23 +64,24 @@ class Player{
 			zeroPad:2
 		});
 
-		this.input.keybord.on('keydown_LEFT', function(event){
+		//movement of the sprite
+		keyLeft.on('down', function(event){
 			this.character.x -= 10;
 			this.character.play('moveLeft'); 
-		}, this);
+		});
 
-		this.input.keybord.on('keyup_LEFT', function(event){
+		keyLeft.on('up', function(event){
 			this.character.play('standLeft'); 
-		}, this);
+		});
 
-		this.input.keybord.on('keydown_RIGHT', function(event){
+		keyRight.on('down', function(event){
 			this.character.x += 10;
 			this.character.play('moveRight'); 
-		}, this);
+		});
 
-		this.input.keybord.on('keyup_RIGHT', function(event){
-			this.character.play('standRight'); 
-		}, this);
+		keyRight.on('up', function(event){
+			this.character.play('standRight');
+		});
 	}
 
 	addTask(task){
@@ -141,26 +146,23 @@ class Player{
 
 class Student extends Player{
 
-	constructor(points, nLevel, x, y, filename){
-		super(points, nLevel, x, y);
-		super.preload(filename);
+	constructor(filename, points, nLevel, x, y){
+		super(filename, points, nLevel, x, y);
 	}
 }
 
 class Father extends Player{
 
-	constructor(points, nLevel, x, y, filename){
-		super(points, nLevel, x, y);
-		super.preload(filename);
+	constructor(filename, points, nLevel, x, y){
+		super(filename, points, nLevel, x, y);
 	}
 	
 }
 
 class Turist extends Player{
 
-	constructor(points, nLevel, x, y, filename){
-		super(points, nLevel, x, y);
-		super.preload(filename);
+	constructor(filename, points, nLevel, x, y){
+		super(filename, points, nLevel, x, y);
 	}
 	
 }
