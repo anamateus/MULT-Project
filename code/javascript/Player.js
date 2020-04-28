@@ -3,6 +3,7 @@
 		-> if when moving left and right it decresases/increases by 10 or not
 		-> sprite velocity (needs to be faster or not)
 		-> starting point
+		-> first scene with sprite in constructor
 */
 
 "use strict";
@@ -11,7 +12,7 @@ var tasks = [];
 var keyLeft = scene.input.keyboard.addKey("LEFT");
 var keyRight = scene.input.keyboard.addKey("RIGHT");
 
-class Player{
+class Player extends Phaser.GameObjects.Sprite{
 
 	constructor(filename, points, nLevel, x, y){
 		this.filename = filename;
