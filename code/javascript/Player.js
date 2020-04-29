@@ -14,7 +14,8 @@ var keyRight = scene.input.keyboard.addKey("RIGHT");
 
 class Player extends Phaser.GameObjects.Sprite{
 
-	constructor(filename, points, nLevel, x, y){
+	constructor(filename, points, nLevel, x, y, scene){
+		super(scene, x, y, filename) //scene has to be Phaser.Scene; [frame] paramater??
 		this.filename = filename;
 		this.points = points;
 		this.nLevel = nLevel;
@@ -28,7 +29,12 @@ class Player extends Phaser.GameObjects.Sprite{
 	}
 	
 	preload(filename){
-		this.load.spritesheet("character", "../resources/others/phone-screen-" + filename + ".png", {frameWidth: 322, frameHeight: 322});
+		this.load.image("character", "../resources/others/phone-screen-" + filename + ".png");
+		this.load.spritesheet("sprite", "../resources/characters/" + filename + "Sprite.png", {
+			frameWidth: 241,	//trying to make smaller than before
+			frameHeight: 241,	//trying to make smaller than before
+			endFrame: 6, //not sure if sprite begins with index 0, if not then change to 7
+		});	
 	}
 
 	create(){
@@ -83,6 +89,8 @@ class Player extends Phaser.GameObjects.Sprite{
 		keyRight.on('up', function(event){
 			this.character.play('standRight');
 		});
+		
+		this.add.sprite(100, 100, 'sprite').play('front'); //check 100 100 position
 	}
 
 	addTask(task){
@@ -147,23 +155,23 @@ class Player extends Phaser.GameObjects.Sprite{
 
 class Student extends Player{
 
-	constructor(filename, points, nLevel, x, y){
-		super(filename, points, nLevel, x, y);
+	constructor(filename, points, nLevel, x, y, scene){
+		super(filename, points, nLevel, x, y, scene);
 	}
 }
 
 class Father extends Player{
 
-	constructor(filename, points, nLevel, x, y){
-		super(filename, points, nLevel, x, y);
+	constructor(filename, points, nLevel, x, y, scene){
+		super(filename, points, nLevel, x, y, scene);
 	}
 	
 }
 
 class Turist extends Player{
 
-	constructor(filename, points, nLevel, x, y){
-		super(filename, points, nLevel, x, y);
+	constructor(filename, points, nLevel, x, y, scene){
+		super(filename, points, nLevel, x, y, scene);
 	}
 	
 }
