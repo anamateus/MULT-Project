@@ -27,7 +27,7 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
     }
 
     onEvent(){
-        this.initialTime--;
+        this.initialTime-=0.001; // since it's called every ms it decreases ons ms to the initialTime
         if (this.initialTime >= 0){
             text.setText("Time: " + formatTime(this.initialTime));
         }
