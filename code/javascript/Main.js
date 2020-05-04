@@ -100,9 +100,49 @@ class chooseCharacterScreen extends Phaser.Scene {
 
             chosenCharacter.on('pointerdown', function (event) {
                 //let player = new Player(type, 0, 1, 0, 0); // character, points, level, x, y
-                this.scene.start("phoneScreen", {phone: type});
+                //this.scene.start("phoneScreen", {phone: type});
+                this.scene.start("phoneScreenAux", {phone: type});
             }, this);
         }
+    }
+}
+
+class phoneScreenAux extends Phaser.Scene {
+   /* constructor() {
+        super({key: "phoneScreenAux"});
+    }
+
+    preload() {
+        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#ff8c00");
+    }
+
+    create() {
+        let textConfigs = {
+            font: "18pt Comic Sans",
+            color: "black"
+        };
+        this.add.text(config.width / 2 - 100, config.height / 5, "How you doing?", textConfigs);
+        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone");
+    }*/
+    constructor() {
+        super({key: "phoneScreenAux"});
+    }
+
+    init(data) {
+        this.character = data.phone;
+    }
+
+    preload() {
+        this.load.image("backgroundPhone", "../../resources/others/phone-screen-" + this.character + ".png");
+    }
+
+    create() {
+        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone");
+        let textConfigs = {
+            font: "18pt Comic Sans",
+            color: "black"
+        };
+        this.add.text(config.width / 2 - 150, config.height / 2, "I don't konw what to write in here\nPlease send help", textConfigs);
     }
 }
 
@@ -183,6 +223,7 @@ class Main extends Phaser.Game {
         this.scene.add("mainMenu", mainMenu);
         this.scene.add("chooseCharacter", chooseCharacterScreen);
         this.scene.add("phoneScreen", phoneScreen);
+        this.scene.add("phoneScreenAux", phoneScreenAux);
         this.scene.add("howToPlay", howToPlayScreen);
         this.scene.add("credits", creditsScreen);
         // add the rest
