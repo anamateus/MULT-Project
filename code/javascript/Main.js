@@ -138,11 +138,23 @@ class phoneScreenAux extends Phaser.Scene {
 
     create() {
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone");
-        let textConfigs = {
+        let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
         };
-        this.add.text(config.width / 2 - 150, config.height / 2, "I don't konw what to write in here\nPlease send help", textConfigs);
+        this.add.text(config.width / 2 - 150, 80, "How you doing good looking?\n\n", titleConfigs);
+        
+        let subTitleConfigs = {
+            font: "14pt Comic Sans",
+            color: "black"
+        };
+        this.add.text(config.width / 2 - 150, 120, "These are the instructions\nof the game.\n", subTitleConfigs);
+
+        let textConfigs = {
+            font: "12pt Comic Sans",
+            color: "black"
+        };
+        this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs);
     }
 }
 
