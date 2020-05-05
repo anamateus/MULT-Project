@@ -2,6 +2,7 @@
 	DETAILS TO SETTLE
         -> make switch to change time between different levels
         -> relation between virtual and real time
+        -> check the position of the time in the canvas
 */
 
 "use strict";
@@ -9,9 +10,20 @@
 
 class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
     
-    constructor(){
-        this.initialTime = 60; //one minute in seconds
-        text = this.add.text(32, 32, "Time: " + formatTime(this.initialTime));
+    constructor(level){
+        this.level = level;
+        this.count = 0;
+        if (level == 1){    //depending on the level the timer will beggin in a different time
+            this.initialTime = 300; //five minutes in seconds
+        }
+        /*
+            other levels
+        */
+        let txt = {
+            font: "18pt Comic Sans",
+            color: "black"
+        };
+        this.add.text(32, 32, "Time: 8:00h", txt); //example beginning at 8am
         timer = this.time.addEvent({
             delay: 1,    //every 1 ms calls the func onEvent()
             callback: onEvent,
@@ -20,17 +32,27 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
         });
     }
 
-    formatTime(seconds){
-        var minutes = Math.floor(seconds/60);
-        var realSeconds = (seconds%60).toString().padStart(2, '0'); //padStart helps formating the text
-        return minutes + ":" + realSeconds;
+    /*
+        EXAMPLE: first level will be 5 minutes long and will simulate 12 hours of the day -> 25seg/hour
+    */
+    formatTime(){
+        this.count++;
+        if (this.level == 1){
+            var h = Math.floor(count/25000); 
+            var minutes = Math.floor(count%25000);
+        }
+        /*
+            other levels
+        */
+        return h + ":" + minutes;
     }
 
     onEvent(){
         this.initialTime-=0.001; // since it's called every ms it decreases ons ms to the initialTime
         if (this.initialTime >= 0){
-            text.setText("Time: " + formatTime(this.initialTime));
+            text.setText("Time: " + formatTime());
         }
+	else return this.endLevel();
         
     }
 
