@@ -24,7 +24,7 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
             color: "black"
         };
         this.add.text(32, 32, "Time: 8:00h", txt); //example beginning at 8am
-        timer = this.time.addEvent({
+        let timer = this.time.addEvent({
             delay: 1,    //every 1 ms calls the func onEvent()
             callback: onEvent,
             callbackScope: this,
@@ -44,7 +44,7 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
         /*
             other levels
         */
-        return h + ":" + minutes;
+        return (h+8) + ":" + minutes;	//example of day starting at 8 am
     }
 
     onEvent(){
