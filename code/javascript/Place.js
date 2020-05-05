@@ -7,7 +7,3 @@ class Place extends Phaser.Scene {
         this.closeTime = closeTime;
     }
 }
-
-class Supermarket extends Place {
-
-}

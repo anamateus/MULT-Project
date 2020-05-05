@@ -75,6 +75,7 @@ class chooseCharacterScreen extends Phaser.Scene {
         this.load.image("father", "../../resources/characters/father-front.png");
         this.load.image("student", "../../resources/characters/student-front.png");
         this.load.image("tourist", "../../resources/characters/tourist-front.png");
+        this.load.image("backButton", "../../resources/others/back_button.png");
     }
 
     create() {
@@ -83,10 +84,11 @@ class chooseCharacterScreen extends Phaser.Scene {
             color: "black"
         };
 
-        let characters = ["father", "student", "tourist"];
-        let images = [];
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundChooseCharacter");
         this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character", textConfigs);
+        this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+        let characters = ["father", "student", "tourist"];
+        let images = [];
 
         for (let i = 0; i < 3; i++) {
             let character = this.add.sprite(config.width / 2 + 250 * (i - 1), config.height / 2 + 150, characters[i]).setScale(0.35);
@@ -104,6 +106,11 @@ class chooseCharacterScreen extends Phaser.Scene {
                 this.scene.start("phoneScreenAux", {phone: type});
             }, this);
         }
+
+        /* Back button interaction */
+        this.backButton.on('pointerdown', function (event) {
+            this.scene.start("mainMenu");
+        }, this);
     }
 }
 
@@ -134,10 +141,13 @@ class phoneScreenAux extends Phaser.Scene {
 
     preload() {
         this.load.image("backgroundPhone", "../../resources/others/phone-screen-" + this.character + ".png");
+        this.load.image("backButton", "../../resources/others/back_button.png");
     }
 
     create() {
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone");
+        this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+
         let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
@@ -155,6 +165,11 @@ class phoneScreenAux extends Phaser.Scene {
             color: "black"
         };
         this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs);
+
+        /* Back button interaction */
+        this.backButton.on('pointerdown', function (event) {
+            this.scene.start("chooseCharacter");
+        }, this);
     }
 }
 
@@ -169,6 +184,7 @@ class phoneScreen extends Phaser.Scene {
 
     preload() {
         this.load.image("backgroundPhone", "../../resources/others/phone-screen-" + this.character + ".png");
+
     }
 
     create() {
@@ -182,7 +198,8 @@ class howToPlayScreen extends Phaser.Scene {
     }
 
     preload() {
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#ff8c00");
+        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
+        this.load.image("backButton", "../../resources/others/back_button.png");
     }
 
     create() {
@@ -191,6 +208,12 @@ class howToPlayScreen extends Phaser.Scene {
             color: "black"
         };
         this.add.text(config.width / 2 - 100, config.height / 5, "< insert How to play screen here >", textConfigs);
+        this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+
+        /* Back button interaction */
+        this.backButton.on('pointerdown', function (event) {
+            this.scene.start("mainMenu");
+        }, this);
     }
 }
 
@@ -204,6 +227,7 @@ class creditsScreen extends Phaser.Scene {
         this.load.image("anaCredits", "../../resources/characters/ana-credits.png");
         this.load.image("lauraCredits", "../../resources/characters/laura-credits.png");
         this.load.image("ritaCredits", "../../resources/characters/rita-credits.png");
+        this.load.image("backButton", "../../resources/others/back_button.png");
     }
 
     create() {
@@ -213,11 +237,21 @@ class creditsScreen extends Phaser.Scene {
         };
 
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundCredits");
-        this.add.text(config.width / 2, config.height / 4, "This game is amazing!!!!", textConfigs);
-        this.add.image(config.width / 2 - 150, config.height / 2 + 175, "anaCredits").setScale(0.35);
-        this.add.image(config.width / 2, config.height / 2 + 175, "lauraCredits").setScale(0.3);
-        this.add.image(config.width / 2 + 150, config.height / 2 + 175, "ritaCredits").setScale(0.33);
+        this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
 
+        this.add.image(config.width / 2 - 150, config.height / 2 + 150, "anaCredits").setScale(0.35);
+        this.add.image(config.width / 2, config.height / 2 + 150, "lauraCredits").setScale(0.3);
+        this.add.image(config.width / 2 + 150, config.height / 2 + 150, "ritaCredits").setScale(0.33);
+
+        this.add.text(config.width / 2 - 100, config.height / 2 - 200, "This game was developed by:", textConfigs);
+        this.add.text(config.width / 2 - 165, config.height / 2 + 265, "Ana", textConfigs);
+        this.add.text(config.width / 2  - 20, config.height / 2 + 265, "Laura", textConfigs);
+        this.add.text(config.width / 2 + 135, config.height / 2 + 265, "Rita", textConfigs);
+
+        /* Back button interaction */
+        this.backButton.on('pointerdown', function (event) {
+            this.scene.start("mainMenu");
+        }, this);
     }
 }
 
