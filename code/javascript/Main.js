@@ -101,9 +101,9 @@ class chooseCharacterScreen extends Phaser.Scene {
             let type = characters[i]; // corresponding string/tag
 
             chosenCharacter.on('pointerdown', function (event) {
-                //let player = new Player(type, 0, 1, 0, 0); // character, points, level, x, y
-                //this.scene.start("phoneScreen", {phone: type});
-                this.scene.start("phoneScreenAux", {phone: type});
+                //let player = new Player(type, 0, 1, 0, 0, "phoneScreen"); // character, points, level, x, y
+                //this.scene.start("phoneScreen", {phone: player.filename});
+                this.scene.start("phoneScreen", {phone: type});
             }, this);
         }
 
@@ -114,25 +114,9 @@ class chooseCharacterScreen extends Phaser.Scene {
     }
 }
 
-class phoneScreenAux extends Phaser.Scene {
-   /* constructor() {
-        super({key: "phoneScreenAux"});
-    }
-
-    preload() {
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#ff8c00");
-    }
-
-    create() {
-        let textConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        this.add.text(config.width / 2 - 100, config.height / 5, "How you doing?", textConfigs);
-        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone");
-    }*/
+class phoneScreen extends Phaser.Scene {
     constructor() {
-        super({key: "phoneScreenAux"});
+        super({key: "phoneScreen"});
     }
 
     init(data) {
@@ -167,28 +151,10 @@ class phoneScreenAux extends Phaser.Scene {
         this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs);
 
         /* Back button interaction */
+        // FIXME: reset character!!
         this.backButton.on('pointerdown', function (event) {
             this.scene.start("chooseCharacter");
         }, this);
-    }
-}
-
-class phoneScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "phoneScreen"});
-    }
-
-    init(data) {
-        this.character = data.phone;
-    }
-
-    preload() {
-        this.load.image("backgroundPhone", "../../resources/others/phone-screen-" + this.character + ".png");
-
-    }
-
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone");
     }
 }
 
@@ -269,7 +235,6 @@ class Main extends Phaser.Game {
         this.scene.add("mainMenu", mainMenu);
         this.scene.add("chooseCharacter", chooseCharacterScreen);
         this.scene.add("phoneScreen", phoneScreen);
-        this.scene.add("phoneScreenAux", phoneScreenAux);
         this.scene.add("howToPlay", howToPlayScreen);
         this.scene.add("credits", creditsScreen);
         // add the rest
