@@ -124,12 +124,14 @@ class phoneScreen extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("backgroundPhone", "../../resources/others/phone-screen-" + this.character + ".png");
+        this.load.image("backgroundPhone-father", "../../resources/others/phone-screen-father.png");
+        this.load.image("backgroundPhone-student", "../../resources/others/phone-screen-student.png");
+        this.load.image("backgroundPhone-tourist", "../../resources/others/phone-screen-tourist.png");
         this.load.image("backButton", "../../resources/others/back_button.png");
     }
 
     create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone");
+        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone-" + this.character);
         this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
 
         let titleConfigs = {
