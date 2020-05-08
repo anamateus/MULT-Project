@@ -1,3 +1,5 @@
+import {Player} from "./Player.js";
+
 let config = {
     type: Phaser.AUTO,
     width: 1080,
@@ -86,7 +88,10 @@ class chooseCharacterScreen extends Phaser.Scene {
 
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundChooseCharacter");
         this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character", textConfigs);
-        this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({
+            useHandCursor: true,
+            pixelPerfect: true
+        });
         let characters = ["father", "student", "tourist"];
         let images = [];
 
@@ -101,9 +106,9 @@ class chooseCharacterScreen extends Phaser.Scene {
             let type = characters[i]; // corresponding string/tag
 
             chosenCharacter.on('pointerdown', function (event) {
-                //let player = new Player(type, 0, 1, 0, 0, "phoneScreen"); // character, points, level, x, y
-                //this.scene.start("phoneScreen", {phone: player.filename});
-                this.scene.start("phoneScreen", {phone: type});
+                //let player = new Player(type, 0, 1, 0, 0, "phoneScreen"); //FIXME: create player object
+                //this.scene.start("phoneScreen", {phone: type, level: player.level});
+                this.scene.start("phoneScreen", {phone: type, level: 1});
             }, this);
         }
 
@@ -121,6 +126,7 @@ class phoneScreen extends Phaser.Scene {
 
     init(data) {
         this.character = data.phone;
+        this.level = data.level;
     }
 
     preload() {
@@ -128,34 +134,59 @@ class phoneScreen extends Phaser.Scene {
         this.load.image("backgroundPhone-student", "../../resources/others/phone-screen-student.png");
         this.load.image("backgroundPhone-tourist", "../../resources/others/phone-screen-tourist.png");
         this.load.image("backButton", "../../resources/others/back_button.png");
+        this.load.image("nextButton", "../../resources/others/back_button.png"); //FIXME: change image
     }
 
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone-" + this.character);
-        this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-
+    createInstructions(visibilityState) {
         let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
         };
-        this.add.text(config.width / 2 - 150, 80, "How you doing good looking?\n\n", titleConfigs);
-        
+        this.title = this.add.text(config.width / 2 - 150, 80, "Instructions\n", titleConfigs).setVisible(visibilityState);
+
         let subTitleConfigs = {
             font: "14pt Comic Sans",
             color: "black"
         };
-        this.add.text(config.width / 2 - 150, 120, "These are the instructions\nof the game.\n", subTitleConfigs);
+        this.subtitle = this.add.text(config.width / 2 - 150, 120, "These are the instructions\nof the game.\n", subTitleConfigs).setVisible(visibilityState);
 
         let textConfigs = {
             font: "12pt Comic Sans",
             color: "black"
         };
-        this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs);
+        this.instructions = this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs).setVisible(visibilityState);
+    }
+
+    createTasksList(visibilityState) {
+        // display list of tasks depending on player chosen
+    }
+
+    create() {
+        this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone-" + this.character);
+        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+        this.nextButton = this.add.sprite(config.width - 100, config.height / 10, "nextButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+
+        if (this.level === 1) {
+            this.createInstructions(true);
+        }
 
         /* Back button interaction */
-        // FIXME: reset character!!
         this.backButton.on('pointerdown', function (event) {
-            this.scene.start("chooseCharacter");
+            if (this.title.text === "Instructions\n") {
+                this.scene.start("chooseCharacter");
+            } else if (this.title.text === "Your Tasks\n") {
+                this.createInstructions(true);
+            }
+        }, this);
+
+        /* Next button interaction */
+        this.nextButton.on('pointerdown', function (event) {
+            if (this.title.text === "Instructions\n") {
+                this.createInstructions(false);
+            } else if (this.title.text === "Your Tasks\n") {
+                // start level X
+                // this.createTasksList();
+            }
         }, this);
     }
 }
@@ -176,7 +207,7 @@ class howToPlayScreen extends Phaser.Scene {
             color: "black"
         };
         this.add.text(config.width / 2 - 100, config.height / 5, "< insert How to play screen here >", textConfigs);
-        this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
 
         /* Back button interaction */
         this.backButton.on('pointerdown', function (event) {
@@ -205,7 +236,7 @@ class creditsScreen extends Phaser.Scene {
         };
 
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundCredits");
-        this.backButton = this.add.sprite(config.width - 100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+        this.backButton = this.add.sprite(80, config.height / 12, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
 
         this.add.image(config.width / 2 - 150, config.height / 2 + 150, "anaCredits").setScale(0.35);
         this.add.image(config.width / 2, config.height / 2 + 150, "lauraCredits").setScale(0.3);
@@ -213,7 +244,7 @@ class creditsScreen extends Phaser.Scene {
 
         this.add.text(config.width / 2 - 100, config.height / 2 - 200, "This game was developed by:", textConfigs);
         this.add.text(config.width / 2 - 165, config.height / 2 + 265, "Ana", textConfigs);
-        this.add.text(config.width / 2  - 20, config.height / 2 + 265, "Laura", textConfigs);
+        this.add.text(config.width / 2 - 20, config.height / 2 + 265, "Laura", textConfigs);
         this.add.text(config.width / 2 + 135, config.height / 2 + 265, "Rita", textConfigs);
 
         /* Back button interaction */

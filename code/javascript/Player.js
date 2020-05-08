@@ -9,11 +9,10 @@
 "use strict";
 
 var tasks = [];
-var keyLeft = scene.input.keyboard.addKey("LEFT");
-var keyRight = scene.input.keyboard.addKey("RIGHT");
+//var keyLeft = scene.input.keyboard.addKey("LEFT");
+//var keyRight = scene.input.keyboard.addKey("RIGHT");
 
-class Player extends Phaser.GameObjects.Sprite{
-
+export class Player extends Phaser.GameObjects.Sprite{
 	constructor(filename, points, nLevel, x, y, scene){
 		super(scene, x, y, filename) //scene has to be Phaser.Scene; [frame] paramater??
 		this.filename = filename;
