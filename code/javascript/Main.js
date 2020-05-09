@@ -77,7 +77,7 @@ class chooseCharacterScreen extends Phaser.Scene {
         this.load.image("father", "../../resources/characters/father-front.png");
         this.load.image("student", "../../resources/characters/student-front.png");
         this.load.image("tourist", "../../resources/characters/tourist-front.png");
-        this.load.image("backButton", "../../resources/others/back_button.png");
+        this.load.image("backButton", "../../resources/others/back-button.png");
     }
 
     create() {
@@ -199,7 +199,7 @@ class howToPlayScreen extends Phaser.Scene {
 
     preload() {
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back_button.png");
+        this.load.image("backButton", "../../resources/others/back-button.png");
     }
 
     create() {
@@ -227,7 +227,7 @@ class creditsScreen extends Phaser.Scene {
         this.load.image("anaCredits", "../../resources/characters/ana-credits.png");
         this.load.image("lauraCredits", "../../resources/characters/laura-credits.png");
         this.load.image("ritaCredits", "../../resources/characters/rita-credits.png");
-        this.load.image("backButton", "../../resources/others/back_button.png");
+        this.load.image("backButton", "../../resources/others/back-button.png");
     }
 
     create() {
