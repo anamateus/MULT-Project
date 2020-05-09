@@ -133,8 +133,9 @@ class phoneScreen extends Phaser.Scene {
         this.load.image("backgroundPhone-father", "../../resources/others/phone-screen-father.png");
         this.load.image("backgroundPhone-student", "../../resources/others/phone-screen-student.png");
         this.load.image("backgroundPhone-tourist", "../../resources/others/phone-screen-tourist.png");
-        this.load.image("backButton", "../../resources/others/back_button.png");
-        this.load.image("nextButton", "../../resources/others/back_button.png"); //FIXME: change image
+        this.load.image("backButton", "../../resources/others/back-button.png");
+        this.load.image("nextButton", "../../resources/others/next-button.png");
+        this.load.image("startGameButton", "../../resources/others/go-button.png");
     }
 
     createInstructions(visibilityState) {
