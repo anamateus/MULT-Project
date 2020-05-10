@@ -137,31 +137,37 @@ class phoneScreen extends Phaser.Scene {
         this.load.image("backgroundPhone-tourist", "../../resources/others/phone-screen-tourist.png");
         this.load.image("backButton", "../../resources/others/back-button.png");
         this.load.image("nextButton", "../../resources/others/next-button.png");
-        this.load.image("startGameButton", "../../resources/others/go-button.png");
         this.load.image("helpButton", "../../resources/others/help-button.png");
     }
 
-    createInstructions(visibilityState) {
+    createInstructions() {
+        let content = [];
         let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
         };
-        this.title = this.add.text(config.width / 2 - 150, 80, "Instructions\n", titleConfigs).setVisible(visibilityState);
-
-        let subTitleConfigs = {
-            font: "14pt Comic Sans",
-            color: "black"
-        };
-        this.subtitle = this.add.text(config.width / 2 - 150, 120, "These are the instructions\nof the game.\n", subTitleConfigs).setVisible(visibilityState);
+        let title = this.add.text(config.width / 2 - 150, 80, "Instructions\n", titleConfigs);
 
         let textConfigs = {
             font: "12pt Comic Sans",
             color: "black"
         };
-        this.instructions = this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs).setVisible(visibilityState);
+        let instructions = this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs);
+
+        content.push(title);
+        content.push(instructions);
+        return content;
     }
 
-    createTasksList(visibilityState) {
+    createTasksList(visibilityState, backButton) {
+        backButton.setVisible(false);
+        backButton.setInteractive(false);
+        let titleConfigs = {
+            font: "18pt Comic Sans",
+            color: "black"
+        };
+        let title = this.add.text(config.width / 2 - 150, 80, "Your tasks\n", titleConfigs).setVisible(visibilityState);
+
         // display list of tasks depending on player chosen
     }
 
@@ -169,27 +175,28 @@ class phoneScreen extends Phaser.Scene {
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone-" + this.character);
         this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
         this.nextButton = this.add.sprite(config.width - 100, config.height / 10, "nextButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+        let content;
 
         if (this.level === 1) {
-            this.createInstructions(true);
+            content = this.createInstructions().map(elem => elem.setVisible(true));
+        } else {
+            this.createTasksList(true, this.backButton);
         }
 
         /* Back button interaction */
         this.backButton.on('pointerdown', function (event) {
-            if (this.title.text === "Instructions\n") {
-                this.scene.start("chooseCharacter");
-            } else if (this.title.text === "Your Tasks\n") {
-                this.createInstructions(true);
-            }
+            this.scene.start("chooseCharacter");
         }, this);
 
         /* Next button interaction */
         this.nextButton.on('pointerdown', function (event) {
-            if (this.title.text === "Instructions\n") {
-                this.createInstructions(false);
-            } else if (this.title.text === "Your Tasks\n") {
-                // start level X
-                // this.createTasksList();
+            let title = content[0];
+            if (title.text === "Instructions\n") {
+                content.map(elem => elem.setVisible(false));
+                this.createTasksList(true, this.backButton);
+            } else if (title.text === "Your Tasks\n") {
+                // skip to the level
+                this.scene.start("howToPlay");
             }
         }, this);
     }
