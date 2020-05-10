@@ -17,6 +17,7 @@ class mainMenu extends Phaser.Scene {
         this.load.image("logo", "../../resources/others/logo.png");
         this.load.image("tickbox", "../../resources/others/tickbox.png");
         this.load.image("tick", "../../resources/others/tick.png");
+        this.load.image("helpButton", "../../resources/others/help-button.png");
     }
 
     create() {
@@ -78,6 +79,7 @@ class chooseCharacterScreen extends Phaser.Scene {
         this.load.image("student", "../../resources/characters/student-front.png");
         this.load.image("tourist", "../../resources/characters/tourist-front.png");
         this.load.image("backButton", "../../resources/others/back-button.png");
+        this.load.image("helpButton", "../../resources/others/help-button.png");
     }
 
     create() {
@@ -136,6 +138,7 @@ class phoneScreen extends Phaser.Scene {
         this.load.image("backButton", "../../resources/others/back-button.png");
         this.load.image("nextButton", "../../resources/others/next-button.png");
         this.load.image("startGameButton", "../../resources/others/go-button.png");
+        this.load.image("helpButton", "../../resources/others/help-button.png");
     }
 
     createInstructions(visibilityState) {
