@@ -1,35 +1,54 @@
 /*
 	DETAILS TO SETTLE
         -> make switch to change time between different levels
-        -> relation between virtual and real time
         -> check the position of the time in the canvas
 */
 
 "use strict";
 
-
 class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
     
     constructor(level){
+	    
+        /*couldn't find the constructor for this phaser extension... once i do i'll replace it here*/
+	    
         this.level = level;
         this.count = 0;
-        if (level == 1){    //depending on the level the timer will beggin in a different time
-            this.initialTime = 300; //five minutes in seconds
-        }
-        /*
-            other levels
-        */
-        let txt = {
+
+	let txt = {
             font: "18pt Comic Sans",
             color: "black"
-        };
-        this.add.text(32, 32, "Time: 8:00h", txt); //example beginning at 8am
-        let timer = this.time.addEvent({
-            delay: 1,    //every 1 ms calls the func onEvent()
-            callback: onEvent,
-            callbackScope: this,
-            loop:true
-        });
+        };	    
+	    
+        if (level == 0){    //if level == 0 then the timer to view the tasks is the one initialized
+
+            this.initialTime = 30;  //30 seconds to see tasks
+            this.add.text(32, 32, "Time left: " + this.initialTime + " seconds", txt); //example beginning at 8am
+            let timer = this.time.addEvent({
+                delay: 1,    //every 1 ms calls the func tasksTimer()
+                callback: tasksTimer,
+                callbackScope: this,
+                loop:true
+            });
+
+        } else {
+
+            if (level == 1){    //depending on the level the timer will beggin in a different time
+                this.initialTime = 300; //five minutes in seconds
+            }
+            /*
+                other levels
+            */
+            
+            this.add.text(32, 32, "Time: 8:00h", txt); //example beginning at 8am
+            let timer = this.time.addEvent({
+                delay: 1,    //every 1 ms calls the func onEvent()
+                callback: onEvent,
+                callbackScope: this,
+                loop:true
+            });
+
+        }
     }
 
     /*
@@ -58,5 +77,14 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
 
     endLevel(){
         //when the time runs out end game
+    }
+	
+    tasksTimer(){
+    	this.initialTime -= 0.001;
+	if (this.initialTime%1 == 0){
+		this.text.setText("Time left: " + this.initialTime + " seconds");
+	} else if (this.initialTime == 0){
+		/*avançar para o jogo*/
+	}
     }
 }
