@@ -159,16 +159,21 @@ class phoneScreen extends Phaser.Scene {
         return content;
     }
 
-    createTasksList(visibilityState, backButton) {
+    createTasksList(backButton) {
         backButton.setVisible(false);
         backButton.setInteractive(false);
+        let content = [];
+
         let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
         };
-        let title = this.add.text(config.width / 2 - 150, 80, "Your tasks\n", titleConfigs).setVisible(visibilityState);
+        let title = this.add.text(config.width / 2 - 150, 80, "Your Tasks\n", titleConfigs);
 
+        content.push(title);
         // display list of tasks depending on player chosen
+        // content.push(task-X);
+        return content;
     }
 
     create() {
@@ -180,7 +185,7 @@ class phoneScreen extends Phaser.Scene {
         if (this.level === 1) {
             content = this.createInstructions().map(elem => elem.setVisible(true));
         } else {
-            this.createTasksList(true, this.backButton);
+            content = this.createTasksList(this.backButton);
         }
 
         /* Back button interaction */
@@ -193,12 +198,31 @@ class phoneScreen extends Phaser.Scene {
             let title = content[0];
             if (title.text === "Instructions\n") {
                 content.map(elem => elem.setVisible(false));
-                this.createTasksList(true, this.backButton);
-            } else if (title.text === "Your Tasks\n") {
-                // skip to the level
-                this.scene.start("howToPlay");
+                content = this.createTasksList(this.backButton);
+            } else if (title.text === "Your Tasks\n") {              // go to Map to start each level
+                this.scene.start("map"); // just to test
             }
         }, this);
+    }
+}
+
+class mapScreen extends Phaser.Scene {
+    constructor() {
+        super({key: "map"});
+    }
+    preload() {
+        // insert street images here
+        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb"); // just to test
+    }
+    create() {
+
+        // add street images here
+
+        let textConfigs = {
+            font: "18pt Comic Sans",
+            color: "black"
+        };
+        this.add.text(config.width / 2 - 100, config.height / 5, "Lauraaaaaa <333 add the map stuff here", textConfigs);
     }
 }
 
@@ -279,6 +303,7 @@ class Main extends Phaser.Game {
         this.scene.add("mainMenu", mainMenu);
         this.scene.add("chooseCharacter", chooseCharacterScreen);
         this.scene.add("phoneScreen", phoneScreen);
+        this.scene.add("map", mapScreen);
         this.scene.add("howToPlay", howToPlayScreen);
         this.scene.add("credits", creditsScreen);
         // add the rest
