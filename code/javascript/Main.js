@@ -1,5 +1,3 @@
-import {Player} from "./Player.js";
-
 let config = {
     type: Phaser.AUTO,
     width: 1080,
