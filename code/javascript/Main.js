@@ -230,17 +230,34 @@ class howToPlayScreen extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
         this.load.image("backButton", "../../resources/others/back-button.png");
     }
 
-    create() {
-        let textConfigs = {
+    instructions(){
+        let content = [];
+        let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
         };
-        this.add.text(config.width / 2 - 100, config.height / 5, "< insert How to play screen here >", textConfigs);
+        let title = this.add.text(config.width / 2 - 150, 80, "How to play\n", titleConfigs);
+        
+        let textConfigs = {
+            font: "12pt Comic Sans",
+            color: "black"
+        };
+        let text = this.add.text(config.width / 2 - 150, 180, "[instructions here]\n", textConfigs);
+        
+        content.push(title);
+        content.push(text);
+        return content;
+    }
+    
+    create() {
+        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
         this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
+        let content = this.instructions();
 
         /* Back button interaction */
         this.backButton.on('pointerdown', function (event) {
