@@ -41,52 +41,35 @@ export class Player extends Phaser.GameObjects.Sprite{
 
 		//definition of each position of the sprite
 		this.anims.create({
-			key: 'front',
-			frames: this.anims.generateFrameNames(character, {start:0, end: 0}),
-			zeroPad:2
+		    key: 'stand', 
+		    frames: [{key:'studentSprite', frame:0}],
+		    frameRate: 5
+		})
+
+		this.anims.create({
+		    key:'rightstop',
+		    frames:[{key:'studentSprite',frame:4}],
+		    frameRate:5
 		});
 
 		this.anims.create({
-			key: 'moveLeft', 
-			frames: this.anims.generateFrameNames(character, {start:2, end: 3}),
-			zeroPad:2
+		    key:'rightwalk',
+		    frames:this.anims.generateFrameNumbers('studentSprite',{start:5,end:6, zeroPad:4}),
+		    frameRate:5,
+		    repeat:-1
 		});
 
 		this.anims.create({
-			key: 'standLeft', 
-			frames: this.anims.generateFrameNames(character, {start:1, end: 1}),
-			zeroPad:2
+		    key:'leftstop',
+		    frames:[{key:'studentSprite',frame:1}],
+		    frameRate:5
 		});
 
 		this.anims.create({
-			key: 'moveRight', 
-			frames: this.anims.generateFrameNames(character, {start:5, end: 6}),
-			zeroPad:2
-		});
-
-		this.anims.create({
-			key: 'standRight', 
-			frames: this.anims.generateFrameNames(character, {start:4, end: 4}),
-			zeroPad:2
-		});
-
-		//movement of the sprite
-		keyLeft.on('down', function(event){
-			this.character.x -= 10;
-			this.character.play('moveLeft'); 
-		});
-
-		keyLeft.on('up', function(event){
-			this.character.play('standLeft'); 
-		});
-
-		keyRight.on('down', function(event){
-			this.character.x += 10;
-			this.character.play('moveRight'); 
-		});
-
-		keyRight.on('up', function(event){
-			this.character.play('standRight');
+		    key:'leftwalk',
+		    frames:this.anims.generateFrameNumbers('studentSprite',{start:2, end:3, zeroPad:4}),
+		    frameRate:5,
+		    repeat:-1
 		});
 		
 		this.add.sprite(100, 100, 'sprite').play('front'); //check 100 100 position
@@ -148,6 +131,34 @@ export class Player extends Phaser.GameObjects.Sprite{
 
 	selectObject(Object){	//select an object
 
+	}
+	
+	update(){
+		/*Check movement depending on the button being pressed.*/
+		if(cursor.left.isDown){
+
+		    player.setVelocityX(-100);
+		    player.anims.play('leftwalk',true);
+		    this.direction='left';
+
+		}else if(cursor.right.isDown){
+
+		    player.setVelocityX(100);
+		    player.anims.play('rightwalk',true);
+		    this.direction='right';
+
+		} else {
+		    if (this.direction == 'right'){
+			player.setVelocityX(0);
+			player.anims.play('rightstop',true);
+		    } else if (this.direction == 'left'){
+			player.setVelocityX(0);
+			player.anims.play('leftstop',true);
+		    } else {
+			player.setVelocityX(0);
+			player.anims.play('stand',true);
+		    }
+		}
 	}
 	
 }
