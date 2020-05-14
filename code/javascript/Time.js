@@ -20,7 +20,7 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
             color: "black"
         };	    
 	    
-        if (level == 0){    //if level == 0 then the timer to view the tasks is the one initialized
+        if (level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
 
             this.initialTime = 30;  //30 seconds to see tasks
             this.add.text(32, 32, "Time left: " + this.initialTime + " seconds", txt); //example beginning at 8am
@@ -33,7 +33,7 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
 
         } else {
 
-            if (level == 1){    //depending on the level the timer will beggin in a different time
+            if (level === 1){    //depending on the level the timer will beggin in a different time
                 this.initialTime = 300; //five minutes in seconds
             }
             /*
@@ -56,7 +56,7 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
     */
     formatTime(){
         this.count++;
-        if (this.level == 1){
+        if (this.level === 1){
             var h = Math.floor(count/25000); 
             var minutes = Math.floor(count%25000);
         }
@@ -81,10 +81,18 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
 	
     tasksTimer(){
     	this.initialTime -= 0.001;
-	if (this.initialTime%1 == 0){
+	if (this.initialTime%1 === 0){
 		this.text.setText("Time left: " + this.initialTime + " seconds");
-	} else if (this.initialTime == 0){
+	} else if (this.initialTime === 0){
 		/*avançar para o jogo*/
 	}
+    }
+	
+    checkOpeningHours(opens, closes){
+    	var aux = this.initialTime;
+    	if (Math.floor(aux/25000) <= opens || Math.floor(aux/25000) >= closes){
+            return false;    //the store is closed
+        }
+        else return true;
     }
 }
