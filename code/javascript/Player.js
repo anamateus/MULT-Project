@@ -81,7 +81,7 @@ export class Player extends Phaser.GameObjects.Sprite{
 
 	removeTask(task){
 		for (let i = 0; i < this.tasks.length; i++){
-			if (this.tasks[i] == task){
+			if (this.tasks[i] === task){
 				this.tasks.splice(i, 1);	//splice(i, 1) -> removes 1 element in position i
 			}
 		}
@@ -137,41 +137,38 @@ export class Player extends Phaser.GameObjects.Sprite{
 		/*Check movement depending on the button being pressed.*/
 		if(cursor.left.isDown){
 
-		    player.setVelocityX(-100);
-		    player.anims.play('leftwalk',true);
+		    this.setVelocityX(-100);
+		    this.anims.play('leftwalk',true);
 		    this.direction='left';
 
 		}else if(cursor.right.isDown){
 
-		    player.setVelocityX(100);
-		    player.anims.play('rightwalk',true);
+		    this.setVelocityX(100);
+		    this.anims.play('rightwalk',true);
 		    this.direction='right';
 
 		} else {
-		    if (this.direction == 'right'){
-			player.setVelocityX(0);
-			player.anims.play('rightstop',true);
-		    } else if (this.direction == 'left'){
-			player.setVelocityX(0);
-			player.anims.play('leftstop',true);
+		    if (this.direction === 'right'){
+			this.setVelocityX(0);
+			this.anims.play('rightstop',true);
+		    } else if (this.direction === 'left'){
+			this.setVelocityX(0);
+			this.anims.play('leftstop',true);
 		    } else {
-			player.setVelocityX(0);
-			player.anims.play('stand',true);
+			this.setVelocityX(0);
+			this.anims.play('stand',true);
 		    }
 		}
 	}
-	
 }
 
 class Student extends Player{
-
 	constructor(filename, points, nLevel, x, y, scene){
 		super(filename, points, nLevel, x, y, scene);
 	}
 }
 
 class Father extends Player{
-
 	constructor(filename, points, nLevel, x, y, scene){
 		super(filename, points, nLevel, x, y, scene);
 	}
@@ -179,9 +176,7 @@ class Father extends Player{
 }
 
 class Turist extends Player{
-
 	constructor(filename, points, nLevel, x, y, scene){
 		super(filename, points, nLevel, x, y, scene);
 	}
-	
 }

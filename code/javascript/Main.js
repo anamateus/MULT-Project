@@ -5,7 +5,7 @@ let config = {
     autoCenter: true
 };
 
-class mainMenu extends Phaser.Scene {
+class MainMenu extends Phaser.Scene {
     constructor() {
         super({key: "mainMenu"});
     }
@@ -66,7 +66,7 @@ class mainMenu extends Phaser.Scene {
     }
 }
 
-class chooseCharacterScreen extends Phaser.Scene {
+class ChooseCharacterScreen extends Phaser.Scene {
     constructor() {
         super({key: "chooseCharacter"});
     }
@@ -119,7 +119,7 @@ class chooseCharacterScreen extends Phaser.Scene {
     }
 }
 
-class phoneScreen extends Phaser.Scene {
+class PhoneScreen extends Phaser.Scene {
     constructor() {
         super({key: "phoneScreen"});
     }
@@ -204,7 +204,7 @@ class phoneScreen extends Phaser.Scene {
     }
 }
 
-class mapScreen extends Phaser.Scene {
+class MapScreen extends Phaser.Scene {
     constructor() {
         super({key: "map"});
     }
@@ -224,7 +224,7 @@ class mapScreen extends Phaser.Scene {
     }
 }
 
-class howToPlayScreen extends Phaser.Scene {
+class HowToPlayScreen extends Phaser.Scene {
     constructor() {
         super({key: "howToPlay"});
     }
@@ -266,7 +266,7 @@ class howToPlayScreen extends Phaser.Scene {
     }
 }
 
-class creditsScreen extends Phaser.Scene {
+class CreditsScreen extends Phaser.Scene {
     constructor() {
         super({key: "credits"});
     }
@@ -315,12 +315,12 @@ class Main extends Phaser.Game {
         super(config);
 
         /* Game scenes */
-        this.scene.add("mainMenu", mainMenu);
-        this.scene.add("chooseCharacter", chooseCharacterScreen);
-        this.scene.add("phoneScreen", phoneScreen);
-        this.scene.add("map", mapScreen);
-        this.scene.add("howToPlay", howToPlayScreen);
-        this.scene.add("credits", creditsScreen);
+        this.scene.add("mainMenu", MainMenu);
+        this.scene.add("chooseCharacter", ChooseCharacterScreen);
+        this.scene.add("phoneScreen", PhoneScreen);
+        this.scene.add("map", MapScreen);
+        this.scene.add("howToPlay", HowToPlayScreen);
+        this.scene.add("credits", CreditsScreen);
         // add the rest
     }
 
