@@ -8,14 +8,13 @@
 
 "use strict";
 
-var tasks = [];
 //var keyLeft = scene.input.keyboard.addKey("LEFT");
 //var keyRight = scene.input.keyboard.addKey("RIGHT");
 
 export class Player extends Phaser.GameObjects.Sprite{
-	constructor(filename, points, nLevel, x, y, scene){
-		super(scene, x, y, filename) //scene has to be Phaser.Scene; [frame] paramater??
-		this.filename = filename;
+	constructor(scene, x, y, texture, frame, points, nLevel){
+		super(scene, x, y, texture, frame) //scene has to be Phaser.Scene; [frame] paramater??
+		this.texture = texture;
 		this.points = points;
 		this.nLevel = nLevel;
 		if (this.nLevel <= 7){
@@ -25,11 +24,12 @@ export class Player extends Phaser.GameObjects.Sprite{
 		}
 		this.x = x;
 		this.y = y;
+		this.tasks = [];
 	}
 	
-	preload(filename){
-		this.load.image("character", "../resources/others/phone-screen-" + filename + ".png");
-		this.load.spritesheet("sprite", "../resources/characters/" + filename + "Sprite.png", {
+	preload(texture){
+		this.load.image("character", "../resources/others/phone-screen-" + texture + ".png");
+		this.load.spritesheet("sprite", "../resources/characters/" + texture + "Sprite.png", {
 			frameWidth: 241,	//trying to make smaller than before
 			frameHeight: 241,	//trying to make smaller than before
 			endFrame: 6, //not sure if sprite begins with index 0, if not then change to 7
@@ -163,20 +163,20 @@ export class Player extends Phaser.GameObjects.Sprite{
 }
 
 class Student extends Player{
-	constructor(filename, points, nLevel, x, y, scene){
-		super(filename, points, nLevel, x, y, scene);
+	constructor(texture, points, nLevel, x, y, scene){
+		super(texture, points, nLevel, x, y, scene);
 	}
 }
 
 class Father extends Player{
-	constructor(filename, points, nLevel, x, y, scene){
-		super(filename, points, nLevel, x, y, scene);
+	constructor(texture, points, nLevel, x, y, scene){
+		super(texture, points, nLevel, x, y, scene);
 	}
 	
 }
 
 class Turist extends Player{
-	constructor(filename, points, nLevel, x, y, scene){
-		super(filename, points, nLevel, x, y, scene);
+	constructor(texture, points, nLevel, x, y, scene){
+		super(texture, points, nLevel, x, y, scene);
 	}
 }

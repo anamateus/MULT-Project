@@ -5,5 +5,8 @@ class Place extends Phaser.Scene {
         super({key: "Place"});
         this.openTime = openTime;
         this.closeTime = closeTime;
+        this.wasEntered = false;     // if entered on map, set to true
     }
+
+
 }

@@ -1,3 +1,5 @@
+import {Player} from "./Player.js";
+
 let config = {
     type: Phaser.AUTO,
     width: 1080,
@@ -105,10 +107,10 @@ class ChooseCharacterScreen extends Phaser.Scene {
             let chosenCharacter = images[i];
             let type = characters[i]; // corresponding string/tag
 
-            chosenCharacter.on('pointerdown', function (event) {
-                //let player = new Player(type, 0, 1, 0, 0, "phoneScreen"); //FIXME: create player object
-                //this.scene.start("phoneScreen", {phone: type, level: player.level});
+            chosenCharacter.on('pointerdown', function (event) { //FIXME: create player object
                 this.scene.start("phoneScreen", {phone: type, level: 1});
+                let player = new Player("phoneScreen",0, 1, type, type + "-front.png", 0); // not sure about the frame param.
+
             }, this);
         }
 

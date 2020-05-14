@@ -1,9 +1,12 @@
 "use strict";
 
-class Object {
-    constructor(x, y) {
+class Object extends Phaser.GameObjects.Sprite {
+    constructor(scene, x, y, texture) {
+        super(scene, x, y, texture);
         this.x = x;
         this.y = y;
+        this.setInteractive({useHandCursor: true, pixelPerfect: true});
+        this.wasSelected = false;
     }
 
     getPos(){
@@ -11,6 +14,8 @@ class Object {
     }
 
     animation(){
-
+        this.on('pointerdown', function (event) {
+            this.setVisible(false);                          // change
+        }, this);
     }
 }

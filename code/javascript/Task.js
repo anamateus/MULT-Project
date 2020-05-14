@@ -1,6 +1,6 @@
 "use strict";
 
-class Task {
+export class Task {
     constructor(place, ...args) {
         this.place = place;
         if (args.length === 1) {
