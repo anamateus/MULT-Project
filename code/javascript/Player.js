@@ -12,8 +12,8 @@
 //var keyRight = scene.input.keyboard.addKey("RIGHT");
 
 export class Player extends Phaser.GameObjects.Sprite{
-	constructor(scene, x, y, texture, frame, points, nLevel){
-		super(scene, x, y, texture, frame) //scene has to be Phaser.Scene; [frame] paramater??
+	constructor(scene, x, y, texture, points, nLevel){
+		super(scene, x, y, texture) //scene has to be Phaser.Scene; [frame] paramater??
 		this.texture = texture;
 		this.points = points;
 		this.nLevel = nLevel;

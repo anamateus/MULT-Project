@@ -225,7 +225,7 @@ class PhoneScreen extends Phaser.Scene {
                 content.map(elem => elem.setVisible(false));
                 content = this.createTasksList(this.backButton);
             } else if (title.text === "Your Tasks\n") {              // go to Map to start each level
-                this.scene.start("map"); // just to test
+                this.scene.start("map", {character: this.character});
             }
         }, this);
     }
@@ -235,13 +235,20 @@ class MapScreen extends Phaser.Scene {
     constructor() {
         super({key: "map"});
     }
+
+    init(data) {
+        this.character = data.character;
+    }
+
     preload() {
         this.load.image("street1", "../../resources/scenarios/map/street-1.png");
         this.load.image("street2", "../../resources/scenarios/map/street-2.png");
         this.load.image("street3", "../../resources/scenarios/map/street-3.png");
+        this.load.image(this.character + "Sprite", "../../resources/characters/" + this.character + "Sprite.png")
     }
     create() {
-       this.street = this.add.image(config.width / 2, config.height / 2, "street1");
+        let player = new Player(this, 0,0,this.character + "Sprite.png", 0, 1);
+        this.street = this.add.image(config.width / 2, config.height / 2, "street1");
     }
 }
 
