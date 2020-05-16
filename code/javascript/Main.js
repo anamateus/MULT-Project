@@ -83,6 +83,8 @@ class ChooseCharacterScreen extends Phaser.Scene {
     }
 
     create() {
+        localStorage.clear();
+
         let textConfigs = {
             font: "18pt Comic Sans",
             color: "black"
@@ -107,10 +109,8 @@ class ChooseCharacterScreen extends Phaser.Scene {
             let chosenCharacter = images[i];
             let type = characters[i]; // corresponding string/tag
 
-            chosenCharacter.on('pointerdown', function (event) { //FIXME: create player object
+            chosenCharacter.on('pointerdown', function (event) {
                 this.scene.start("phoneScreen", {phone: type, level: 1});
-                let player = new Player("phoneScreen",0, 1, type, type + "-front.png", 0); // not sure about the frame param.
-
             }, this);
         }
 
@@ -171,8 +171,33 @@ class PhoneScreen extends Phaser.Scene {
         let title = this.add.text(config.width / 2 - 150, 80, "Your Tasks\n", titleConfigs);
 
         content.push(title);
-        // display list of tasks depending on player chosen
-        // content.push(task-X);
+
+        let placeIcons = {
+            "bookshop" : [0,50,1], // x1, x2, screen
+            "university": [50, 100, 1]
+            // etc...
+        }
+
+        switch (this.character) {
+            case "father": {
+                let places = ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket"];
+                for (let i = 0; i < this.level; i++) {
+                    for (let place of places) {
+                        let p = new Place()
+                        //content.push(new Task())
+                    }
+                }
+                break;
+            }
+            case "student": {
+
+                break;
+            }
+            case "tourist": {
+
+                break;
+            }
+        }
         return content;
     }
 
