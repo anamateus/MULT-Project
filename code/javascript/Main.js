@@ -211,18 +211,12 @@ class MapScreen extends Phaser.Scene {
         super({key: "map"});
     }
     preload() {
-        // insert street images here
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb"); // just to test
+        this.load.image("street1", "../../resources/scenarios/map/street-1.png");
+        this.load.image("street2", "../../resources/scenarios/map/street-2.png");
+        this.load.image("street3", "../../resources/scenarios/map/street-3.png");
     }
     create() {
-
-        // add street images here
-
-        let textConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        this.add.text(config.width / 2 - 100, config.height / 5, "Lauraaaaaa <333 add the map stuff here", textConfigs);
+       this.street = this.add.image(config.width / 2, config.height / 2, "street1");
     }
 }
 
