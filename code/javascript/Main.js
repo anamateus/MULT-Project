@@ -22,7 +22,8 @@ class MainMenu extends Phaser.Scene {
 
     create() {
         let textConfigs = {
-            font: "18pt Comic Sans",
+            font: "16pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundMainMenu");
@@ -86,12 +87,13 @@ class ChooseCharacterScreen extends Phaser.Scene {
         localStorage.clear();
 
         let textConfigs = {
-            font: "18pt Comic Sans",
+            font: "16pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };
 
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundChooseCharacter");
-        this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character", textConfigs);
+        this.add.text(config.width / 2 - 100, config.height / 5, "Choose your character!", textConfigs);
         this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({
             useHandCursor: true,
             pixelPerfect: true
@@ -138,18 +140,21 @@ class PhoneScreen extends Phaser.Scene {
         this.load.image("backButton", "../../resources/others/back-button.png");
         this.load.image("nextButton", "../../resources/others/next-button.png");
         this.load.image("helpButton", "../../resources/others/help-button.png");
+        this.load.json("info", "../../resources/info.json");
     }
 
     createInstructions() {
         let content = [];
         let titleConfigs = {
-            font: "18pt Comic Sans",
+            font: "16pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };
         let title = this.add.text(config.width / 2 - 150, 80, "Instructions\n", titleConfigs);
 
         let textConfigs = {
-            font: "12pt Comic Sans",
+            font: "10pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };
         let instructions = this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs);
@@ -160,40 +165,44 @@ class PhoneScreen extends Phaser.Scene {
     }
 
     createTasksList(backButton) {
+        this.json = this.cache.json.get("info");
+
         backButton.setVisible(false);
         backButton.setInteractive(false);
         let content = [];
 
         let titleConfigs = {
-            font: "18pt Comic Sans",
+            font: "16pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };
         let title = this.add.text(config.width / 2 - 150, 80, "Your Tasks\n", titleConfigs);
 
         content.push(title);
 
-        let placeIcons = {
-            "bookshop" : [0,50,1], // x1, x2, screen
-            "university": [50, 100, 1]
-            // etc...
-        }
+        let numTasks = 3 + 2 * this.level;
 
         switch (this.character) {
             case "father": {
-                let places = ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket"];
-                for (let i = 0; i < this.level; i++) {
-                    for (let place of places) {
-                        let p = new Place()
+                let places = ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket", "home"];
+
+                for (let i = 0; i < numTasks; i++) {
+                    for (let j = 0; j < places.length; j++) {
+                        let p = places[Math.random() * places.length];
+                        let place = new Place(p, -1, -1); //FIXME: change time params
+
                         //content.push(new Task())
                     }
                 }
                 break;
             }
             case "student": {
+                let places = ["bookshop", "university", "clothesshop", "pastryshop", "supermarket", "home"];
 
                 break;
             }
             case "tourist": {
+                let places = ["bookshop", "clothesshop", "university", "candyshop", "pastryshop", "supermarket"];
 
                 break;
             }
@@ -241,6 +250,7 @@ class MapScreen extends Phaser.Scene {
     }
 
     preload() {
+        this.load.json("info", "../../resources/info.json");
         this.load.image("street1", "../../resources/scenarios/map/street-1.png");
         this.load.image("street2", "../../resources/scenarios/map/street-2.png");
         this.load.image("street3", "../../resources/scenarios/map/street-3.png");
@@ -309,7 +319,8 @@ class CreditsScreen extends Phaser.Scene {
 
     create() {
         let textConfigs = {
-            font: "14pt Comic Sans",
+            font: "16pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };
 
@@ -354,6 +365,7 @@ class Main extends Phaser.Game {
 
     preload() {
 
+
     }
 
     launch() {
@@ -368,5 +380,6 @@ class Main extends Phaser.Game {
 
 function main() {
     let game = new Main();
+    game.preload();
     game.launch();
 }

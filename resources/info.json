@@ -1,0 +1,73 @@
+{
+    "places" : {
+        "bookshop": {
+            "coords": [0, 200],
+            "screen": 1,
+            "textures": [
+                "bookshop-inside-1",
+                "bookshop-inside-2",
+                "bookshop-inside-3"
+            ],
+            "objects": []
+        },
+        "university": {
+            "coords": [200, 400],
+            "screen": 1,
+            "textures": [],
+            "objects": []
+        },
+        "pastryshop": {
+            "coords": [400, 600],
+            "screen": 1,
+            "textures": ["pastryshop-inside-1", "pastryshop-inside-2", "pastryshop-inside-3"],
+            "objects": ["baguette"]
+        },
+        "supermarket": {
+            "coords": [0, 200],
+            "screen": 2,
+            "textures": ["supermarket-inside-1", "supermarket-inside-2", "supermarket-inside-3"],
+            "objects": ["cheese", "cookies"]
+        },
+        "home": {
+            "coords": [200, 400],
+            "screen": 2,
+            "textures": [],
+            "objects": []
+        },
+        "laundryshop": {
+            "coords": [400, 600],
+            "screen": 2,
+            "textures": ["laundryshop-inside-1", "laundryshop-inside-2", "laundryshop-inside-3"],
+            "objects": ["laundry-machine-0", "laundry-machine-1"]
+        },
+        "candyshop": {
+            "coords": [0, 200],
+            "screen": 3,
+            "textures": ["candyshop-inside-1", "candyshop-inside-2", "candyshop-inside-3"],
+            "objects": ["lollipopJar"]
+        },
+        "gardenshop": {
+            "coords": [200, 400],
+            "screen": 3,
+            "textures": ["gardenshop-inside-1", "gardenshop-inside-2", "gardenshop-inside-3"],
+            "objects": []
+        },
+        "clothesshop": {
+            "coords": [400, 600],
+            "screen": 3,
+            "textures": ["clothesshop-inside-1", "clothesshop-inside-2", "clothesshop-inside-3"],
+            "objects": []
+        }
+    },
+    "characters" : {
+        "father" : {
+            "places" : ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket", "home"]
+        },
+        "student" : {
+            "places" : ["bookshop", "university", "clothesshop", "pastryshop", "supermarket", "home"]
+        },
+        "tourist" : {
+            "places" : ["bookshop", "clothesshop", "university", "candyshop", "pastryshop", "supermarket"]
+        }
+    }
+}
