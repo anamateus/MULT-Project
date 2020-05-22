@@ -276,8 +276,9 @@ class MapScreen extends Phaser.Scene {
         this.load.image(this.character + "Sprite", "../../resources/characters/" + this.character + "Sprite.png")
     }
     create() {
-        let player = new Player(this, 0,0,this.character + "Sprite.png", 0, 1);
+        let player = new Player(this, 50,500, this.character, 0, 1);
         this.street = this.add.image(config.width / 2, config.height / 2, "street1");
+        this.add.existing(player.setScale(0.25,0.25));
     }
 }
 

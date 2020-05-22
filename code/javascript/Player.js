@@ -11,7 +11,7 @@
 //var keyLeft = scene.input.keyboard.addKey("LEFT");
 //var keyRight = scene.input.keyboard.addKey("RIGHT");
 
-export class Player extends Phaser.GameObjects.Sprite{
+export class Player extends Phaser.Physics.Arcade.Sprite{
 	constructor(scene, x, y, texture, points, nLevel){
 		super(scene, x, y, texture) //scene has to be Phaser.Scene; [frame] paramater??
 		this.texture = texture;
@@ -28,16 +28,15 @@ export class Player extends Phaser.GameObjects.Sprite{
 	}
 	
 	preload(texture){
-		this.load.image("character", "../resources/others/phone-screen-" + texture + ".png");
 		this.load.spritesheet("sprite", "../resources/characters/" + texture + "Sprite.png", {
 			frameWidth: 241,	//trying to make smaller than before
 			frameHeight: 241,	//trying to make smaller than before
 			endFrame: 6, //not sure if sprite begins with index 0, if not then change to 7
-		});	
+		});
 	}
 
 	create(){
-		const character = this.add.sprite(100, 100, character, 0); //0 to start with the first frame
+		this.add.sprite(100, 100, this.texture, 0); //0 to start with the first frame
 
 		//definition of each position of the sprite
 		this.anims.create({
