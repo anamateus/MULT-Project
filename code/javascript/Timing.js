@@ -6,7 +6,7 @@
 
 "use strict";
 
-class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
+expprt class Timing extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
     
     constructor(level){
 	    
@@ -16,7 +16,8 @@ class Time extends Phaser.Time.TimerEvent{    //not sure this is the phaser clas
         this.count = 0;
 
 	let txt = {
-            font: "18pt Comic Sans",
+            font: "16pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };	    
 	    
