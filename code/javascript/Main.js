@@ -1,4 +1,7 @@
 import {Player} from "./Player.js";
+import {Place} from "./Place.js";
+import {Thing} from "./Thing.js";
+import {Task} from "./Task.js";
 
 let config = {
     type: Phaser.AUTO,
@@ -141,6 +144,7 @@ class PhoneScreen extends Phaser.Scene {
         this.load.image("nextButton", "../../resources/others/next-button.png");
         this.load.image("helpButton", "../../resources/others/help-button.png");
         this.load.json("info", "../../resources/info.json");
+
     }
 
     createInstructions() {
@@ -157,7 +161,12 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-        let instructions = this.add.text(config.width / 2 - 150, 180, "-You are going to have 5 minutes\nto complete all of the tasks.\n\n-You can't check the tasks' list\n more than once.\n\n-...\n", textConfigs);
+        let instructions = this.add.text(config.width / 2 - 150, 180,
+            "-You are going to have 5 minutes\n" +
+            "to complete all of the tasks.\n\n" +
+            "-You can't check the tasks' list\n" +
+            " more than once.\n\n" +
+            "-...\n", textConfigs);
 
         content.push(title);
         content.push(instructions);
@@ -180,32 +189,26 @@ class PhoneScreen extends Phaser.Scene {
 
         content.push(title);
 
+        /* Tasks generation */
         let numTasks = 3 + 2 * this.level;
+        let tasks = [];
+        let places = this.json["characters"][this.character]["places"];
 
-        switch (this.character) {
-            case "father": {
-                let places = ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket", "home"];
+        for (let i = 0; i < numTasks; i++) {
+            for (let j = 0; j < places.length; j++) {
+                let p = places[Math.floor(Math.random() * places.length)];
+                let objects = this.json["places"][p]["objects"];
+                let o = objects[Math.floor(Math.random() * objects.length)];
 
-                for (let i = 0; i < numTasks; i++) {
-                    for (let j = 0; j < places.length; j++) {
-                        let p = places[Math.random() * places.length];
-                        let place = new Place(p, -1, -1); //FIXME: change time params
-
-                        //content.push(new Task())
-                    }
-                }
-                break;
+                //let place = new Place(p, -1, -1);
+                //let object = new Thing(p, 0, 0, o); //FIXME!!!!!!!
+                //tasks.push(new Task(place, object));
             }
-            case "student": {
-                let places = ["bookshop", "university", "clothesshop", "pastryshop", "supermarket", "home"];
+        }
 
-                break;
-            }
-            case "tourist": {
-                let places = ["bookshop", "clothesshop", "university", "candyshop", "pastryshop", "supermarket"];
-
-                break;
-            }
+        for (let i = 0; i < tasks.length; i++) {
+            let task = tasks[i];
+            this.add.text(config.width / 2 - 150, 180 + 10 * i,"Go to the" + task.place + "to get " + task.thing);
         }
         return content;
     }

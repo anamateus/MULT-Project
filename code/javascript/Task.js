@@ -4,7 +4,7 @@ export class Task {
     constructor(place, ...args) {
         this.place = place;
         if (args.length === 1) {
-            this.object = object;
+            this.thing = args;
         }
         this.status = 0;
     }
