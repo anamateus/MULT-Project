@@ -2,6 +2,7 @@ import {Player} from "./Player.js";
 import {Place} from "./Place.js";
 import {Thing} from "./Thing.js";
 import {Task} from "./Task.js";
+import {Timing} from "./Timing.js";
 
 let config = {
     type: Phaser.AUTO,
@@ -178,6 +179,8 @@ class PhoneScreen extends Phaser.Scene {
 
         backButton.setVisible(false);
         backButton.setInteractive(false);
+        
+        var timer = new Timing(0);
         let content = [];
 
         let titleConfigs = {
@@ -186,8 +189,11 @@ class PhoneScreen extends Phaser.Scene {
             color: "black"
         };
         let title = this.add.text(config.width / 2 - 150, 80, "Your Tasks\n", titleConfigs);
-
+        let aux = timer.txt(0);
+        let counter = this.add.aux();
+        
         content.push(title);
+        content.push(counter);
 
         /* Tasks generation */
         let numTasks = 3 + 2 * this.level;
