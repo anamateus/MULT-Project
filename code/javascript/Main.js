@@ -145,7 +145,21 @@ class PhoneScreen extends Phaser.Scene {
         this.load.image("nextButton", "../../resources/others/next-button.png");
         this.load.image("helpButton", "../../resources/others/help-button.png");
         this.load.json("info", "../../resources/info.json");
+    }
 
+    preloadObjects() {
+        this.json = this.cache.json.get("info");
+        let places = this.json["places"];
+        for (let place of Object.keys(places)) {
+            let backgrounds = this.json["places"][place]["textures"];
+            for (let background of backgrounds) {
+                this.load.image(place, "../../resources/scenarios/" + background + ".png");
+            }
+            let objects = this.json["places"][place]["objects"];
+            for (let object of objects) {
+                this.load.image(object, "../../resources/objects/" + place + "/" + object + ".png");
+            }
+        }
     }
 
     createInstructions() {
@@ -175,7 +189,7 @@ class PhoneScreen extends Phaser.Scene {
     }
 
     createTasksList(backButton) {
-        this.json = this.cache.json.get("info");
+        this.preloadObjects();
 
         backButton.setVisible(false);
         backButton.setInteractive(false);
@@ -201,20 +215,26 @@ class PhoneScreen extends Phaser.Scene {
         let places = this.json["characters"][this.character]["places"];
 
         for (let i = 0; i < numTasks; i++) {
-            for (let j = 0; j < places.length; j++) {
-                let p = places[Math.floor(Math.random() * places.length)];
-                let objects = this.json["places"][p]["objects"];
-                let o = objects[Math.floor(Math.random() * objects.length)];
+            let p = places[Math.floor(Math.random() * places.length)];
+            let objects = this.json["places"][p]["objects"];
+            let o = objects[Math.floor(Math.random() * objects.length)];
 
-                //let place = new Place(p, -1, -1);
-                //let object = new Thing(p, 0, 0, o); //FIXME!!!!!!!
-                //tasks.push(new Task(place, object));
-            }
+            let place = new Place(p, -1, -1, this.json);
+            //let object = new Thing(p, 0, 0, o); //FIXME!!!!!!!
+            //tasks.push(new Task(place, object));
+            tasks.push(new Task(place));
         }
+
+        /* Listing tasks on screen */
+        let textConfigs = {
+            font: "10pt",
+            fontFamily: "Comic Sans",
+            color: "black"
+        };
 
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
-            this.add.text(config.width / 2 - 150, 180 + 10 * i,"Go to the" + task.place + "to get " + task.thing);
+            this.add.text(config.width / 2 - 160, 130 + 20 * i,"- Go to the " + task.place.texture  + " to get " /*+ task.thing.texture*/, textConfigs);
         }
         return content;
     }
