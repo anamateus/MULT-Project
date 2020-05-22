@@ -6,14 +6,16 @@
 
 "use strict";
 
-expprt class Timing extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
+export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
     
-    constructor(level){
-	    
+    constructor(configs, level, scene) {
+        super(configs);
         /*couldn't find the constructor for this phaser extension... once i do i'll replace it here*/
-	    
+
         this.level = level;
+        this.scene = scene;
         this.count = 0;
+
 
 	let txt = {
             font: "16pt",
@@ -41,14 +43,15 @@ expprt class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
                 other levels
             */
             
-            this.add.text(32, 32, "Time: 8:00h", txt); //example beginning at 8am
-            let timer = this.time.addEvent({
+            this.scene.add.text(32, 32, "Time: 8:00h", txt); //example beginning at 8am
+            /*
+            let timer = this.scene.time.addEvent({
                 delay: 1,    //every 1 ms calls the func onEvent()
                 callback: onEvent,
                 callbackScope: this,
                 loop:true
-            });
-
+            }, this);
+             */
         }
     }
 
