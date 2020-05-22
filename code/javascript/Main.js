@@ -147,21 +147,6 @@ class PhoneScreen extends Phaser.Scene {
         this.load.json("info", "../../resources/info.json");
     }
 
-    preloadObjects() {
-        this.json = this.cache.json.get("info");
-        let places = this.json["places"];
-        for (let place of Object.keys(places)) {
-            let backgrounds = this.json["places"][place]["textures"];
-            for (let background of backgrounds) {
-                this.load.image(place, "../../resources/scenarios/" + background + ".png");
-            }
-            let objects = this.json["places"][place]["objects"];
-            for (let object of objects) {
-                this.load.image(object, "../../resources/objects/" + place + "/" + object + ".png");
-            }
-        }
-    }
-
     createInstructions() {
         let content = [];
         let titleConfigs = {
@@ -186,6 +171,14 @@ class PhoneScreen extends Phaser.Scene {
         content.push(title);
         content.push(instructions);
         return content;
+    }
+
+    preloadObjects() {
+        this.json = this.cache.json.get("info");
+        let places = this.json["places"];
+        for (let place of Object.keys(places)) {
+            new Place(place, -1, -1, this.json);
+        }
     }
 
     createTasksList(backButton) {
@@ -219,10 +212,7 @@ class PhoneScreen extends Phaser.Scene {
             let objects = this.json["places"][p]["objects"];
             let o = objects[Math.floor(Math.random() * objects.length)];
 
-            let place = new Place(p, -1, -1, this.json);
-            //let object = new Thing(p, 0, 0, o); //FIXME!!!!!!!
-            //tasks.push(new Task(place, object));
-            tasks.push(new Task(place));
+            tasks.push(new Task(p, o));
         }
 
         /* Listing tasks on screen */
@@ -234,7 +224,7 @@ class PhoneScreen extends Phaser.Scene {
 
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
-            this.add.text(config.width / 2 - 160, 130 + 20 * i,"- Go to the " + task.place.texture  + " to get " /*+ task.thing.texture*/, textConfigs);
+            this.add.text(config.width / 2 - 160, 130 + 20 * i, "- Get " + task.thing + " from the " + task.place, textConfigs);
         }
         return content;
     }

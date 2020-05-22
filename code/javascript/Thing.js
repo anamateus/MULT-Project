@@ -5,7 +5,7 @@ export class Thing extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture);
         this.setInteractive({useHandCursor: true, pixelPerfect: true});
         this.wasSelected = false;
-        scene.add.existing(this);
+        //scene.add.existing(this);
     }
 
     getPos(){
