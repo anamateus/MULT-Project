@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
     
     constructor(configs, level, scene) {
@@ -22,11 +20,14 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
         };	    
         if (this.level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
             console.log("Starting timer....");
-            this.scene.add.text(32, 32);
-            this.timer = this.scene.time.delayedCall(2000, this.endLevel, [], this.scene);
-
+            this.txt = this.scene.add.text(50,20,"Time Left: ", this.textConfigs);
+            this.timer = this.scene.time.addEvent({
+                delay: 1000,
+                callback: this.update,
+                callbackScope: this,
+                repeat: 5
+            })
         } else {
-
             /*
                 other levels
             */
@@ -46,15 +47,6 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
         //    other levels
         
         return (h+8) + ":" + minutes;	//example of day starting at 8 am
-    }
-
-    onEvent(){
-        this.initialTime-=0.001; // since it's called every ms it decreases ons ms to the initialTime
-        if (this.initialTime >= 0){
-            text.setText("Time: " + formatTime());
-        }
-	else return this.endLevel();
-        
     }*/
 
     endLevel(){
@@ -62,19 +54,14 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
     }
 	
     update(){
-        /*this.initialTime -= 0.001;
-        if (this.initialTime%1 === 0){
-        this.scene.add.setText("Time left: " + (this.timer).getProgress().toString().substr(0, 4) + " seconds");*/
-        let t = this.timer;//.getProgress();
-        console.log(t);
-        this.scene.add.text(50,20,"Time Left: " + t.toString().substr(0, 4) + "seconds", this.textConfigs);
-        console.log("Its updating!!!");
-        if (t === 0){
+        if (this.count <= 5){
+            //console.log(this.timer.getElapsed())
+            this.txt.setText("Time Left: " + this.count*1 +  " seconds");
+            this.count++;
+            console.log("Its updating!!!");
+        } else {
             this.endLevel();
         }
-        /*} else if (this.initialTime === 0){
-            //avançar para o jogo
-        }*/
     }
 	
 	/*
