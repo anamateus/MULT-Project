@@ -158,7 +158,7 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-        let title = this.add.text(config.width / 2 - 150, 80, "Instructions\n", titleConfigs);
+        let title = this.add.text(config.width / 2 - 70, 80, "Instructions\n", titleConfigs);
 
         let textConfigs = {
             font: "10pt",
@@ -169,10 +169,8 @@ class PhoneScreen extends Phaser.Scene {
             "-You are going to have a given amount of\n" +
             "time to complete all of the tasks.\n\n" +
             "-The tasks' list is going to be shown to\n" +
-            "you only at the start of each level.\n\n" +
-            "-Press the <- and -> arrows in your\n" +
-            "keyboard to walk in the map.\n\n" +
-            "-Use the up arrow to enter a shop.\n\n", textConfigs);
+            "you only at the start of each level.\n\n"
+            , textConfigs);
 
         content.push(title);
         content.push(instructions);
@@ -181,9 +179,11 @@ class PhoneScreen extends Phaser.Scene {
 
     preloadObjects() {
         this.json = this.cache.json.get("info");
+        this.placesList = []
         let places = this.json["places"];
         for (let place of Object.keys(places)) {
-            new Place(place, -1, -1, this.json);
+            let p = new Place(place, -1, -1, this.json);
+            this.placesList.push(p);
         }
     }
 
@@ -201,7 +201,7 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-        let title = this.add.text(config.width / 2 - 150, 80, "Your Tasks\n", titleConfigs);
+        let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\n", titleConfigs);
         //let aux = timer.txt(0);
         //let counter = this.add.aux();
         
@@ -259,14 +259,13 @@ class PhoneScreen extends Phaser.Scene {
                 content.map(elem => elem.setVisible(false));
                 content = this.createTasksList(this.backButton);
             } else if (title.text === "Your Tasks\n") {              // go to Map to start each level
-                this.scene.start("map", {character: this.character});
+                this.scene.start("map", {character: this.character, placesList: this.placesList});
             }
         }, this);
     }
 }
 
 class MapScreen extends Phaser.Scene {
-    
     constructor() {
         super({key: "map"});
         this.currentStreet = 1;
@@ -274,6 +273,8 @@ class MapScreen extends Phaser.Scene {
 
     init(data) {
         this.character = data.character;
+        this.placesList = data.placesList;
+        console.log(this.placesList);
     }
 
     preload() {
@@ -331,39 +332,31 @@ class MapScreen extends Phaser.Scene {
             this.currentStreet++;
             this.background.setTexture("street" + this.currentStreet);
             this.player.x = 20;
-        } else if (this.player.x <= 20 && 1 < this.currentStreet <= 3){
+        } else if (this.player.x <= 20 && 1 < this.currentStreet <= 3) {
             this.currentStreet--;
             this.background.setTexture("street" + this.currentStreet);
             this.player.x = 1060;
-        } else if ( (this.player.x <= 350) && (this.currentStreet == 1) && (this.input.keyboard.createCursorKeys().up.isDown) ){
-            this.scene.start('BookShop');
-        } else if ( ( (this.player.x > 350) && (this.player.x <= 800) ) && (this.currentStreet == 1) && (this.input.keyboard.createCursorKeys().up.isDown) ){
-            this.scene.start('University');
-        } else if ( (this.player.x > 800) && (this.currentStreet == 1) && (this.input.keyboard.createCursorKeys().up.isDown) ){
-            this.scene.start('PastryShop');
-        } else if ( (this.player.x <= 350) && (this.currentStreet == 2) && (this.input.keyboard.createCursorKeys().up.isDown) ){
-            this.scene.start('Supermarket');
-        }  else if ( ( (this.player.x >= 650) && (this.player.x <= 1050) ) && (this.currentStreet == 2) && (this.input.keyboard.createCursorKeys().up.isDown) ){
-            this.scene.start('Laundry');
-        } else if ( (this.player.x <= 300) && (this.currentStreet == 3) && (this.input.keyboard.createCursorKeys().up.isDown) ){
-            this.scene.start('CandyShop');
-        } else if ( ( (this.player.x > 300) && (this.player.x <= 650) ) && (this.currentStreet == 3) && (this.input.keyboard.createCursorKeys().up.isDown) ){
-            this.scene.start('GardenStore');
-        } else if ( ( (this.player.x > 650) && (this.player.x < 950) ) && (this.currentStreet == 3) && (this.input.keyboard.createCursorKeys().up.isDown) ){
-            this.scene.start('ClothesShop');
         }
     }
 
     placeEntrance() { //FIXME
         this.json = this.cache.json.get("info");
         let places = this.json["places"];
-        for (let place of Object.keys(places)) {
-            let screen = this.json["places"][place]["screen"];
-            let coords = this.json["places"][place]["coords"];
+        for (let place of this.placesList) {
+            let screen = this.json["places"][place.texture]["screen"];
+            let coords = this.json["places"][place.texture]["coords"];
             let x1 = coords[0];
             let x2 = coords[1];
-            if (this.currentStreet === screen && this.player.keys.up.isDown && x1 < this.player.x < x2) {
-                this.scene.start(place);
+            if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2)) {
+                let p = this.json["places"][place.texture];
+                this.player.enterPlace(p);
+
+                //this.scene.start(p);
+                console.log(place.jsonDoc["places"]);
+                console.log(place.texture);
+                console.log(place.jsonDoc["places"][place.texture]["textures"]);
+                console.log(place.backgrounds);
+                this.scene.start("pastryshop");
             }
         }
     }
@@ -373,278 +366,6 @@ class MapScreen extends Phaser.Scene {
         this.updateScreen();
         this.placeEntrance();
     }
-}
-
-class BookShopScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "BookShop"});
-    }
-
-    preload() {
-        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back-button.png");
-    }
-
-    instructions(){
-        let content = [];
-        let titleConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        let title = this.add.text(config.width / 2 - 150, 80, "This is going to be the book shop.\n", titleConfigs);
-        content.push(title);
-        return content;
-    }
-    
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
-        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
-
-        /* Back button interaction */
-        this.backButton.on('pointerdown', function (event) {
-            this.scene.start("map");
-        }, this);
-    }
-}
-
-class UniversityScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "University"});
-    }
-
-    preload() {
-        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back-button.png");
-    }
-    instructions(){
-        let content = [];
-        let titleConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        let title = this.add.text(config.width / 2 - 150, 80, "This is going to be the university.\n", titleConfigs);
-        content.push(title);
-        return content;
-    }
-    
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
-        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
-
-        /* Back button interaction */
-        this.backButton.on('pointerdown', function (event) {
-            this.scene.start("map");
-        }, this);
-    }
-}
-
-class PastryShopScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "PastryShop"});
-    }
-
-    preload() {
-        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back-button.png");
-    }
-
-    instructions(){
-        let content = [];
-        let titleConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        let title = this.add.text(config.width / 2 - 150, 80, "This is going to be the pastry shop.\n", titleConfigs);
-        content.push(title);
-        return content;
-    }
-    
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
-        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
-
-        /* Back button interaction */
-        this.backButton.on('pointerdown', function (event) {
-            this.scene.start("map");
-        }, this);
-    }
-}
-
-class SupermarketScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "Supermarket"});
-    }
-
-    preload() {
-        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back-button.png");
-    }
-
-    instructions(){
-        let content = [];
-        let titleConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        let title = this.add.text(config.width / 2 - 150, 80, "This is going to be the supermarket.\n", titleConfigs);
-        content.push(title);
-        return content;
-    }
-    
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
-        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
-
-        /* Back button interaction */
-        this.backButton.on('pointerdown', function (event) {
-            this.scene.start("map");
-        }, this);
-    }
-}
-
-class LaundryScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "Laundry"});
-    }
-
-    preload() {
-        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back-button.png");
-    }
-
-    instructions(){
-        let content = [];
-        let titleConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        let title = this.add.text(config.width / 2 - 150, 80, "This is going to be the laundry.\n", titleConfigs);
-        content.push(title);
-        return content;
-    }
-    
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
-        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
-
-        /* Back button interaction */
-        this.backButton.on('pointerdown', function (event) {
-            this.scene.start("map");
-        }, this);
-    }
-}
-
-class CandyShopScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "CandyShop"});
-    }
-
-    preload() {
-        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back-button.png");
-    }
-
-    instructions(){
-        let content = [];
-        let titleConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        let title = this.add.text(config.width / 2 - 150, 80, "This is going to be the candy shop.\n", titleConfigs);
-        content.push(title);
-        return content;
-    }
-    
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
-        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
-
-        /* Back button interaction */
-        this.backButton.on('pointerdown', function (event) {
-            this.scene.start("map");
-        }, this);
-    }
-}
-
-class GardenStoreScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "GardenStore"});
-    }
-
-    preload() {
-        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back-button.png");
-    }
-  
-    instructions(){
-        let content = [];
-        let titleConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        let title = this.add.text(config.width / 2 - 150, 80, "This is going to be the garden store.\n", titleConfigs);
-        content.push(title);
-        return content;
-    }
-    
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
-        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
-
-        /* Back button interaction */
-        this.backButton.on('pointerdown', function (event) {
-            this.scene.start("map");
-        }, this);
-    }
-}
-
-class ClothesShopScreen extends Phaser.Scene {
-    constructor() {
-        super({key: "ClothesShop"});
-    }
-
-    preload() {
-        this.load.image("phoneBackground", "../../resources/others/phone-screen-student.png");
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#82c4cb");
-        this.load.image("backButton", "../../resources/others/back-button.png");
-    }
-
-    instructions(){
-        let content = [];
-        let titleConfigs = {
-            font: "18pt Comic Sans",
-            color: "black"
-        };
-        let title = this.add.text(config.width / 2 - 150, 80, "This is going to be the clothes shop.\n", titleConfigs);
-        content.push(title);
-        return content;
-    }
-    
-    create() {
-        this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
-        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
-
-        /* Back button interaction */
-        this.backButton.on('pointerdown', function (event) {
-            this.scene.start("map");
-        }, this);
-    }
-  
 }
 
 class HowToPlayScreen extends Phaser.Scene {
@@ -659,35 +380,26 @@ class HowToPlayScreen extends Phaser.Scene {
     }
 
     instructions(){
-        let content = [];
         let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
         };
-        let title = this.add.text(config.width / 2 - 150, 80, "How to play\n", titleConfigs);
+        let title = this.add.text(config.width / 2 - 50, 80, "How to play\n", titleConfigs);
         
         let textConfigs = {
             font: "12pt Comic Sans",
             color: "black"
         };
         let text = this.add.text(config.width / 2 - 150, 140,
-            "-You are going to have a given amount of\n" +
-            "time to complete all of the tasks.\n\n" +
-            "-The tasks' list is going to be shown to\n" +
-            "you only at the start of each level.\n\n" +
             "-Press the <- and -> arrows in your\n" +
             "keyboard to walk in the map.\n\n" +
-            "-Use the up arrow to enter a shop.\n\n", textConfigs);
-
-        content.push(title);
-        content.push(text);
-        return content;
+            "-Use the up arrow to enter a place.\n\n", textConfigs);
     }
     
     create() {
         this.background = this.add.image(config.width / 2, config.height / 2, "phoneBackground");
         this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
-        let content = this.instructions();
+        this.instructions();
 
         /* Back button interaction */
         this.backButton.on('pointerdown', function (event) {
@@ -735,7 +447,6 @@ class CreditsScreen extends Phaser.Scene {
     }
 }
 
-
 /* Start game right after the browser loads*/
 (function () {
     window.addEventListener("load", main);
@@ -750,23 +461,10 @@ class Main extends Phaser.Game {
         this.scene.add("chooseCharacter", ChooseCharacterScreen);
         this.scene.add("phoneScreen", PhoneScreen);
         this.scene.add("map", MapScreen);
-        this.scene.add("map", BookShopScreen);
-        this.scene.add("map", UniversityScreen);
-        this.scene.add("map", PastryShopScreen);
-        this.scene.add("map", SupermarketScreen);
-        this.scene.add("map", LaundryScreen);
-        this.scene.add("map", CandyShopScreen);
-        this.scene.add("map", GardenStoreScreen);
-        this.scene.add("map", ClothesShopScreen);
+        this.scene.add("pastryshop", Place);
         this.scene.add("howToPlay", HowToPlayScreen);
         this.scene.add("credits", CreditsScreen);
         // add the rest
-    }
-    
-
-    preload() {
-
-
     }
 
     launch() {
@@ -781,6 +479,5 @@ class Main extends Phaser.Game {
 
 function main() {
     let game = new Main();
-    game.preload();
     game.launch();
 }

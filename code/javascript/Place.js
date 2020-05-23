@@ -8,20 +8,21 @@ export class Place extends Phaser.Scene {
         this.texture = texture;
         this.openTime = openTime;
         this.closeTime = closeTime;
-        this.json = json;
+        this.jsonDoc = json;
         this.objects = [];
         this.wasEntered = false;
     }
 
     preload() {
         // load place screens
-        let backgrounds = this.json["places"][this.texture]["textures"];
-        for (let i = 0; i < backgrounds.length; i++) {
-            this.load.image(this.texture + i , "../../resources/scenarios/" + backgrounds[i] + ".png");
+        console.log("aaa");
+        this.backgrounds = this.jsonDoc["places"][this.texture]["textures"];
+        for (let i = 0; i < this.backgrounds.length; i++) {
+            this.load.image(this.texture + i+1 , "../../resources/scenarios/" + this.backgrounds[i] + ".png");
         }
 
         // load place objects
-        let objects = this.json["places"][this.texture]["objects"];
+        let objects = this.jsonDoc["places"][this.texture]["objects"];
         for (let object of objects) {
             this.load.image(object, "../../resources/objects/" + this.texture + "/" + object + ".png");
             let thing = new Thing(this.texture, 0, 0, object);
@@ -30,6 +31,6 @@ export class Place extends Phaser.Scene {
         }
     }
     create() {
-        this.add.image(540, 300, this.texture + "1");
+        this.background = this.add.image(540, 300, this.texture + "1");
     }
 }

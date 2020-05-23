@@ -63,8 +63,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 		}
 	}
 
-	enterPlace(scene, place){	//enter a certain (var) place
-
+	enterPlace(place){	//enter a certain (var) place
+		place.wasEntered = true;
 	}
 
 	leavePlace(){	//return to map
