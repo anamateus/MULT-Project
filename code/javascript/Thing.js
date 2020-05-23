@@ -7,6 +7,11 @@ export class Thing extends Phaser.GameObjects.Sprite {
         this.wasSelected = false;
     }
 
+    setPos(x,y) {
+        this.x = x;
+        this.y = y;
+    }
+
     getPos(){
         return [this.x, this.y];
     }
