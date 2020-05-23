@@ -193,7 +193,7 @@ class PhoneScreen extends Phaser.Scene {
         backButton.setVisible(false);
         backButton.setInteractive(false);
         
-        var timer = new Timing({}, this.level, this);
+        var timer = new Timing({}, 0, this);
         let content = [];
 
         let titleConfigs = {
@@ -204,9 +204,8 @@ class PhoneScreen extends Phaser.Scene {
         let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\n", titleConfigs);
         //let aux = timer.txt(0);
         //let counter = this.add.aux();
-        
+
         content.push(title);
-        //content.push(counter);
 
         /* Tasks generation */
         let numTasks = 3 + 2 * this.level;
@@ -283,6 +282,7 @@ class MapScreen extends Phaser.Scene {
         this.load.image("street2", "../../resources/scenarios/map/street-2.png");
         this.load.image("street3", "../../resources/scenarios/map/street-3.png");
         this.load.spritesheet(this.character + "Sprite", "../../resources/characters/" + this.character + "Sprite.png", {frameWidth: 322, frameHeight: 322});
+        this.load.image("backButton", "../../resources/others/back-button.png");
         this.load.json("info", "../../resources/info.json");
     }
 
@@ -320,9 +320,14 @@ class MapScreen extends Phaser.Scene {
         });
 
         this.player = new Player(this, 60,490, this.character, 0, 1);
+        this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
+
+        this.backButton.on('pointerdown', function (event) {
+            this.scene.start("howToPlay");    //WORK OUT WHERE TO GO AND HOW TO SAVE DATA
+        }, this);
     }
 
     updateScreen() {
@@ -380,6 +385,7 @@ class HowToPlayScreen extends Phaser.Scene {
     }
 
     instructions(){
+        let content = [];
         let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
