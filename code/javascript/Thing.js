@@ -5,7 +5,6 @@ export class Thing extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture);
         this.setInteractive({useHandCursor: true, pixelPerfect: true});
         this.wasSelected = false;
-        //scene.add.existing(this);
     }
 
     getPos(){
@@ -14,7 +13,7 @@ export class Thing extends Phaser.GameObjects.Sprite {
 
     animation(){
         this.on('pointerdown', function (event) {
-            this.setVisible(false);                          // change
+            this.setVisible(false);
         }, this);
     }
 }

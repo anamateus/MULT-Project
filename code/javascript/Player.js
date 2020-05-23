@@ -1,12 +1,13 @@
 "use strict";
 
+
 export class Player extends Phaser.Physics.Arcade.Sprite{
-	constructor(scene, x, y, texture, points, nLevel){
+	constructor(scene, x, y, texture, points, level){
 		super(scene, x, y, texture);
 		this.texture = texture;
 		this.points = points;
-		this.nLevel = nLevel;
-		if (this.nLevel <= 7){
+		this.level = level;
+		if (this.level <= 7){
 			this.endingFlag = 0;
 		} else {
 			this.endingFlag = 1;
@@ -55,8 +56,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 	}
 
 	setNLevel(){
-		this.nLevel++;
-		if (this.nLevel <= 7){
+		this.level++;
+		if (this.level <= 7){
 			this.endingFlag = 0;
 		} else {
 			this.endingFlag = 1;

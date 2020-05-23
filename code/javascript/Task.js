@@ -1,11 +1,9 @@
 "use strict";
 
 export class Task {
-    constructor(place, ...args) {
+    constructor(place, thing) {
         this.place = place;
-        if (args.length === 1) {
-            this.thing = args;
-        }
+        this.thing = thing;
         this.status = 0;
     }
 

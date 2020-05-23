@@ -183,6 +183,7 @@ class PhoneScreen extends Phaser.Scene {
         let places = this.json["places"];
         for (let place of Object.keys(places)) {
             let p = new Place(place, -1, -1, this.json);
+            this.game.scene.add(place, p);
             this.placesList.push(p);
         }
     }
@@ -205,6 +206,7 @@ class PhoneScreen extends Phaser.Scene {
         let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\n", titleConfigs);
 
         content.push(title);
+
 
         /* Tasks generation */
         let numTasks = 3 + 2 * this.level;
@@ -345,7 +347,6 @@ class MapScreen extends Phaser.Scene {
 
     placeEntrance() { //FIXME
         this.json = this.cache.json.get("info");
-        let places = this.json["places"];
         for (let place of this.placesList) {
             let screen = this.json["places"][place.texture]["screen"];
             let coords = this.json["places"][place.texture]["coords"];
@@ -354,13 +355,7 @@ class MapScreen extends Phaser.Scene {
             if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2)) {
                 let p = this.json["places"][place.texture];
                 this.player.enterPlace(p);
-
-                //this.scene.start(p);
-                console.log(place.jsonDoc["places"]);
-                console.log(place.texture);
-                console.log(place.jsonDoc["places"][place.texture]["textures"]);
-                console.log(place.backgrounds);
-                this.scene.start("pastryshop");
+                this.scene.start(place.texture);
             }
         }
     }
@@ -465,7 +460,6 @@ class Main extends Phaser.Game {
         this.scene.add("chooseCharacter", ChooseCharacterScreen);
         this.scene.add("phoneScreen", PhoneScreen);
         this.scene.add("map", MapScreen);
-        this.scene.add("pastryshop", Place);
         this.scene.add("howToPlay", HowToPlayScreen);
         this.scene.add("credits", CreditsScreen);
         // add the rest
