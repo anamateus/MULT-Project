@@ -1,10 +1,7 @@
-/*
-	DETAILS TO SETTLE
-        -> make switch to change time between different levels
-        -> check the position of the time in the canvas
-*/
-
 "use strict";
+
+var timer;
+var text;
 
 export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
     
@@ -15,58 +12,41 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
         this.level = level;
         this.scene = scene;
         this.count = 0;
+	this.create();
+    }
+	
+    create(){
 
-
-	let txt = {
+        text = {
             font: "16pt",
             fontFamily: "Comic Sans",
             color: "black"
         };	    
-	    
-        if (level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
-
-            this.initialTime = 30;  //30 seconds to see tasks
-            this.add.text(32, 32, "Time left: " + this.initialTime + " seconds", txt); //example beginning at 8am
-            let timer = this.time.addEvent({
-                delay: 1,    //every 1 ms calls the func tasksTimer()
-                callback: tasksTimer,
-                callbackScope: this,
-                loop:true
-            });
+        if (this.level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
+            console.log("Starting timer....");
+            this.scene.add.text(32, 32);
+            timer = this.scene.time.delayedCall(2000, this.endLevel, [], this.scene);
 
         } else {
 
-            if (level === 1){    //depending on the level the timer will beggin in a different time
-                this.initialTime = 300; //five minutes in seconds
-            }
             /*
                 other levels
             */
-            
-            this.scene.add.text(32, 32, "Time: 8:00h", txt); //example beginning at 8am
-            /*
-            let timer = this.scene.time.addEvent({
-                delay: 1,    //every 1 ms calls the func onEvent()
-                callback: onEvent,
-                callbackScope: this,
-                loop:true
-            }, this);
-             */
         }
     }
 
     /*
         EXAMPLE: first level will be 5 minutes long and will simulate 12 hours of the day -> 25seg/hour
-    */
+    *//*
     formatTime(){
         this.count++;
         if (this.level === 1){
             var h = Math.floor(count/25000); 
             var minutes = Math.floor(count%25000);
         }
-        /*
-            other levels
-        */
+        
+        //    other levels
+        
         return (h+8) + ":" + minutes;	//example of day starting at 8 am
     }
 
@@ -77,26 +57,34 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
         }
 	else return this.endLevel();
         
-    }
+    }*/
 
     endLevel(){
-        //when the time runs out end game
+       console.log("Time's up!");
     }
 	
-    tasksTimer(){
-    	this.initialTime -= 0.001;
-	if (this.initialTime%1 === 0){
-		this.text.setText("Time left: " + this.initialTime + " seconds");
-	} else if (this.initialTime === 0){
-		/*avançar para o jogo*/
-	}
+    update(){
+        /*this.initialTime -= 0.001;
+        if (this.initialTime%1 === 0){
+        this.scene.add.setText("Time left: " + (this.timer).getProgress().toString().substr(0, 4) + " seconds");*/
+        let t = timer;//.getProgress();
+        console.log(t);
+        this.scene.settext("Time Left: " + t.toString().substr(0, 4) + "seconds");
+        console.log("Its updating!!!");
+        if (t === 0){
+            this.endLevel();
+        }
+        /*} else if (this.initialTime === 0){
+            //avançar para o jogo
+        }*/
     }
 	
+	/*
     checkOpeningHours(opens, closes){
     	var aux = this.initialTime;
     	if (Math.floor(aux/25000) <= opens || Math.floor(aux/25000) >= closes){
             return false;    //the store is closed
         }
         else return true;
-    }
+    }*/
 }
