@@ -16,20 +16,20 @@ export class Place extends Phaser.Scene {
     preload() {
         // load place screens
         let backgrounds = this.json["places"][this.texture]["textures"];
-        for (let background of backgrounds) {
-            this.load.image(this.texture, "../../resources/scenarios/" + background + ".png");
+        for (let i = 0; i < backgrounds.length; i++) {
+            this.load.image(this.texture + i , "../../resources/scenarios/" + backgrounds[i] + ".png");
         }
 
         // load place objects
         let objects = this.json["places"][this.texture]["objects"];
         for (let object of objects) {
             this.load.image(object, "../../resources/objects/" + this.texture + "/" + object + ".png");
-            let thing = new Thing(this.texture, 0, 0, object); //FIXME!!!!!!!
+            let thing = new Thing(this.texture, 0, 0, object);
             objects.push(thing);
             this.addExisting(thing);
         }
     }
     create() {
-
+        this.add.image(540, 300, this.texture + "1");
     }
 }

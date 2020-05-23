@@ -282,6 +282,7 @@ class MapScreen extends Phaser.Scene {
         this.load.image("street2", "../../resources/scenarios/map/street-2.png");
         this.load.image("street3", "../../resources/scenarios/map/street-3.png");
         this.load.spritesheet(this.character + "Sprite", "../../resources/characters/" + this.character + "Sprite.png", {frameWidth: 322, frameHeight: 322});
+        this.load.json("info", "../../resources/info.json");
     }
 
     create() {
@@ -353,9 +354,24 @@ class MapScreen extends Phaser.Scene {
         }
     }
 
+    placeEntrance() { //FIXME
+        this.json = this.cache.json.get("info");
+        let places = this.json["places"];
+        for (let place of Object.keys(places)) {
+            let screen = this.json["places"][place]["screen"];
+            let coords = this.json["places"][place]["coords"];
+            let x1 = coords[0];
+            let x2 = coords[1];
+            if (this.currentStreet === screen && this.player.keys.up.isDown && x1 < this.player.x < x2) {
+                this.scene.start(place);
+            }
+        }
+    }
+
     update(time, delta) {
         this.player.update(time);
         this.updateScreen();
+        this.placeEntrance();
     }
 }
 
