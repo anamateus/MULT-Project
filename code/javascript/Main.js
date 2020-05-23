@@ -195,7 +195,6 @@ class PhoneScreen extends Phaser.Scene {
         backButton.setInteractive(false);
         
         let timer = new Timing({}, 0, this);
-        timer.update();
         let content = [];
 
         let titleConfigs = {
