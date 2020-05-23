@@ -194,6 +194,7 @@ class PhoneScreen extends Phaser.Scene {
         backButton.setInteractive(false);
         
         let timer = new Timing({}, 0, this);
+        timer.update();
         let content = [];
 
         let titleConfigs = {
@@ -324,7 +325,7 @@ class MapScreen extends Phaser.Scene {
         this.physics.world.enable(this.player);
 
         this.helpButton.on('pointerdown', function (event) {
-            this.scene.start("helpScreen");    //WORK OUT WHERE TO GO AND HOW TO SAVE DATA
+            this.scene.start("howToPlay");    //WORK OUT WHERE TO GO AND HOW TO SAVE DATA
         }, this);
     }
 
@@ -383,18 +384,17 @@ class HowToPlayScreen extends Phaser.Scene {
     }
 
     instructions(){
-        let content = [];
         let titleConfigs = {
             font: "18pt Comic Sans",
             color: "black"
         };
-        let title = this.add.text(config.width / 2 - 50, 80, "How to play\n", titleConfigs);
+        this.add.text(config.width / 2 - 50, 80, "How to play\n", titleConfigs);
         
         let textConfigs = {
             font: "12pt Comic Sans",
             color: "black"
         };
-        let text = this.add.text(config.width / 2 - 150, 140,
+        this.add.text(config.width / 2 - 150, 140,
             "-Press the <- and -> arrows in your\n" +
             "keyboard to walk in the map.\n\n" +
             "-Use the up arrow to enter a place.\n\n", textConfigs);

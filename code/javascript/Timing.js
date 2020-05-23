@@ -1,7 +1,6 @@
 "use strict";
 
-var timer;
-var text;
+
 
 export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the phaser class that is extended?
     
@@ -16,8 +15,7 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
     }
 	
     create(){
-
-        text = {
+        this.textConfigs = {
             font: "16pt",
             fontFamily: "Comic Sans",
             color: "black"
@@ -25,7 +23,7 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
         if (this.level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
             console.log("Starting timer....");
             this.scene.add.text(32, 32);
-            timer = this.scene.time.delayedCall(2000, this.endLevel, [], this.scene);
+            this.timer = this.scene.time.delayedCall(2000, this.endLevel, [], this.scene);
 
         } else {
 
@@ -67,9 +65,9 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
         /*this.initialTime -= 0.001;
         if (this.initialTime%1 === 0){
         this.scene.add.setText("Time left: " + (this.timer).getProgress().toString().substr(0, 4) + " seconds");*/
-        let t = timer;//.getProgress();
+        let t = this.timer;//.getProgress();
         console.log(t);
-        this.scene.settext("Time Left: " + t.toString().substr(0, 4) + "seconds");
+        this.scene.add.text(50,20,"Time Left: " + t.toString().substr(0, 4) + "seconds", this.textConfigs);
         console.log("Its updating!!!");
         if (t === 0){
             this.endLevel();
@@ -87,4 +85,5 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
         }
         else return true;
     }*/
+
 }
