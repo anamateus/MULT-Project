@@ -274,7 +274,6 @@ class MapScreen extends Phaser.Scene {
     init(data) {
         this.character = data.character;
         this.placesList = data.placesList;
-        console.log(this.placesList);
     }
 
     preload() {
@@ -290,39 +289,43 @@ class MapScreen extends Phaser.Scene {
     create() {
         this.anims.create({
             key: 'stand',
-            frames: [{key:'studentSprite', frame:0}],
+            frames: [{key:this.character + 'Sprite', frame:0}],
             frameRate: 5
         })
 
         this.anims.create({
             key:'rightstop',
-            frames:[{key:'studentSprite',frame:4}],
+            frames:[{key:this.character + 'Sprite',frame:4}],
             frameRate:5
         });
 
         this.anims.create({
             key:'rightwalk',
-            frames:this.anims.generateFrameNumbers('studentSprite',{start:5,end:6, zeroPad:4}),
+            frames:this.anims.generateFrameNumbers(this.character + 'Sprite',{start:5,end:6, zeroPad:4}),
             frameRate:5,
             repeat:-1
         });
 
         this.anims.create({
             key:'leftstop',
-            frames:[{key:'studentSprite',frame:1}],
+            frames:[{key:this.character + 'Sprite',frame:1}],
             frameRate:5
         });
 
         this.anims.create({
             key:'leftwalk',
-            frames: this.anims.generateFrameNumbers('studentSprite',{start:2, end:3, zeroPad:4}),
+            frames: this.anims.generateFrameNumbers(this.character + 'Sprite',{start:2, end:3, zeroPad:4}),
             frameRate:5,
             repeat:-1
         });
 
         this.player = new Player(this, 60,490, this.character, 0, 1);
+        let playerInfo = {"texture": this.player.texture, "points": this.player.points, "level": this.player.level};
+        localStorage.setItem("player", JSON.stringify(playerInfo));
+
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
         this.helpButton = this.add.image( config.width -50,  50, "helpButton").setScale(0.30).setInteractive({useHandCursor: true, pixelPerfect: true});
+
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
 
@@ -353,10 +356,9 @@ class MapScreen extends Phaser.Scene {
             let x1 = coords[0];
             let x2 = coords[1];
             if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2)) {
-                let p = this.json["places"][place.texture];
-                this.player.enterPlace(p);
+                this.player.enterPlace(place);
                 this.scene.start(place.texture);
-
+                place.loadPlayer();
             }
         }
     }

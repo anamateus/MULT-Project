@@ -1,6 +1,5 @@
 "use strict";
 
-
 export class Player extends Phaser.Physics.Arcade.Sprite{
 	constructor(scene, x, y, texture, points, level){
 		super(scene, x, y, texture);
@@ -101,6 +100,5 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 			this.anims.play('stand',true);
 		    }
 		}
-
 	}
 }
