@@ -17,12 +17,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 		this.keys = this.scene.input.keyboard.createCursorKeys();
 	}
 
-	create(){
-		//this.add.sprite(100, 100, this.texture, 0); //0 to start with the first frame
-		
-		//this.add.sprite(100, 100, 'sprite').play('front'); //check 100 100 position
-	}
-
 	addTask(task){
 		this.tasks.push(task);
 	}
@@ -69,7 +63,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 		}
 	}
 
-	enterPlace(place){	//enter a certain (var) place
+	enterPlace(scene, place){	//enter a certain (var) place
 
 	}
 
@@ -107,24 +101,5 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 		    }
 		}
 
-	}
-}
-
-class Student extends Player{
-	constructor(texture, points, nLevel, x, y, scene){
-		super(texture, points, nLevel, x, y, scene);
-	}
-}
-
-class Father extends Player{
-	constructor(texture, points, nLevel, x, y, scene){
-		super(texture, points, nLevel, x, y, scene);
-	}
-	
-}
-
-class Turist extends Player{
-	constructor(texture, points, nLevel, x, y, scene){
-		super(texture, points, nLevel, x, y, scene);
 	}
 }
