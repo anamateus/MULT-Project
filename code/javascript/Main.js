@@ -193,7 +193,7 @@ class PhoneScreen extends Phaser.Scene {
         backButton.setVisible(false);
         backButton.setInteractive(false);
         
-        var timer = new Timing({}, this.level, this);
+        var timer = new Timing({}, 0, this);
         let content = [];
 
         let titleConfigs = {
@@ -202,11 +202,8 @@ class PhoneScreen extends Phaser.Scene {
             color: "black"
         };
         let title = this.add.text(config.width / 2 - 150, 80, "Your Tasks\n", titleConfigs);
-        //let aux = timer.txt(0);
-        //let counter = this.add.aux();
         
         content.push(title);
-        //content.push(counter);
 
         /* Tasks generation */
         let numTasks = 3 + 2 * this.level;
