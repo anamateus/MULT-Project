@@ -193,7 +193,7 @@ class PhoneScreen extends Phaser.Scene {
         backButton.setVisible(false);
         backButton.setInteractive(false);
         
-        var timer = new Timing({}, 0, this);
+        let timer = new Timing({}, 0, this);
         let content = [];
 
         let titleConfigs = {
@@ -202,8 +202,6 @@ class PhoneScreen extends Phaser.Scene {
             color: "black"
         };
         let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\n", titleConfigs);
-        //let aux = timer.txt(0);
-        //let counter = this.add.aux();
 
         content.push(title);
 
@@ -282,7 +280,7 @@ class MapScreen extends Phaser.Scene {
         this.load.image("street2", "../../resources/scenarios/map/street-2.png");
         this.load.image("street3", "../../resources/scenarios/map/street-3.png");
         this.load.spritesheet(this.character + "Sprite", "../../resources/characters/" + this.character + "Sprite.png", {frameWidth: 322, frameHeight: 322});
-        this.load.image("backButton", "../../resources/others/back-button.png");
+        this.load.image("helpButton", "../../resources/others/help-button.png");
         this.load.json("info", "../../resources/info.json");
     }
 
@@ -325,9 +323,12 @@ class MapScreen extends Phaser.Scene {
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
 
+        /*
         this.backButton.on('pointerdown', function (event) {
             this.scene.start("howToPlay");    //WORK OUT WHERE TO GO AND HOW TO SAVE DATA
         }, this);
+
+         */
     }
 
     updateScreen() {
