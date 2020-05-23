@@ -8,20 +8,21 @@ export class Place extends Phaser.Scene {
         this.texture = texture;
         this.openTime = openTime;
         this.closeTime = closeTime;
-        this.jsonDoc = json;
+        this.json = json;
         this.objects = [];
         this.wasEntered = false;
+        this.currentScreen = 1;
     }
 
     preload() {
         // load place screens
-        this.backgrounds = this.jsonDoc["places"][this.texture]["textures"];
+        this.backgrounds = this.json["places"][this.texture]["textures"];
         for (let i = 0; i < this.backgrounds.length; i++) {
             this.load.image(this.texture + (i+1) , "../../resources/scenarios/"+ this.texture + "/" + this.backgrounds[i] + ".png");
         }
 
         // load place objects
-        let objects = this.jsonDoc["places"][this.texture]["objects"];
+        let objects = this.json["places"][this.texture]["objects"];
         for (let object of objects) {
             this.load.image(object, "../../resources/objects/" + this.texture + "/" + object + ".png");
             this.objects.push(object);
@@ -29,18 +30,39 @@ export class Place extends Phaser.Scene {
     }
 
     create() {
-        this.background = this.add.image(540, 300, this.texture + "1");
+        this.background = this.add.image(540, 300, this.texture + this.currentScreen);
         for (let object of this.objects) {
-            let coords = this.placeObjects();
-            let thing = new Thing(this, coords[0], coords[1], object);
-            this.add.existing(thing.setScale(0.25));
+            let thing = new Thing(this, -1, -1, object).setScale(0.25, 0.25);
+            let coords = this.placeObject(thing);
+            thing.setPos(coords[0], coords[1]);
+            this.add.existing(thing);
         }
     }
 
-    placeObjects() { // update
-        let x = Math.random() * this.game.config.width;
-        let y = Math.random() * this.game.config.height;
+    placeObject(object) { // update
+        let shelves = this.json["places"][this.texture]["shelves"];
+        let objectWidth = object.width * 0.25;
+        let objectHeight = object.height * 0.25;
 
+        this.update();
+        let xMin = objectWidth;
+        let xMax = this.game.config.width - objectWidth;
+
+        if (this.currentScreen === 1) {
+            xMin += 450;
+        } else if (this.currentScreen === 3) {
+            xMax -= 450;
+        }
+
+        let x = Math.round(xMin + Math.random() * (xMax - xMin));
+        let y = shelves[Math.round(Math.random() * shelves.length)] - objectHeight/10;
         return [x,y];
     }
+
+
+    update(time, delta) {
+        console.log([this.game.input.mousePointer.x,this.game.input.mousePointer.y]);
+    }
+
+
 }

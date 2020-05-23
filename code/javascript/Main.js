@@ -345,7 +345,7 @@ class MapScreen extends Phaser.Scene {
         }
     }
 
-    placeEntrance() { //FIXME
+    placeEntrance() {
         this.json = this.cache.json.get("info");
         for (let place of this.placesList) {
             let screen = this.json["places"][place.texture]["screen"];
@@ -356,6 +356,7 @@ class MapScreen extends Phaser.Scene {
                 let p = this.json["places"][place.texture];
                 this.player.enterPlace(p);
                 this.scene.start(place.texture);
+
             }
         }
     }
