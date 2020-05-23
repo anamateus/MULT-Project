@@ -1,19 +1,8 @@
-/*
-	DETAILS TO SETTLE
-		-> if when moving left and right it decresases/increases by 10 or not
-		-> sprite velocity (needs to be faster or not)
-		-> starting point
-		-> first scene with sprite in constructor
-*/
-
 "use strict";
-
-//var keyLeft = scene.input.keyboard.addKey("LEFT");
-//var keyRight = scene.input.keyboard.addKey("RIGHT");
 
 export class Player extends Phaser.Physics.Arcade.Sprite{
 	constructor(scene, x, y, texture, points, nLevel){
-		super(scene, x, y, texture) //scene has to be Phaser.Scene; [frame] paramater??
+		super(scene, x, y, texture);
 		this.texture = texture;
 		this.points = points;
 		this.nLevel = nLevel;
@@ -25,53 +14,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 		this.x = x;
 		this.y = y;
 		this.tasks = [];
-	}
-	
-	preload(texture){
-		this.load.spritesheet("sprite", "../resources/characters/" + texture + "Sprite.png", {
-			frameWidth: 241,	//trying to make smaller than before
-			frameHeight: 241,	//trying to make smaller than before
-			endFrame: 6, //not sure if sprite begins with index 0, if not then change to 7
-		});
+		this.keys = this.scene.input.keyboard.createCursorKeys();
 	}
 
 	create(){
-		this.add.sprite(100, 100, this.texture, 0); //0 to start with the first frame
-
-		//definition of each position of the sprite
-		this.anims.create({
-		    key: 'stand', 
-		    frames: [{key:'studentSprite', frame:0}],
-		    frameRate: 5
-		})
-
-		this.anims.create({
-		    key:'rightstop',
-		    frames:[{key:'studentSprite',frame:4}],
-		    frameRate:5
-		});
-
-		this.anims.create({
-		    key:'rightwalk',
-		    frames:this.anims.generateFrameNumbers('studentSprite',{start:5,end:6, zeroPad:4}),
-		    frameRate:5,
-		    repeat:-1
-		});
-
-		this.anims.create({
-		    key:'leftstop',
-		    frames:[{key:'studentSprite',frame:1}],
-		    frameRate:5
-		});
-
-		this.anims.create({
-		    key:'leftwalk',
-		    frames:this.anims.generateFrameNumbers('studentSprite',{start:2, end:3, zeroPad:4}),
-		    frameRate:5,
-		    repeat:-1
-		});
+		//this.add.sprite(100, 100, this.texture, 0); //0 to start with the first frame
 		
-		this.add.sprite(100, 100, 'sprite').play('front'); //check 100 100 position
+		//this.add.sprite(100, 100, 'sprite').play('front'); //check 100 100 position
 	}
 
 	addTask(task){
@@ -132,21 +81,20 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 
 	}
 	
-	update(){
+	update(time){
 		/*Check movement depending on the button being pressed.*/
-		if(cursor.left.isDown){
-
-		    this.setVelocityX(-100);
+		if(this.keys.left.isDown){
+		    this.setVelocityX(-200);
 		    this.anims.play('leftwalk',true);
 		    this.direction='left';
 
-		}else if(cursor.right.isDown){
-
-		    this.setVelocityX(100);
+		} else if(this.keys.right.isDown){
+		    this.setVelocityX(200);
 		    this.anims.play('rightwalk',true);
 		    this.direction='right';
 
-		} else {
+		}
+		else {
 		    if (this.direction === 'right'){
 			this.setVelocityX(0);
 			this.anims.play('rightstop',true);
@@ -158,6 +106,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 			this.anims.play('stand',true);
 		    }
 		}
+
 	}
 }
 

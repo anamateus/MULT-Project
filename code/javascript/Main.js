@@ -8,7 +8,11 @@ let config = {
     type: Phaser.AUTO,
     width: 1080,
     height: 600,
-    autoCenter: true
+    autoCenter: true,
+    physics: {
+        default: 'arcade',
+        debug: true
+    }
 };
 
 class MainMenu extends Phaser.Scene {
@@ -262,6 +266,7 @@ class PhoneScreen extends Phaser.Scene {
 class MapScreen extends Phaser.Scene {
     constructor() {
         super({key: "map"});
+        this.currentStreet = 1;
     }
 
     init(data) {
@@ -273,14 +278,68 @@ class MapScreen extends Phaser.Scene {
         this.load.image("street1", "../../resources/scenarios/map/street-1.png");
         this.load.image("street2", "../../resources/scenarios/map/street-2.png");
         this.load.image("street3", "../../resources/scenarios/map/street-3.png");
-        this.load.image(this.character + "Sprite", "../../resources/characters/" + this.character + "Sprite.png")
+        this.load.spritesheet(this.character + "Sprite", "../../resources/characters/" + this.character + "Sprite.png", {frameWidth: 322, frameHeight: 322});
     }
+
     create() {
-        let player = new Player(this, 50,500, this.character, 0, 1);
-        this.street = this.add.image(config.width / 2, config.height / 2, "street1");
-        this.add.existing(player.setScale(0.25,0.25));
+        this.anims.create({
+            key: 'stand',
+            frames: [{key:'studentSprite', frame:0}],
+            frameRate: 5
+        })
+
+        this.anims.create({
+            key:'rightstop',
+            frames:[{key:'studentSprite',frame:4}],
+            frameRate:5
+        });
+
+        this.anims.create({
+            key:'rightwalk',
+            frames:this.anims.generateFrameNumbers('studentSprite',{start:5,end:6, zeroPad:4}),
+            frameRate:5,
+            repeat:-1
+        });
+
+        this.anims.create({
+            key:'leftstop',
+            frames:[{key:'studentSprite',frame:1}],
+            frameRate:5
+        });
+
+        this.anims.create({
+            key:'leftwalk',
+            frames: this.anims.generateFrameNumbers('studentSprite',{start:2, end:3, zeroPad:4}),
+            frameRate:5,
+            repeat:-1
+        });
+
+        this.player = new Player(this, 60,490, this.character, 0, 1);
+        this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
+        this.add.existing(this.player.setScale(0.75,0.75));
+        this.physics.world.enable(this.player);
+    }
+
+    updateScreen() {
+        if ((this.player.x < 35 && this.player.direction === 'left' && this.currentStreet === 1 )|| (this.player.x > 1045 && this.player.direction === 'right' && this.currentStreet === 3)) {
+            this.player.setVelocityX(0);
+        } else if(this.player.x >= 1060 && 1 <= this.currentStreet < 3){
+            this.currentStreet++;
+            this.background.setTexture("street" + this.currentStreet);
+            this.player.x = 20;
+        } else if (this.player.x <= 20 && 1 < this.currentStreet <= 3){
+            this.currentStreet--;
+            this.background.setTexture("street" + this.currentStreet);
+            this.player.x = 1060;
+        }
+    }
+
+    update(time, delta) {
+        this.player.update(time);
+        this.updateScreen();
     }
 }
+
 
 class HowToPlayScreen extends Phaser.Scene {
     constructor() {

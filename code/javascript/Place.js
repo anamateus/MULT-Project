@@ -29,4 +29,7 @@ export class Place extends Phaser.Scene {
             this.addExisting(thing);
         }
     }
+    create() {
+
+    }
 }
