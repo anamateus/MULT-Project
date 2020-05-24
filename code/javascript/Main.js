@@ -169,7 +169,9 @@ class PhoneScreen extends Phaser.Scene {
             "-You are going to have a given amount of\n" +
             "time to complete all of the tasks.\n\n" +
             "-The tasks' list is going to be shown to\n" +
-            "you only at the start of each level.\n\n"
+            "you only at the start of each level.\n\n" + 
+            "- Each level will be a differnt day\n\n" + 
+            "that goes from 8am to 8pm\n\n"
             , textConfigs);
 
         content.push(title);
@@ -194,7 +196,7 @@ class PhoneScreen extends Phaser.Scene {
         backButton.setVisible(false);
         backButton.setInteractive(false);
         
-        let timer = new Timing({}, 0, this);
+        let timer = new Timing({}, 0, this, 0);
         let content = [];
 
         let titleConfigs = {
