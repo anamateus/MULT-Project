@@ -197,7 +197,7 @@ class PhoneScreen extends Phaser.Scene {
         backButton.setVisible(false);
         backButton.setInteractive(false);
         
-        let timer = new Timing({}, 0, this, 0);
+        this.timer = new Timing({}, 0, this, 0);
         let content = [];
 
         let titleConfigs = {
@@ -261,6 +261,7 @@ class PhoneScreen extends Phaser.Scene {
                 content.map(elem => elem.setVisible(false));
                 content = this.createTasksList(this.backButton);
             } else if (title.text === "Your Tasks\n") {              // go to Map to start each level
+                this.timer.endTimer();
                 this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level});
             }
         }, this);
