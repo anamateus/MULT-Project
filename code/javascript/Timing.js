@@ -19,13 +19,14 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
             color: "black"
         };	    
         if (this.level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
-            console.log("Starting timer....");
+            this.countdown = 5;
+	    console.log("Starting timer....");
             this.txt = this.scene.add.text(50,20,"Time Left: ", this.textConfigs);
             this.timer = this.scene.time.addEvent({
                 delay: 1000,
                 callback: this.update,
                 callbackScope: this,
-                repeat: 5
+                repeat: this.countdown
             })
         } else {
             /*
@@ -54,9 +55,9 @@ export class Timing extends Phaser.Time.TimerEvent{    //not sure this is the ph
     }
 	
     update(){
-        if (this.count <= 5){
+        if (this.count <= this.countdown){
             //console.log(this.timer.getElapsed())
-            this.txt.setText("Time Left: " + this.count*1 +  " seconds");
+            this.txt.setText("Time Left: " + (this.countdown-this.count) +  " seconds");
             this.count++;
             console.log("Its updating!!!");
         } else {
