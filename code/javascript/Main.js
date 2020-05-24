@@ -284,13 +284,10 @@ class MapScreen extends Phaser.Scene {
     }
 
     init(data) {
-        if (data.length === 1) {
-            this.countdown = data.time;
-        } else {
-            this.character = data.character;
-            this.placesList = data.placesList;
-            this.level = data.level;
-        }
+        this.character = data.character;
+        this.placesList = data.placesList;
+        this.level = data.level;
+        this.countdown = data.time;
     }
 
     preload() {
@@ -338,13 +335,22 @@ class MapScreen extends Phaser.Scene {
             repeat:-1
         });
 
+        /* Settings for level 1 */
         if (this.level === 1 && (this.player === undefined)) {
             this.player = new Player(this, 60, 490, this.character, 0, 1);
             let playerInfo = {"texture": this.player.texture, "points": this.player.points, "level": this.player.level};
             localStorage.setItem("player", JSON.stringify(playerInfo));
+
+            this.timer = new Timing({}, this.level, this, 0);
+            let timeInfo = {"countdown": this.timer.countdown};
+            localStorage.setItem("time", JSON.stringify(timeInfo));
+        /* Settings for other levels */
         } else {
             this.playerInfo = JSON.parse(localStorage.getItem("player"));
             this.player = new Player(this, 60, 490, this.character, this.playerInfo["points"], this.playerInfo["level"]);
+
+            this.timeInfo = JSON.parse(localStorage.getItem("time"));
+            this.timer = new Timing({}, this.playerInfo["level"], this, this.timeInfo["countdown"]);
         }
 
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
@@ -352,8 +358,6 @@ class MapScreen extends Phaser.Scene {
 
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
-        
-        this.timer = new Timing({}, this.level, this, this.countdown);
 
         /*
         this.helpButton.on('pointerdown', function (event) {
@@ -386,11 +390,12 @@ class MapScreen extends Phaser.Scene {
             this.player.keys = this.input.keyboard.createCursorKeys(); // resetting keys
             if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2) && place.wasEntered === false) {
                 console.log("entering place");
-                let aux = this.timer.count;
+                //let aux = this.timer.count;
                 this.timer.endTimer();
+                localStorage.setItem("time", JSON.stringify({"countdown": this.timer.count}));
                 this.player.enterPlace(place);
                 place.loadPlayer();
-                this.scene.start(place.texture, {time: aux, level: this.level});
+                this.scene.start(place.texture);
             }
         }
     }
