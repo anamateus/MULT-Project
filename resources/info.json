@@ -1,6 +1,6 @@
 {
     "places" : {
-        "pastryshop": {
+        "pastry-shop": {
             "coords": [796, 1060],
             "screen": 1,
             "textures": ["pastryshop-inside-1", "pastryshop-inside-2", "pastryshop-inside-3"],
@@ -16,7 +16,7 @@
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
-        "laundryshop": {
+        "laundry-shop": {
             "coords": [650, 963],
             "screen": 2,
             "textures": ["laundryshop-inside-1", "laundryshop-inside-2", "laundryshop-inside-3"],
@@ -24,7 +24,7 @@
             "shelves": [460],
             "door": "door-2"
         },
-        "candyshop": {
+        "candy-shop": {
             "coords": [0, 273],
             "screen": 3,
             "textures": ["candyshop-inside-1", "candyshop-inside-2", "candyshop-inside-3"],
@@ -32,7 +32,7 @@
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
-        "bookshop": {
+        "book-shop": {
             "coords": [30, 310],
             "screen": 1,
             "textures": ["bookshop-inside-1", "bookshop-inside-2", "bookshop-inside-3"],
@@ -40,7 +40,7 @@
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
-        "clothesshop": {
+        "clothes-shop": {
             "coords": [663, 940],
             "screen": 3,
             "textures": ["clothesshop-inside-1", "clothesshop-inside-2", "clothesshop-inside-3"],
@@ -48,7 +48,7 @@
             "shelves": [338],
             "door": "door-2"
         },
-        "gardenshop": {
+        "garden-shop": {
             "coords": [310, 623],
             "screen": 3,
             "textures": ["gardenshop-inside-1", "gardenshop-inside-2", "gardenshop-inside-3"],
@@ -59,13 +59,13 @@
     },
     "characters" : {
         "father" : {
-            "places" : ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket", "laundryshop"]
+            "places" : ["book-shop", "clothes-shop", "garden-shop", "pastry-shop", "supermarket", "laundry-shop"]
         },
         "student" : {
-            "places" : ["bookshop", "clothesshop", "pastryshop", "supermarket", "laundryshop", "gardenshop"]
+            "places" : ["book-shop", "clothes-shop", "pastry-shop", "supermarket", "laundry-shop", "garden-shop"]
         },
         "tourist" : {
-            "places" : ["bookshop", "clothesshop", "candyshop", "pastryshop", "supermarket", "gardenshop"]
+            "places" : ["book-shop", "clothes-shop", "candy-shop", "pastry-shop", "supermarket", "garden-shop"]
         }
     }
 }
