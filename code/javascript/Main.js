@@ -249,9 +249,9 @@ class PhoneScreen extends Phaser.Scene {
             let ts = task.thing.replace("-", " ");
             let pl = task.place.replace("-", " ");
             if (this.level < 4) {
-                this.add.text(config.width / 2 - 160, 130 + 20 * i, "- Get " + ts + " from the " + pl, textConfigs);
+                this.add.text(config.width / 2 - 165, 130 + 20 * i, "- Get " + ts + " from the " + pl, textConfigs);
             } else {
-                this.add.text(config.width / 2 - 160, 130 + 20 * i, "- Get " + ts, textConfigs);
+                this.add.text(config.width / 2 - 165, 130 + 20 * i, "- Get " + ts, textConfigs);
             }
         }
         return content;
@@ -287,7 +287,7 @@ class PhoneScreen extends Phaser.Scene {
         }, this);
     }
     
-    update(){
+    update(time, delta){
         if (this.timer !== undefined && this.timer.count === -1){
             console.log("entrou");
             this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level, time: 0});
