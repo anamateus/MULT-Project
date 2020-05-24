@@ -331,8 +331,6 @@ class MapScreen extends Phaser.Scene {
         } else {
             this.playerInfo = JSON.parse(localStorage.getItem("player"));
             this.player = new Player(this, 60, 490, this.character, this.playerInfo["points"], this.playerInfo["level"]);
-            //this.player.points = this.playerInfo["points"];
-            //this.player.level = this.playerInfo["level"];
         }
 
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);

@@ -63,20 +63,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 		}
 	}
 
-	enterPlace(place){	//enter a certain (var) place
+	enterPlace(place){
 		place.wasEntered = true;
-		this.keys.up.enabled = false;
-		this.keys.down.enabled = true;
 	}
 
 	leavePlace(place){	//return to map
 		place.wasEntered = false;
-		//this.keys.up.enabled = true;
-		this.keys.down.enabled = false;
-	}
-
-	selectObject(Object){	//select an object
-
 	}
 	
 	update(time){
