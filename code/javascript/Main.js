@@ -287,7 +287,7 @@ class MapScreen extends Phaser.Scene {
         this.character = data.character;
         this.placesList = data.placesList;
         this.level = data.level;
-        this.countdown = data.time;
+        this.count = data.time;
     }
 
     preload() {
@@ -342,7 +342,7 @@ class MapScreen extends Phaser.Scene {
             localStorage.setItem("player", JSON.stringify(playerInfo));
 
             this.timer = new Timing({}, this.level, this, 0);
-            let timeInfo = {"countdown": this.timer.countdown};
+            let timeInfo = {"count": this.timer.count};
             localStorage.setItem("time", JSON.stringify(timeInfo));
         /* Settings for other levels */
         } else {
@@ -350,7 +350,7 @@ class MapScreen extends Phaser.Scene {
             this.player = new Player(this, 60, 490, this.character, this.playerInfo["points"], this.playerInfo["level"]);
 
             this.timeInfo = JSON.parse(localStorage.getItem("time"));
-            this.timer = new Timing({}, this.playerInfo["level"], this, this.timeInfo["countdown"]);
+            this.timer = new Timing({}, this.playerInfo["level"], this, this.timeInfo["count"]);
         }
 
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
@@ -393,7 +393,7 @@ class MapScreen extends Phaser.Scene {
                 console.log("entering place");
                 //let aux = this.timer.count;
                 this.timer.endTimer();
-                localStorage.setItem("time", JSON.stringify({"countdown": this.timer.count}));
+                localStorage.setItem("time", JSON.stringify({"count": this.timer.count}));
                 this.player.enterPlace(place);
                 place.loadPlayer();
                 this.scene.start(place.texture);

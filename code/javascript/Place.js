@@ -50,7 +50,7 @@ export class Place extends Phaser.Scene {
         let objects = this.json["places"][this.texture]["objects"];
         for (let object of objects) {
             /* Distribute objects by the screens */
-            let thing = new Thing(this, -1, -1, object).setScale(0.25, 0.25);
+            let thing = new Thing(this, -1, -1, object).setScale(0.5, 0.5);
             let coords = this.placeObject(thing);
             thing.setPos(coords[0], coords[1]);
             thing.setDepth(1);
@@ -64,8 +64,9 @@ export class Place extends Phaser.Scene {
 
         this.door = this.add.sprite(210, 298, this.json["places"][this.texture]["door"]);
         this.door.setScale(2).setDepth(2);
-        
-        //this.timer = new Timing({}, this.level, this, this.curTime);
+
+        let timeInfo = JSON.parse(localStorage.getItem("time"));
+        this.timer = new Timing({}, this.player.level, this, timeInfo["count"]);
     }
 
     loadPlayer() {
@@ -108,14 +109,13 @@ export class Place extends Phaser.Scene {
 
         this.physics.world.enable(this.player);
 
-        let timeInfo = JSON.parse(localStorage.getItem("time"));
-        this.timer = new Timing({}, this.player.level, this, timeInfo["countdown"]);
+
     }
 
     placeObject(object) {
         let shelves = this.json["places"][this.texture]["shelves"];
-        let objectWidth = object.width * 0.25;
-        let objectHeight = object.height * 0.25;
+        let objectWidth = object.width * 0.5;
+        let objectHeight = object.height * 0.5;
 
         let xMin = objectWidth;
         let xMax = this.game.config.width - objectWidth;
@@ -178,7 +178,7 @@ export class Place extends Phaser.Scene {
             //let aux = this.timer.count;
             this.timer.endTimer();
             //this.scene.start("map", {"time": aux});
-            localStorage.setItem("time", JSON.stringify({"countdown": this.timer.count}));
+            localStorage.setItem("time", JSON.stringify({"count": this.timer.count}));
             this.scene.start("map");
         }
         if ((this.player.x < 35 && this.player.direction === 'left' && this.currentScreen === 1 )|| (this.player.x > 1045 && this.player.direction === 'right' && this.currentScreen === 3)) {

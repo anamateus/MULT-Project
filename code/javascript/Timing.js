@@ -17,7 +17,7 @@ export class Timing extends Phaser.Time.TimerEvent{
         };	    
 	    
         if (this.level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
-            this.countdown = 45; //45 seconds to view the tasks list
+            this.countdown = 10; //45 seconds to view the tasks list
 	    console.log("Starting timer....");
             this.txt = this.scene.add.text(50,20,"Time Left: ", this.textConfigs);
             this.timer = this.scene.time.addEvent({
@@ -56,6 +56,7 @@ export class Timing extends Phaser.Time.TimerEvent{
     updateTasks(){
         if (this.count <= this.countdown){
             this.txt.setText("Time Left: " + (this.countdown-this.count) +  " seconds");
+            console.log("Time Left: " + (this.countdown-this.count) +  " seconds");
             this.count++;
         } else {
             this.endLevel();
@@ -65,6 +66,7 @@ export class Timing extends Phaser.Time.TimerEvent{
     updateLevel(){
         if (this.count <= this.countdown){
             this.txt.setText("Time: " + this.formatTime());
+            console.log("Time: " + this.formatTime());
             this.count++;
         } else {
             this.endLevel();

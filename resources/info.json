@@ -45,7 +45,7 @@
             "screen": 3,
             "textures": ["clothesshop-inside-1", "clothesshop-inside-2", "clothesshop-inside-3"],
             "objects": ["blueJeans", "greenJeans", "greenTshirt", "hanger", "redTshirt", "tracksuit", "tracksuitBlack", "universitySweater"],
-            "shelves": [340],
+            "shelves": [338],
             "door": "door-2"
         },
         "gardenshop": {
