@@ -208,7 +208,7 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-        let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\n", titleConfigs);
+        let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\nLevel " + this.level + "\n\n", titleConfigs);
 
         content.push(title);
 
@@ -243,12 +243,10 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-       
+
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
-            let ts = task.thing.replace("-", " ");
-            let pl = task.place.replace("-", " ");
-            this.add.text(config.width / 2 - 160, 130 + 20 * i, "- Get " + ts + " from the " + pl, textConfigs);
+            this.add.text(config.width / 2 - 160, 130 + 20 * i, "- Get " + task.thing + " from the " + task.place, textConfigs);
         }
         return content;
     }
@@ -276,11 +274,18 @@ class PhoneScreen extends Phaser.Scene {
             if (title.text === "Instructions\n") {
                 content.map(elem => elem.setVisible(false));
                 content = this.createTasksList(this.backButton);
-            } else if (title.text === "Your Tasks\n") {              // go to Map to start each level
+            } else if (title.text === ("Your Tasks\nLevel " + this.level + "\n\n")) {              // go to Map to start each level
                 this.timer.endTimer();
                 this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level, time: 0});
             }
         }, this);
+    }
+    
+    update(){
+        if (this.timer != undefined && this.timer.count === -1){
+            console.log("entrou");
+            this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level, time: 0});
+        }
     }
 }
 
@@ -408,6 +413,10 @@ class MapScreen extends Phaser.Scene {
         this.player.update(time);
         this.updateScreen();
         this.placeEntrance();
+        if (this.timer != undefined && this.timer.count === -1){
+            this.level++;
+            this.scene.start("phoneScreen", {phone: this.character, level: this.level});
+        }
     }
 }
 
