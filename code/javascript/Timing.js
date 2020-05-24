@@ -6,7 +6,7 @@ export class Timing extends Phaser.Time.TimerEvent{
         this.level = level;
         this.scene = scene;
         this.count = passing;   //when we change screens preserves the time left
-	this.create();
+	    this.create();
     }
 	
     create(){
@@ -27,17 +27,17 @@ export class Timing extends Phaser.Time.TimerEvent{
                 repeat: this.countdown
             })
         } else {
-		
-	    this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs);
-            if (this.level === 1 || this.level === 2){
-                this.countdown = 5*60; //5 minutes
-            } else if (this.level === 3 || this.level === 4){
-                this.countdown = 4.5*60; //4.5 minutes
-            } else if (this.level === 5 || this.level === 6){
-                this.countdown = 4*60; //4 minutes
-            } else if (this.level === 7){
-                this.countdown = 3.5*60; //3.5 minutes
-            }
+            this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs).depth = 10;
+                if (this.level === 1 || this.level === 2){
+                    this.countdown = 5*60; //5 minutes
+                } else if (this.level === 3 || this.level === 4){
+                    this.countdown = 4.5*60; //4.5 minutes
+                } else if (this.level === 5 || this.level === 6){
+                    this.countdown = 4*60; //4 minutes
+                } else if (this.level === 7){
+                    this.countdown = 3.5*60; //3.5 minutes
+                }
+
 
 	    if (this.count !== 0) {    //changing screens
                 this.formatTime()
@@ -84,7 +84,7 @@ export class Timing extends Phaser.Time.TimerEvent{
     formatTime(){    //25seg == 1 hour
         this.h = 8 + Math.floor(this.count/25000); 
         this.minutes = Math.floor(this.count%25000);
-	if (this.minutes > 59){
+	    if (this.minutes > 59){
             this.h += Math.floor(this.minutes/60);
             this.minutes = Math.floor(this.minutes%60);
         }
@@ -92,11 +92,11 @@ export class Timing extends Phaser.Time.TimerEvent{
     }
 	
     checkOpeningHours(opens, closes){
-    var aux = this.count;
-    	if (Math.floor(aux/25000) <= opens || Math.floor(aux/25000) >= closes){
-            return false;    //the store is closed
-        }
-        else return true;
+        let aux = this.count;
+            if (Math.floor(aux/25000) <= opens || Math.floor(aux/25000) >= closes){
+                return false;    //the store is closed
+            }
+            else return true;
     }
 
     endTimer(){

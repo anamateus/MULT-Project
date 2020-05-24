@@ -15,11 +15,14 @@ export class Place extends Phaser.Scene {
         this.wasEntered = false;
         this.currentScreen = 1;
     }
-    
+
+    /*
     init(data){ //auxiliary for time
         this.curTime = data.time;
         this.level = data.level;
     }
+
+     */
 
     preload() {
         // load place screens
@@ -62,7 +65,7 @@ export class Place extends Phaser.Scene {
         this.door = this.add.sprite(210, 298, this.json["places"][this.texture]["door"]);
         this.door.setScale(2).setDepth(2);
         
-        this.timer = new Timing({}, this.level, this, this.curTime);
+        //this.timer = new Timing({}, this.level, this, this.curTime);
     }
 
     loadPlayer() {
@@ -104,6 +107,9 @@ export class Place extends Phaser.Scene {
         this.player.setDepth(3);
 
         this.physics.world.enable(this.player);
+
+        let timeInfo = JSON.parse(localStorage.getItem("time"));
+        this.timer = new Timing({}, this.player.level, this, timeInfo["countdown"]);
     }
 
     placeObject(object) {
@@ -169,9 +175,11 @@ export class Place extends Phaser.Scene {
         if (20 + this.door.x - this.door.width < this.player.x && this.player.x < this.door.x + this.door.width - 20 && this.player.keys.down.isDown) {
             this.player.leavePlace(this);
             this.wasEntered = true;
-            let aux = this.timer.count;
+            //let aux = this.timer.count;
             this.timer.endTimer();
-            this.scene.start("map", {"time": aux});
+            //this.scene.start("map", {"time": aux});
+            localStorage.setItem("time", JSON.stringify({"countdown": this.timer.count}));
+            this.scene.start("map");
         }
         if ((this.player.x < 35 && this.player.direction === 'left' && this.currentScreen === 1 )|| (this.player.x > 1045 && this.player.direction === 'right' && this.currentScreen === 3)) {
             this.player.setVelocityX(0);
