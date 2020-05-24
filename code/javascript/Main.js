@@ -374,9 +374,11 @@ class MapScreen extends Phaser.Scene {
             this.player.keys = this.input.keyboard.createCursorKeys(); // resetting keys
             if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2) && place.wasEntered === false) {
                 console.log("entering place");
+                let aux = this.timer.count;
+                this.timer.endTimer();
                 this.player.enterPlace(place);
                 place.loadPlayer();
-                this.scene.start(place.texture);
+                this.scene.start(place.texture, {time: aux, level: this.level});
             }
         }
     }
