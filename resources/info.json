@@ -4,7 +4,7 @@
             "coords": [796, 1060],
             "screen": 1,
             "textures": ["pastryshop-inside-1", "pastryshop-inside-2", "pastryshop-inside-3"],
-            "objects": ["baguette", "chocolate-cake", "cinnamon-roll", "strawberry-cake"],
+            "objects": ["chocolate-cake", "cinnamon-roll", "strawberry-cake"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
