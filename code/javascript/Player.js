@@ -74,12 +74,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 	update(time){
 		/*Check movement depending on the button being pressed.*/
 		if(this.keys.left.isDown && this.scene.anims){
-		    this.setVelocityX(-200);
+		    this.setVelocityX(-500);
 		    this.anims.play('leftwalk',true);
 		    this.direction='left';
 
 		} else if(this.keys.right.isDown){
-		    this.setVelocityX(200);
+		    this.setVelocityX(500);
 		    this.anims.play('rightwalk',true);
 		    this.direction='right';
 
