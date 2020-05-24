@@ -17,8 +17,7 @@ export class Timing extends Phaser.Time.TimerEvent{
         };	    
 	    
         if (this.level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
-            this.countdown = 10; //45 seconds to view the tasks list
-	    console.log("Starting timer....");
+            this.countdown = 10; //10 seconds to view the tasks list
             this.txt = this.scene.add.text(50,20,"Time Left: ", this.textConfigs);
             this.timer = this.scene.time.addEvent({
                 delay: 1000,
@@ -29,7 +28,7 @@ export class Timing extends Phaser.Time.TimerEvent{
         } else {
             this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs);
                 if (this.level === 1 || this.level === 2){
-                    this.countdown = 5*60; //5 minutes
+                    this.countdown = 5*60; //5 minutes -> change by 0.25 for quick trial
                 } else if (this.level === 3 || this.level === 4){
                     this.countdown = 4.5*60; //4.5 minutes
                 } else if (this.level === 5 || this.level === 6){
@@ -54,8 +53,8 @@ export class Timing extends Phaser.Time.TimerEvent{
     }
 
     updateTasks(){
-        if (this.count <= this.countdown){
-            this.txt.setText("Time Left: " + (this.countdown-this.count) +  " seconds");
+	this.txt.setText("Time Left: " + (this.countdown-this.count) +  " seconds");
+        if (this.count < this.countdown){
             this.count++;
         } else {
             this.endLevel();
@@ -63,8 +62,8 @@ export class Timing extends Phaser.Time.TimerEvent{
     }
 	
     updateLevel(){
-        if (this.count <= this.countdown){
-            this.txt.setText("Time: " + this.formatTime());
+        this.txt.setText("Time: " + this.formatTime());
+        if (this.count < this.countdown){
             this.count++;
         } else {
             this.endLevel();
@@ -73,11 +72,7 @@ export class Timing extends Phaser.Time.TimerEvent{
 
     endLevel(){
         console.log("Time's up!");
-        if (this.level === 0){
-            //go to next level
-        } else {
-            //end level
-        }
+        this.count = -1;
     }
 	
     formatTime(){    //25seg == 1 hour
