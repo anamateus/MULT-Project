@@ -194,12 +194,15 @@ class PhoneScreen extends Phaser.Scene {
     createTasksList(backButton) {
         this.preloadObjects();
 
+        /* Handling back button */
         backButton.setVisible(false);
         backButton.setInteractive(false);
-        
-        this.timer = new Timing({}, 0, this, 0);
-        let content = [];
 
+        /* Timer */
+        this.timer = new Timing({}, 0, this, 0);
+
+        /* Title */
+        let content = [];
         let titleConfigs = {
             font: "16pt",
             fontFamily: "Comic Sans",
@@ -208,7 +211,6 @@ class PhoneScreen extends Phaser.Scene {
         let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\n", titleConfigs);
 
         content.push(title);
-
 
         /* Tasks generation */
         let numTasks = 3 + 2 * this.level;
@@ -222,6 +224,13 @@ class PhoneScreen extends Phaser.Scene {
 
             tasks.push(new Task(p, o));
         }
+
+        /* Save tasks in local storage */
+        let aux = [];
+        for (let object of tasks) {
+            aux.push({"place": object.place, "object": object.thing});
+        }
+        localStorage.setItem("tasks", JSON.stringify(aux));
 
         /* Listing tasks on screen */
         let textConfigs = {
@@ -275,10 +284,13 @@ class MapScreen extends Phaser.Scene {
     }
 
     init(data) {
-        this.character = data.character;
-        this.placesList = data.placesList;
-        this.level = data.level;
-        this.countdown = data.time;
+        if (data.length === 1) {
+            this.countdown = data.time;
+        } else {
+            this.character = data.character;
+            this.placesList = data.placesList;
+            this.level = data.level;
+        }
     }
 
     preload() {
