@@ -262,7 +262,7 @@ class PhoneScreen extends Phaser.Scene {
                 content = this.createTasksList(this.backButton);
             } else if (title.text === "Your Tasks\n") {              // go to Map to start each level
                 this.timer.endTimer();
-                this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level});
+                this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level, time: 0});
             }
         }, this);
     }
@@ -278,6 +278,7 @@ class MapScreen extends Phaser.Scene {
         this.character = data.character;
         this.placesList = data.placesList;
         this.level = data.level;
+        this.countdown = data.time;
     }
 
     preload() {
@@ -339,6 +340,8 @@ class MapScreen extends Phaser.Scene {
 
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
+        
+        this.timer = new Timing({}, 0, this, this.countdown);
 
         /*
         this.helpButton.on('pointerdown', function (event) {
