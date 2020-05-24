@@ -96,13 +96,17 @@ export class Timing extends Phaser.Time.TimerEvent{
         return (h+8) + ":" + minutes;	//day starting at 8 am
     }
 	
-	/*
     checkOpeningHours(opens, closes){
-    	var aux = this.initialTime;
+    var aux = this.count;
     	if (Math.floor(aux/25000) <= opens || Math.floor(aux/25000) >= closes){
             return false;    //the store is closed
         }
         else return true;
-    }*/
+    }
+
+    endTimer(){
+        this.count = this.countdown + 1;
+        console.log("Terminated");
+    }
 
 }
