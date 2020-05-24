@@ -243,10 +243,12 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-
+       
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
-            this.add.text(config.width / 2 - 160, 130 + 20 * i, "- Get " + task.thing + " from the " + task.place, textConfigs);
+            let ts = task.thing.replace("-", " ");
+            let pl = task.place.replace("-", " ");
+            this.add.text(config.width / 2 - 160, 130 + 20 * i, "- Get " + ts + " from the " + pl, textConfigs);
         }
         return content;
     }
