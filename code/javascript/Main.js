@@ -341,7 +341,7 @@ class MapScreen extends Phaser.Scene {
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
         
-        this.timer = new Timing({}, 0, this, this.countdown);
+        this.timer = new Timing({}, this.level, this, this.countdown);
 
         /*
         this.helpButton.on('pointerdown', function (event) {
