@@ -165,13 +165,14 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-        let instructions = this.add.text(config.width / 2 - 150, 140,
-            "-You are going to have a given amount of\n" +
+        let instructions = this.add.text(config.width / 2 - 155, 140,
+            "- You are going to have a given amount of\n" +
             "time to complete all of the tasks.\n\n" +
-            "-The tasks' list is going to be shown to\n" +
-            "you only at the start of each level.\n\n" + 
-            "- Each level will be a differnt day\n\n" + 
-            "that goes from 8am to 8pm\n\n"
+            "- The tasks' list is going to be shown to\n" +
+            "you only at the start of each level.\n\n" +
+            "- You can only enter each place once.\n\n" +
+            "- Each level will be a different day\n\n" +
+            "that goes from 8am to 8pm.\n\n"
             , textConfigs);
 
         content.push(title);
@@ -373,8 +374,6 @@ class MapScreen extends Phaser.Scene {
                 console.log("entering place");
                 this.player.enterPlace(place);
                 place.loadPlayer();
-                console.log(place);
-                console.log(place.texture);
                 this.scene.start(place.texture);
             }
         }
