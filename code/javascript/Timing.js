@@ -6,8 +6,7 @@ export class Timing extends Phaser.Time.TimerEvent{
         super(configs);
         this.level = level;
         this.scene = scene;
-        this.count = 0;
-	this.countdown = passing;   //when we change screens preserves the time left
+        this.count = passing;   //when we change screens preserves the time left
 	this.create();
     }
 	
@@ -29,29 +28,35 @@ export class Timing extends Phaser.Time.TimerEvent{
                 repeat: this.countdown
             })
         } else {
-            if (this.level === 1 && this.countdown === 0){
+		
+	    this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs);
+		
+            if (this.level === 1){
                 this.countdown = 5*60; //5 minutes 
 
-            } else if (this.level === 2 && this.countdown === 0){ 
+            } else if (this.level === 2){ 
                     this.countdown = 5*60; //5 minutes
         
-            } else if (this.level === 3 && this.countdown === 0){
+            } else if (this.level === 3){
                 this.countdown = 4.5*60; //4.5 minutes
 
-            } else if (this.level === 4 && this.countdown === 0){
+            } else if (this.level === 4){
                 this.countdown = 4.5*60; //4.5 minutes
 
-            } else if (this.level === 5 && this.countdown === 0){
+            } else if (this.level === 5){
                 this.countdown = 4*60; //4 minutes
 
-            } else if (this.level === 6 && this.countdown === 0){
+            } else if (this.level === 6){
                 this.countdown = 4*60; //4 minutes
 
-            } else if (this.level === 7 && this.countdown === 0){
+            } else if (this.level === 7){
                 this.countdown = 3.5*60; //3.5 minutes
             }
+		
+	    if (this.count != 0) {    //changing screens
+                this.formatTime()
+            }
 
-            this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs);
             this.timer = this.scene.time.addEvent({
                 delay: 416, //to simulate 25seg/h then every minute will be 416 ms
                 callback: this.updateLevel,
@@ -91,9 +96,13 @@ export class Timing extends Phaser.Time.TimerEvent{
     }
 	
     formatTime(){    //25seg == 1 hour
-        var h = Math.floor(this.count/25000); 
-        var minutes = Math.floor(this.count%25000);
-        return (h+8) + ":" + minutes;	//day starting at 8 am
+        this.h = 8 + Math.floor(this.count/25000); 
+        this.minutes = Math.floor(this.count%25000);
+	if (this.minutes > 59){
+            this.h += Math.floor(this.minutes/60);
+            this.minutes = Math.floor(this.minutes%60);
+        }
+        return this.h + ":" + this.minutes;	//day starting at 8 am
     }
 	
     checkOpeningHours(opens, closes){
