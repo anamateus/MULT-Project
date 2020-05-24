@@ -65,10 +65,14 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 
 	enterPlace(place){	//enter a certain (var) place
 		place.wasEntered = true;
+		this.keys.up.enabled = false;
+		this.keys.down.enabled = true;
 	}
 
-	leavePlace(){	//return to map
-
+	leavePlace(place){	//return to map
+		place.wasEntered = false;
+		//this.keys.up.enabled = true;
+		this.keys.down.enabled = false;
 	}
 
 	selectObject(Object){	//select an object
@@ -77,7 +81,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 	
 	update(time){
 		/*Check movement depending on the button being pressed.*/
-		if(this.keys.left.isDown){
+		if(this.keys.left.isDown && this.scene.anims){
 		    this.setVelocityX(-200);
 		    this.anims.play('leftwalk',true);
 		    this.direction='left';

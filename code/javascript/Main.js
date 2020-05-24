@@ -258,7 +258,7 @@ class PhoneScreen extends Phaser.Scene {
                 content.map(elem => elem.setVisible(false));
                 content = this.createTasksList(this.backButton);
             } else if (title.text === "Your Tasks\n") {              // go to Map to start each level
-                this.scene.start("map", {character: this.character, placesList: this.placesList});
+                this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level});
             }
         }, this);
     }
@@ -273,6 +273,7 @@ class MapScreen extends Phaser.Scene {
     init(data) {
         this.character = data.character;
         this.placesList = data.placesList;
+        this.level = data.level;
     }
 
     preload() {
@@ -286,6 +287,8 @@ class MapScreen extends Phaser.Scene {
     }
 
     create() {
+        console.log("created map");
+
         this.anims.create({
             key: 'stand',
             frames: [{key:this.character + 'Sprite', frame:0}],
@@ -318,9 +321,16 @@ class MapScreen extends Phaser.Scene {
             repeat:-1
         });
 
-        this.player = new Player(this, 60,490, this.character, 0, 1);
-        let playerInfo = {"texture": this.player.texture, "points": this.player.points, "level": this.player.level};
-        localStorage.setItem("player", JSON.stringify(playerInfo));
+        if (this.level === 1 && (this.player === undefined)) {
+            this.player = new Player(this, 60, 490, this.character, 0, 1);
+            let playerInfo = {"texture": this.player.texture, "points": this.player.points, "level": this.player.level};
+            localStorage.setItem("player", JSON.stringify(playerInfo));
+        } else {
+            this.playerInfo = JSON.parse(localStorage.getItem("player"));
+            this.player = new Player(this, 60, 490, this.character, this.playerInfo["points"], this.playerInfo["level"]);
+            //this.player.points = this.playerInfo["points"];
+            //this.player.level = this.playerInfo["level"];
+        }
 
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
         this.helpButton = this.add.image( config.width -50,  50, "helpButton").setScale(0.30).setInteractive({useHandCursor: true, pixelPerfect: true});
@@ -328,9 +338,11 @@ class MapScreen extends Phaser.Scene {
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
 
+        /*
         this.helpButton.on('pointerdown', function (event) {
-            this.scene.start("howToPlay");    //WORK OUT WHERE TO GO AND HOW TO SAVE DATA
+            this.scene.start("howToPlay");
         }, this);
+         */
     }
 
     updateScreen() {
@@ -354,10 +366,13 @@ class MapScreen extends Phaser.Scene {
             let coords = this.json["places"][place.texture]["coords"];
             let x1 = coords[0];
             let x2 = coords[1];
-            if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2)) {
+            this.player.keys = this.input.keyboard.createCursorKeys(); // resetting keys
+            if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2) && place.wasEntered === false) {
+                console.log("entering place");
                 this.player.enterPlace(place);
-                this.scene.start(place.texture);
                 place.loadPlayer();
+                this.scene.start(place.texture);
+                break;
             }
         }
     }
@@ -368,6 +383,7 @@ class MapScreen extends Phaser.Scene {
         this.placeEntrance();
     }
 }
+
 
 class HowToPlayScreen extends Phaser.Scene {
     constructor() {

@@ -3,7 +3,8 @@
 export class Thing extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture);
-        this.setInteractive({useHandCursor: true, pixelPerfect: true});
+        this.disableInteractive();
+        this.setVisible(false);
         this.wasSelected = false;
     }
 

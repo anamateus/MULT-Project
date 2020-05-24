@@ -5,28 +5,32 @@
             "screen": 1,
             "textures": ["pastryshop-inside-1", "pastryshop-inside-2", "pastryshop-inside-3"],
             "objects": ["baguette"],
-            "shelves": [220, 340, 460]
+            "shelves": [220, 340, 460],
+            "door": "door-2"
         },
         "supermarket": {
             "coords": [0, 300],
             "screen": 2,
             "textures": ["supermarket-inside-1", "supermarket-inside-2", "supermarket-inside-3"],
             "objects": ["cheese", "cookies"],
-            "shelves": [220, 340, 460]
+            "shelves": [220, 340, 460],
+            "door": "door-2"
         },
         "laundryshop": {
             "coords": [650, 963],
             "screen": 2,
             "textures": ["laundryshop-inside-1", "laundryshop-inside-2", "laundryshop-inside-3"],
             "objects": ["laundry-machine-0", "laundry-machine-1"],
-            "shelves": [460]
+            "shelves": [460],
+            "door": "door-2"
         },
         "candyshop": {
             "coords": [0, 273],
             "screen": 3,
             "textures": ["candyshop-inside-1", "candyshop-inside-2", "candyshop-inside-3"],
             "objects": ["lollipopJar"],
-            "shelves": [220, 340, 460]
+            "shelves": [220, 340, 460],
+            "door": "door-2"
         }
     },
     "characters" : {
