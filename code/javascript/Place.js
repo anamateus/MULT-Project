@@ -154,9 +154,6 @@ export class Place extends Phaser.Scene {
     }
 
     updateScreen() {
-        console.log(20 + this.door.x - this.door.width);
-        console.log(this.player.x);
-        console.log(this.door.x + this.door.width - 20);
         if (20 + this.door.x - this.door.width < this.player.x && this.player.x < this.door.x + this.door.width - 20 && this.player.keys.down.isDown) {
             this.player.leavePlace(this);
             this.wasEntered = true;
