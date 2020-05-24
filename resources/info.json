@@ -4,7 +4,7 @@
             "coords": [796, 1060],
             "screen": 1,
             "textures": ["pastryshop-inside-1", "pastryshop-inside-2", "pastryshop-inside-3"],
-            "objects": ["baguette", "chocolateCake", "cinnamonRoll", "strawberryCake"],
+            "objects": ["baguette", "chocolate-cake", "cinnamon-roll", "strawberry-cake"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
@@ -12,7 +12,7 @@
             "coords": [0, 300],
             "screen": 2,
             "textures": ["supermarket-inside-1", "supermarket-inside-2", "supermarket-inside-3"],
-            "objects": ["cheese", "cookies","flour","honey", "peanutButter", "sugar"],
+            "objects": ["cheese", "cookies","flour","honey", "peanut-butter", "sugar"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
@@ -20,7 +20,7 @@
             "coords": [650, 963],
             "screen": 2,
             "textures": ["laundryshop-inside-1", "laundryshop-inside-2", "laundryshop-inside-3"],
-            "objects": ["laundry-machine-0", "laundry-machine-1"],
+            "objects": ["dirty-clothing"],
             "shelves": [460],
             "door": "door-2"
         },
@@ -28,7 +28,7 @@
             "coords": [0, 273],
             "screen": 3,
             "textures": ["candyshop-inside-1", "candyshop-inside-2", "candyshop-inside-3"],
-            "objects": ["lollipopJar", "warsChocolate"],
+            "objects": ["lollipop-jar", "wars-chocolate", "green-candy", "yellow-candy", "orange-candy", "red-candy", "pink-candy", "purple.candy"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
@@ -36,7 +36,7 @@
             "coords": [30, 310],
             "screen": 1,
             "textures": ["bookshop-inside-1", "bookshop-inside-2", "bookshop-inside-3"],
-            "objects": ["blackPen", "bluePen", "dictionary", "greenPen", "mathsBook", "notebook", "pencil", "physicsBook", "redPen", "rubber"],
+            "objects": ["black-pen", "blue-pen", "dictionary", "green-pen", "maths-book", "notebook", "pencil", "physics-book", "red-pen", "rubber"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
@@ -44,7 +44,7 @@
             "coords": [663, 940],
             "screen": 3,
             "textures": ["clothesshop-inside-1", "clothesshop-inside-2", "clothesshop-inside-3"],
-            "objects": ["blueJeans", "greenJeans", "greenTshirt", "hanger", "redTshirt", "tracksuit", "tracksuitBlack", "universitySweater"],
+            "objects": ["blue-jeans", "green-jeans", "green-tshirt", "hanger", "red-tshirt", "white-tracksuit", "black-tracksuit", "university-sweater"],
             "shelves": [338],
             "door": "door-2"
         },
@@ -52,20 +52,20 @@
             "coords": [310, 623],
             "screen": 3,
             "textures": ["gardenshop-inside-1", "gardenshop-inside-2", "gardenshop-inside-3"],
-            "objects": ["aloePlant", "dracaena", "gardeningKit", "seedsBag", "soilBag", "tomatoesPlant"],
+            "objects": ["aloe-vera-plant", "dracaena", "gardening-kit", "seeds-bag", "soil-bag", "tomatoes-plant"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         }
     },
     "characters" : {
         "father" : {
-            "places" : ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket"]
+            "places" : ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket", "laundryshop"]
         },
         "student" : {
-            "places" : ["bookshop", "clothesshop", "pastryshop", "supermarket"]
+            "places" : ["bookshop", "clothesshop", "pastryshop", "supermarket", "laundryshop", "gardenshop"]
         },
         "tourist" : {
-            "places" : ["bookshop", "clothesshop", "candyshop", "pastryshop", "supermarket"]
+            "places" : ["bookshop", "clothesshop", "candyshop", "pastryshop", "supermarket", "gardenshop"]
         }
     }
 }
