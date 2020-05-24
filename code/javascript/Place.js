@@ -47,18 +47,7 @@ export class Place extends Phaser.Scene {
         this.background = this.add.image(540, 300, this.texture + this.currentScreen);
         this.background.setDepth(0);
 
-        let objects = this.json["places"][this.texture]["objects"];
-        for (let object of objects) {
-            /* Distribute objects by the screens */
-            let thing = new Thing(this, -1, -1, object).setScale(0.5, 0.5);
-            let coords = this.placeObject(thing);
-            thing.setPos(coords[0], coords[1]);
-            thing.setDepth(1);
-
-            let set = Math.round(Math.random() * (this.objects.length - 1));
-            (this.objects[set]).push(thing);
-            this.add.existing(thing);
-        }
+        this.createObjects();
         console.log(this.objects);
         this.showObjects();
 
@@ -108,25 +97,52 @@ export class Place extends Phaser.Scene {
         this.player.setDepth(3);
 
         this.physics.world.enable(this.player);
-
-
     }
 
-    placeObject(object) {
+    createObjects() {
+        let objects = this.json["places"][this.texture]["objects"];
+        let sets = [];
+        let setsMin = [0,0,0];
+
+        for (let object of objects) {
+            let set = Math.round(1 + Math.random() * (this.objects.length-1));
+            sets.push(set);
+        }
+        console.log(sets);
+
+        for (let i = 0; i < objects.length; i++) {
+            /* Distribute objects by the screens */
+            let thing = new Thing(this, -1, -1, objects[i]).setScale(0.5, 0.5).setDepth(1);
+            let set = sets[i];
+            let space = setsMin[set-1];
+            console.log(space);
+            let coords = this.placeObject(thing, set, space);
+
+            thing.setPos(coords[0], coords[1]);
+            //console.log([coords[0], coords[1]]);
+            (this.objects[set-1]).push(thing);
+            this.add.existing(thing);
+
+            space += 100; //FIXME
+        }
+    }
+
+    placeObject(object, set, space) {
         let shelves = this.json["places"][this.texture]["shelves"];
         let objectWidth = object.width * 0.5;
         let objectHeight = object.height * 0.5;
 
-        let xMin = objectWidth;
+        let xMin = objectWidth + space;
         let xMax = this.game.config.width - objectWidth;
 
-        if (this.currentScreen === 1) {
-            xMin += 400;
-        } else if (this.currentScreen === 3) {
-            xMax -= 400;
+        //console.log([xMin, xMax, space, set]);
+        if (set === 1) {
+            xMin += 450;
+        } else if (set === 3) {
+            xMax -= 450;
         }
 
-        let x = Math.round(xMin + Math.random() * (xMax - xMin));
+        let x =  Math.round( xMin + Math.random() * (xMax - xMin));
         let y = shelves[Math.round(Math.random() * (shelves.length-1))] - objectHeight/10;
         return [x,y];
     }
