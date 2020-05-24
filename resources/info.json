@@ -36,19 +36,25 @@
             "coords": [30, 310],
             "screen": 1,
             "textures": ["bookshop-inside-1", "bookshop-inside-2", "bookshop-inside-3"],
-            "objects": ["blackPen", "bluePen", "dictionary", "greenPen", "mathsBook", "notebook", "pencil", "physicsBook", "redPen", "rubber"]
+            "objects": ["blackPen", "bluePen", "dictionary", "greenPen", "mathsBook", "notebook", "pencil", "physicsBook", "redPen", "rubber"],
+            "shelves": [220, 340, 460],
+            "door": "door-2"
         },
         "clothesshop": {
             "coords": [663, 940],
             "screen": 3,
             "textures": ["clothesshop-inside-1", "clothesshop-inside-2", "clothesshop-inside-3"],
-            "objects": ["blueJeans", "greenJeans", "greenTshirt", "hanger", "redTshirt", "tracksuit", "tracksuitBlack", "universitySweater"]
+            "objects": ["blueJeans", "greenJeans", "greenTshirt", "hanger", "redTshirt", "tracksuit", "tracksuitBlack", "universitySweater"],
+            "shelves": [340],
+            "door": "door-2"
         },
         "gardenshop": {
             "coords": [310, 623],
             "screen": 3,
             "textures": ["gardenshop-inside-1", "gardenshop-inside-2", "gardenshop-inside-3"],
-            "objects": ["aloePlant", "dracaena", "gardeningKit", "seedsBag", "soilBag", "tomatoesPlant"]
+            "objects": ["aloePlant", "dracaena", "gardeningKit", "seedsBag", "soilBag", "tomatoesPlant"],
+            "shelves": [220, 340, 460],
+            "door": "door-2"
         }
     },
     "characters" : {

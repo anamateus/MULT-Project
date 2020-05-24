@@ -354,6 +354,7 @@ class MapScreen extends Phaser.Scene {
         }
 
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
+        this.background.setDepth(0);
         this.helpButton = this.add.image( config.width -50,  50, "helpButton").setScale(0.30).setInteractive({useHandCursor: true, pixelPerfect: true});
 
         this.add.existing(this.player.setScale(0.75,0.75));

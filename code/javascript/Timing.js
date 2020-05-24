@@ -27,7 +27,7 @@ export class Timing extends Phaser.Time.TimerEvent{
                 repeat: this.countdown
             })
         } else {
-            this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs).depth = 10;
+            this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs);
                 if (this.level === 1 || this.level === 2){
                     this.countdown = 5*60; //5 minutes
                 } else if (this.level === 3 || this.level === 4){
@@ -37,7 +37,6 @@ export class Timing extends Phaser.Time.TimerEvent{
                 } else if (this.level === 7){
                     this.countdown = 3.5*60; //3.5 minutes
                 }
-
 
 	    if (this.count !== 0) {    //changing screens
                 this.formatTime()
