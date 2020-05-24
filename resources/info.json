@@ -35,11 +35,7 @@
         "bookshop": {
             "coords": [30, 310],
             "screen": 1,
-            "textures": [
-                "bookshop-inside-1",
-                "bookshop-inside-2",
-                "bookshop-inside-3"
-            ],
+            "textures": ["bookshop-inside-1", "bookshop-inside-2", "bookshop-inside-3"],
             "objects": ["blackPen", "bluePen", "dictionary", "greenPen", "mathsBook", "notebook", "pencil", "physicsBook", "redPen", "rubber"]
         },
         "clothesshop": {
@@ -54,17 +50,16 @@
             "textures": ["gardenshop-inside-1", "gardenshop-inside-2", "gardenshop-inside-3"],
             "objects": ["aloePlant", "dracaena", "gardeningKit", "seedsBag", "soilBag", "tomatoesPlant"]
         }
-
     },
     "characters" : {
         "father" : {
-            "places" : ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket", "home"]
+            "places" : ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket"]
         },
         "student" : {
-            "places" : ["bookshop", "university", "clothesshop", "pastryshop", "supermarket", "home"]
+            "places" : ["bookshop", "clothesshop", "pastryshop", "supermarket"]
         },
         "tourist" : {
-            "places" : ["bookshop", "clothesshop", "university", "candyshop", "pastryshop", "supermarket"]
+            "places" : ["bookshop", "clothesshop", "candyshop", "pastryshop", "supermarket"]
         }
     }
 }
