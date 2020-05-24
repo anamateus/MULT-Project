@@ -100,13 +100,11 @@ export class Place extends Phaser.Scene {
             this.physics.world = new Phaser.Physics.Arcade.World(this, {});
         }
 
-        console.log(this.physics.world);
         this.physics.world.enable(this.player);
-        //this.updateObjects(); // another fucking bug
-
+        this.updateObjects();
     }
 
-    placeObject(object) { // update
+    placeObject(object) {
         let shelves = this.json["places"][this.texture]["shelves"];
         let objectWidth = object.width * 0.25;
         let objectHeight = object.height * 0.25;
@@ -126,8 +124,13 @@ export class Place extends Phaser.Scene {
     }
 
     updateDoor() {
+        if (this.currentScreen === 1) {
+            this.door.setVisible(true);
+            this.door.x = 210;
+        }
         if (this.currentScreen === 2) {
             this.door.setVisible(false);
+            this.door.setInteractive(false);
         } else if (this.currentScreen === 3) {
             this.door.setVisible(true);
             this.door.x = 870;
@@ -153,6 +156,7 @@ export class Place extends Phaser.Scene {
     updateScreen() {
         if (this.door.x - 2*this.door.width < this.player.x < this.door.x && this.player.keys.down.isDown) {
             this.player.leavePlace(this);
+            this.wasEntered = true;
             this.scene.start("map");
         }
         if ((this.player.x < 35 && this.player.direction === 'left' && this.currentScreen === 1 )|| (this.player.x > 1045 && this.player.direction === 'right' && this.currentScreen === 3)) {

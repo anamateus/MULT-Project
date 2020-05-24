@@ -371,8 +371,9 @@ class MapScreen extends Phaser.Scene {
                 console.log("entering place");
                 this.player.enterPlace(place);
                 place.loadPlayer();
+                console.log(place);
+                console.log(place.texture);
                 this.scene.start(place.texture);
-                break;
             }
         }
     }

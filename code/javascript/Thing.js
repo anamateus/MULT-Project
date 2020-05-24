@@ -19,6 +19,7 @@ export class Thing extends Phaser.GameObjects.Sprite {
 
     animation(){
         this.on('pointerdown', function (event) {
+            this.wasSelected = true;
             this.setVisible(false);
         }, this);
     }
