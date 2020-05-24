@@ -1,7 +1,6 @@
 "use strict";
 
-export class Timing extends Phaser.Time.TimerEvent{    
-    
+export class Timing extends Phaser.Time.TimerEvent{
     constructor(configs, level, scene, passing) {
         super(configs);
         this.level = level;
@@ -30,30 +29,17 @@ export class Timing extends Phaser.Time.TimerEvent{
         } else {
 		
 	    this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs);
-		
-            if (this.level === 1){
-                this.countdown = 5*60; //5 minutes 
-
-            } else if (this.level === 2){ 
-                    this.countdown = 5*60; //5 minutes
-        
-            } else if (this.level === 3){
+            if (this.level === 1 || this.level === 2){
+                this.countdown = 5*60; //5 minutes
+            } else if (this.level === 3 || this.level === 4){
                 this.countdown = 4.5*60; //4.5 minutes
-
-            } else if (this.level === 4){
-                this.countdown = 4.5*60; //4.5 minutes
-
-            } else if (this.level === 5){
+            } else if (this.level === 5 || this.level === 6){
                 this.countdown = 4*60; //4 minutes
-
-            } else if (this.level === 6){
-                this.countdown = 4*60; //4 minutes
-
             } else if (this.level === 7){
                 this.countdown = 3.5*60; //3.5 minutes
             }
-		
-	    if (this.count != 0) {    //changing screens
+
+	    if (this.count !== 0) {    //changing screens
                 this.formatTime()
             }
 

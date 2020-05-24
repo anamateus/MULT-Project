@@ -171,7 +171,7 @@ export class Place extends Phaser.Scene {
             this.wasEntered = true;
             let aux = this.timer.count;
             this.timer.endTimer();
-            this.scene.start("map", {time: aux});
+            this.scene.start("map", {"time": aux});
         }
         if ((this.player.x < 35 && this.player.direction === 'left' && this.currentScreen === 1 )|| (this.player.x > 1045 && this.player.direction === 'right' && this.currentScreen === 3)) {
             this.player.setVelocityX(0);
