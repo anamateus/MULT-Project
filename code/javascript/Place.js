@@ -48,6 +48,13 @@ export class Place extends Phaser.Scene {
 
         let timeInfo = JSON.parse(localStorage.getItem("time"));
         this.timer = new Timing({}, this.player.level, this, timeInfo["count"]);
+
+        if (this.player !== undefined) {
+            this.add.existing(this.player);
+            this.player.setDepth(3);
+
+            this.physics.world.enable(this.player);
+        }
     }
 
     loadPlayer() {
@@ -85,10 +92,13 @@ export class Place extends Phaser.Scene {
             frameRate: 5,
             repeat: -1
         });
+        /*
         this.add.existing(this.player);
         this.player.setDepth(3);
 
         this.physics.world.enable(this.player);
+
+         */
     }
 
     createObjects() {

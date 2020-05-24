@@ -354,10 +354,11 @@ class MapScreen extends Phaser.Scene {
         });
 
         /* Settings for level 1 */
-        if (this.level === 1 && (this.player === undefined)) {
+        if (this.level === 1 || (this.player === undefined)) {
             this.player = new Player(this, 60, 490, this.character, 0, 1);
             let playerInfo = {"texture": this.player.texture, "points": this.player.points, "level": this.player.level};
             localStorage.setItem("player", JSON.stringify(playerInfo));
+
             this.timer = new Timing({}, this.level, this, 0);
         /* Settings for other levels */
         } else {
@@ -370,7 +371,7 @@ class MapScreen extends Phaser.Scene {
 
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
         this.background.setDepth(0);
-        this.helpButton = this.add.image( config.width -50,  50, "helpButton").setScale(0.30).setInteractive({useHandCursor: true, pixelPerfect: true});
+        //this.helpButton = this.add.image( config.width -50,  50, "helpButton").setScale(0.30).setInteractive({useHandCursor: true, pixelPerfect: true});
 
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
