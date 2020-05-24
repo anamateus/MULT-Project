@@ -4,7 +4,7 @@
             "coords": [796, 1060],
             "screen": 1,
             "textures": ["pastryshop-inside-1", "pastryshop-inside-2", "pastryshop-inside-3"],
-            "objects": ["baguette"],
+            "objects": ["baguette", "chocolateCake", "cinnamonRoll", "strawberryCake"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
@@ -12,7 +12,7 @@
             "coords": [0, 300],
             "screen": 2,
             "textures": ["supermarket-inside-1", "supermarket-inside-2", "supermarket-inside-3"],
-            "objects": ["cheese", "cookies"],
+            "objects": ["cheese", "cookies","flour","honey", "peanutButter", "sugar"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
@@ -28,20 +28,43 @@
             "coords": [0, 273],
             "screen": 3,
             "textures": ["candyshop-inside-1", "candyshop-inside-2", "candyshop-inside-3"],
-            "objects": ["lollipopJar"],
+            "objects": ["lollipopJar", "warsChocolate"],
             "shelves": [220, 340, 460],
             "door": "door-2"
+        },
+        "bookshop": {
+            "coords": [30, 310],
+            "screen": 1,
+            "textures": [
+                "bookshop-inside-1",
+                "bookshop-inside-2",
+                "bookshop-inside-3"
+            ],
+            "objects": ["blackPen", "bluePen", "dictionary", "greenPen", "mathsBook", "notebook", "pencil", "physicsBook", "redPen", "rubber"]
+        },
+        "clothesshop": {
+            "coords": [663, 940],
+            "screen": 3,
+            "textures": ["clothesshop-inside-1", "clothesshop-inside-2", "clothesshop-inside-3"],
+            "objects": ["blueJeans", "greenJeans", "greenTshirt", "hanger", "redTshirt", "tracksuit", "tracksuitBlack", "universitySweater"]
+        },
+        "gardenshop": {
+            "coords": [310, 623],
+            "screen": 3,
+            "textures": ["gardenshop-inside-1", "gardenshop-inside-2", "gardenshop-inside-3"],
+            "objects": ["aloePlant", "dracaena", "gardeningKit", "seedsBag", "soilBag", "tomatoesPlant"]
         }
+
     },
     "characters" : {
         "father" : {
-            "places" : ["pastryshop", "supermarket"]
+            "places" : ["bookshop", "clothesshop", "gardenshop", "pastryshop", "supermarket", "home"]
         },
         "student" : {
-            "places" : ["pastryshop", "supermarket"]
+            "places" : ["bookshop", "university", "clothesshop", "pastryshop", "supermarket", "home"]
         },
         "tourist" : {
-            "places" : ["candyshop", "pastryshop", "supermarket"]
+            "places" : ["bookshop", "clothesshop", "university", "candyshop", "pastryshop", "supermarket"]
         }
     }
 }
