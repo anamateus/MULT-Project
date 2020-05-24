@@ -57,6 +57,7 @@ export class Place extends Phaser.Scene {
             this.add.existing(thing);
         }
         console.log(this.objects);
+        this.showObjects();
 
         this.door = this.add.sprite(210, 298, this.json["places"][this.texture]["door"]);
         this.door.setScale(2).setDepth(2);
@@ -66,8 +67,6 @@ export class Place extends Phaser.Scene {
 
     loadPlayer() {
         this.playerInfo = JSON.parse(localStorage.getItem("player"));
-
-        //if (this.player === undefined || this.player === null) {
         this.player = new Player(this, 60, 410, this.playerInfo["texture"], this.playerInfo["points"], this.playerInfo["level"]).setScale(0.9, 0.9);
 
         this.anims.create({
@@ -104,12 +103,7 @@ export class Place extends Phaser.Scene {
         this.add.existing(this.player);
         this.player.setDepth(3);
 
-        if (this.physics.world === null) {
-            this.physics.world = new Phaser.Physics.Arcade.World(this, {});
-        }
-
         this.physics.world.enable(this.player);
-        this.updateObjects();
     }
 
     placeObject(object) {
@@ -135,10 +129,8 @@ export class Place extends Phaser.Scene {
         if (this.currentScreen === 1) {
             this.door.setVisible(true);
             this.door.x = 210;
-        }
-        if (this.currentScreen === 2) {
+        } else if (this.currentScreen === 2) {
             this.door.setVisible(false);
-            this.door.setInteractive(false);
         } else if (this.currentScreen === 3) {
             this.door.setVisible(true);
             this.door.x = 870;
@@ -148,15 +140,27 @@ export class Place extends Phaser.Scene {
     updateObjects() {
         for (let i = 0; i < this.objects.length; i++) {
             let set = this.objects[i];
+            for (let object of set) {
+                object.checkSelection(this);
+                if (object.wasSelected) {
+                    object.removeFrom(this);
+                    object.checkTask(this);
+                }
+            }
+        }
+    }
+
+    showObjects() { // show the correct object sprites when changing screens
+        for (let i = 0; i < this.objects.length; i++) {
+            let set = this.objects[i];
+
             if (i+1 !== this.currentScreen) {
                 for (let object of set) {
                     object.setVisible(false);
-                    if (object.active) {
-                        object.disableInteractive();
-                    }
+                    object.disableInteractive();
                 }
             } else {
-                set.map((object => {object.setVisible(true).setInteractive({useHandCursor: true, pixelPerfect: true})}));
+                set.map((object => {object.setVisible(true).setInteractive({"useHandCursor": true, "pixelPerfect": true})}));
             }
         }
     }
@@ -171,18 +175,18 @@ export class Place extends Phaser.Scene {
         }
         if ((this.player.x < 35 && this.player.direction === 'left' && this.currentScreen === 1 )|| (this.player.x > 1045 && this.player.direction === 'right' && this.currentScreen === 3)) {
             this.player.setVelocityX(0);
-            this.updateObjects();
+            this.showObjects();
             this.updateDoor();
         } else if(this.player.x >= 1060 && 1 <= this.currentScreen < 3){
             this.currentScreen++;
             this.background.setTexture(this.texture + this.currentScreen);
-            this.updateObjects();
+            this.showObjects();
             this.updateDoor();
             this.player.x = 20;
         } else if (this.player.x <= 20 && 1 < this.currentScreen <= 3) {
             this.currentScreen--;
             this.background.setTexture(this.texture + this.currentScreen);
-            this.updateObjects();
+            this.showObjects();
             this.updateDoor();
             this.player.x = 1060;
         }
@@ -191,6 +195,7 @@ export class Place extends Phaser.Scene {
     update(time, delta) {
         if (this.wasEntered === true) {
             this.player.update(time);
+            this.updateObjects();
             this.updateScreen();
         }
     }

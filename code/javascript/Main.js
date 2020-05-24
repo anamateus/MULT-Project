@@ -223,6 +223,13 @@ class PhoneScreen extends Phaser.Scene {
             tasks.push(new Task(p, o));
         }
 
+        /* Save tasks in local storage */
+        let aux = [];
+        for (let object of tasks) {
+            aux.push({"place": object.place, "object": object.thing});
+        }
+        localStorage.setItem("tasks", JSON.stringify(aux));
+
         /* Listing tasks on screen */
         let textConfigs = {
             font: "10pt",
