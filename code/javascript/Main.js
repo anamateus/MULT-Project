@@ -215,14 +215,19 @@ class PhoneScreen extends Phaser.Scene {
         /* Tasks generation */
         let numTasks = 3 + 2 * this.level;
         let tasks = [];
+        let previousObjects = [];
         let places = this.json["characters"][this.character]["places"];
-
-        for (let i = 0; i < numTasks; i++) {
+        let i = 0;
+        while(i !== numTasks && previousObjects.length !== numTasks) {
             let p = places[Math.floor(Math.random() * places.length)];
             let objects = this.json["places"][p]["objects"];
             let o = objects[Math.floor(Math.random() * objects.length)];
 
-            tasks.push(new Task(p, o));
+            if (!previousObjects.includes(o)) {
+                tasks.push(new Task(p, o));
+                previousObjects.push(o);
+             }
+            i++;
         }
 
         /* Save tasks in local storage */
