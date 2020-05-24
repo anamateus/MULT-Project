@@ -345,10 +345,7 @@ class MapScreen extends Phaser.Scene {
             this.player = new Player(this, 60, 490, this.character, 0, 1);
             let playerInfo = {"texture": this.player.texture, "points": this.player.points, "level": this.player.level};
             localStorage.setItem("player", JSON.stringify(playerInfo));
-
             this.timer = new Timing({}, this.level, this, 0);
-            let timeInfo = {"count": this.timer.count};
-            localStorage.setItem("time", JSON.stringify(timeInfo));
         /* Settings for other levels */
         } else {
             this.playerInfo = JSON.parse(localStorage.getItem("player"));
@@ -396,9 +393,8 @@ class MapScreen extends Phaser.Scene {
             this.player.keys = this.input.keyboard.createCursorKeys(); // resetting keys
             if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2) && place.wasEntered === false) {
                 console.log("entering place");
-                //let aux = this.timer.count;
-                this.timer.endTimer();
                 localStorage.setItem("time", JSON.stringify({"count": this.timer.count}));
+                this.timer.endTimer();
                 this.player.enterPlace(place);
                 place.loadPlayer();
                 this.scene.start(place.texture);

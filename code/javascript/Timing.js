@@ -6,7 +6,7 @@ export class Timing extends Phaser.Time.TimerEvent{
         this.level = level;
         this.scene = scene;
         this.count = passing;   //when we change screens preserves the time left
-	    this.create();
+	this.create();
     }
 	
     create(){
@@ -56,7 +56,6 @@ export class Timing extends Phaser.Time.TimerEvent{
     updateTasks(){
         if (this.count <= this.countdown){
             this.txt.setText("Time Left: " + (this.countdown-this.count) +  " seconds");
-            console.log("Time Left: " + (this.countdown-this.count) +  " seconds");
             this.count++;
         } else {
             this.endLevel();
@@ -66,7 +65,6 @@ export class Timing extends Phaser.Time.TimerEvent{
     updateLevel(){
         if (this.count <= this.countdown){
             this.txt.setText("Time: " + this.formatTime());
-            console.log("Time: " + this.formatTime());
             this.count++;
         } else {
             this.endLevel();
