@@ -16,14 +16,6 @@ export class Place extends Phaser.Scene {
         this.currentScreen = 1;
     }
 
-    /*
-    init(data){ //auxiliary for time
-        this.curTime = data.time;
-        this.level = data.level;
-    }
-
-     */
-
     preload() {
         // load place screens
         this.backgrounds = this.json["places"][this.texture]["textures"];
@@ -175,10 +167,8 @@ export class Place extends Phaser.Scene {
         if (20 + this.door.x - this.door.width < this.player.x && this.player.x < this.door.x + this.door.width - 20 && this.player.keys.down.isDown) {
             this.player.leavePlace(this);
             this.wasEntered = true;
-            //let aux = this.timer.count;
-            this.timer.endTimer();
-            //this.scene.start("map", {"time": aux});
             localStorage.setItem("time", JSON.stringify({"count": this.timer.count}));
+            this.timer.endTimer();
             this.scene.start("map");
         }
         if ((this.player.x < 35 && this.player.direction === 'left' && this.currentScreen === 1 )|| (this.player.x > 1045 && this.player.direction === 'right' && this.currentScreen === 3)) {
