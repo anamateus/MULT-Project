@@ -139,6 +139,8 @@ class PhoneScreen extends Phaser.Scene {
     init(data) {
         this.character = data.phone;
         this.level = data.level;
+
+        localStorage.setItem("player", JSON.stringify({"texture": this.character, "points": 0, "level": this.level}))
     }
 
     preload() {
@@ -385,7 +387,8 @@ class MapScreen extends Phaser.Scene {
         });
 
         /* Settings for level 1 */
-        if (this.level === 1 || (this.player === undefined)) {
+        let firstTime = JSON.parse(localStorage.getItem("firstTime"))["firstTime"];
+        if (firstTime === 1) {
             this.player = new Player(this, 60, 490, this.character, 0, 1);
             let playerInfo = {"texture": this.player.texture, "points": this.player.points, "level": this.player.level};
             localStorage.setItem("player", JSON.stringify(playerInfo));
