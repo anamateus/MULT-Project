@@ -17,7 +17,7 @@ export class Timing extends Phaser.Time.TimerEvent{
         };	    
 	    
         if (this.level === 0){    //if level == 0 then the timer to view the tasks is the one initialized
-            this.countdown = 10; //10 seconds to view the tasks list
+            this.countdown = 15; //10 seconds to view the tasks list
             this.txt = this.scene.add.text(50,20,"Time Left: ", this.textConfigs);
             this.timer = this.scene.time.addEvent({
                 delay: 1000,
