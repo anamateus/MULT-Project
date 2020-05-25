@@ -14,6 +14,7 @@ export class Thing extends Phaser.GameObjects.Sprite {
         this.y = y;
     }
 
+    /* Check if object is being clicked */
     checkSelection(){
         this.on('pointerdown', function (event) {
             this.removeFrom(this.scene);
@@ -21,6 +22,8 @@ export class Thing extends Phaser.GameObjects.Sprite {
         }, this);
     }
 
+    /* Check if object selected and place entered correspond to an assigned task,
+    /* and if so, remove the task from the list */
     checkTask(place) {
         let tasks = JSON.parse(localStorage.getItem("tasks"));
         for (let i = 0; i < tasks.length; i++) {
@@ -33,6 +36,7 @@ export class Thing extends Phaser.GameObjects.Sprite {
         }
     }
 
+    /* disable interaction and visibility of object if it was selected */
     removeFrom(place) {
         let objs = place.objects;
         for (let set of objs) {

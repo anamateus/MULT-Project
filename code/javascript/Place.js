@@ -34,29 +34,6 @@ export class Place extends Phaser.Scene {
         this.load.image(this.doorTexture, "../../resources/scenarios/doors/" +  this.doorTexture + ".png");
     }
 
-    create() {
-        /* Place background and objects */
-        this.background = this.add.image(540, 300, this.texture + this.currentScreen);
-        this.background.setDepth(0);
-
-        let aux = JSON.parse(localStorage.getItem("firstTime"))["firstTime"];
-
-        this.createObjects();
-        this.showObjects();
-
-        this.door = this.add.sprite(210, 298, this.json["places"][this.texture]["door"]);
-        this.door.setScale(2).setDepth(2);
-
-        let timeInfo = JSON.parse(localStorage.getItem("time"));
-        this.timer = new Timing({}, this.player.level, this, timeInfo["count"]);
-
-        if (this.player !== undefined) {
-            this.add.existing(this.player);
-            this.player.setDepth(3);
-            this.physics.world.enable(this.player);
-        }
-    }
-
     loadPlayer() {
         this.playerInfo = JSON.parse(localStorage.getItem("player"));
         this.player = new Player(this, 60, 410, this.playerInfo["texture"], this.playerInfo["points"], this.playerInfo["level"]).setScale(0.9, 0.9);
@@ -94,18 +71,41 @@ export class Place extends Phaser.Scene {
         });
     }
 
+    create() {
+        /* Place background and objects */
+        this.background = this.add.image(540, 300, this.texture + this.currentScreen);
+        this.background.setDepth(0);
+
+        this.createObjects();
+        this.showObjects();
+
+        this.door = this.add.sprite(210, 298, this.json["places"][this.texture]["door"]);
+        this.door.setScale(2).setDepth(2);
+
+        /* Timer */
+        let timeInfo = JSON.parse(localStorage.getItem("time"));
+        this.timer = new Timing({}, this.player.level, this, timeInfo["count"]);
+
+        if (this.player !== undefined) {
+            this.add.existing(this.player);
+            this.player.setDepth(3);
+            this.physics.world.enable(this.player);
+        }
+    }
+
     createObjects() {
         let objects = this.json["places"][this.texture]["objects"];
         let sets = [];
-        let setsMin = [0,0,0];
+        let setsMin = [0,0,0]; // minimum x-coordinates for each object in each set
 
+        /* Choose screen for each object */
         for (let object of objects) {
             let set = Math.round(1 + Math.random() * (this.objects.length-1));
             sets.push(set);
         }
 
+        /* Create and distribute objects by the screens */
         for (let i = 0; i < objects.length; i++) {
-            /* Distribute objects by the screens */
             let thing = new Thing(this, -1, -1, objects[i]).setScale(0.5, 0.5).setDepth(1);
             let set = sets[i];
             let space = setsMin[set-1];
@@ -115,26 +115,11 @@ export class Place extends Phaser.Scene {
             (this.objects[set-1]).push(thing);
             this.add.existing(thing);
 
-            setsMin[set-1] += thing.width*0.11;
+            setsMin[set-1] += thing.width*0.11; // increasing minimum x-coordinate of each set to avoid object overlapping
         }
     }
 
-    showObjects() { // show the correct object sprites when changing screens
-        for (let i = 0; i < this.objects.length; i++) {
-            let set = this.objects[i];
-            console.log(this.objects);
-
-            if (i+1 !== this.currentScreen) {
-                for (let object of set) {
-                    object.setVisible(false);
-                    object.disableInteractive();
-                }
-            } else {
-                set.map((object => {object.setVisible(true).setInteractive({"useHandCursor": true, "pixelPerfect": true})}));
-            }
-        }
-    }
-
+    /* Calculate random [x,y] coordinates for each object */
     placeObject(object, set, space) {
         let shelves = this.json["places"][this.texture]["shelves"];
         let objectWidth = object.width * 0.5;
@@ -155,6 +140,24 @@ export class Place extends Phaser.Scene {
         return [x,y];
     }
 
+    /* Show the correct object sprites when changing screens */
+    showObjects() {
+        for (let i = 0; i < this.objects.length; i++) {
+            let set = this.objects[i];
+            console.log(this.objects);
+
+            if (i+1 !== this.currentScreen) {
+                for (let object of set) {
+                    object.setVisible(false);
+                    object.disableInteractive();
+                }
+            } else {
+                set.map((object => {object.setVisible(true).setInteractive({"useHandCursor": true, "pixelPerfect": true})}));
+            }
+        }
+    }
+
+    /* Manage door visibility and coordinates when changing screens */
     updateDoor() {
         if (this.currentScreen === 1) {
             this.door.setVisible(true);
@@ -167,6 +170,7 @@ export class Place extends Phaser.Scene {
         }
     }
 
+    /* Check player coordinates and change screen accordingly */
     updateScreen() {
         if (20 + this.door.x - this.door.width < this.player.x && this.player.x < this.door.x + this.door.width - 20 && this.player.keys.down.isDown) {
             this.player.leavePlace(this);

@@ -28,6 +28,8 @@ class MainMenu extends Phaser.Scene {
     }
 
     create() {
+        localStorage.clear();
+
         let textConfigs = {
             font: "16pt",
             fontFamily: "Comic Sans",
@@ -246,7 +248,8 @@ class PhoneScreen extends Phaser.Scene {
         content.push(title);
 
         /* Tasks generation */
-        let numTasks = 1 + 2 * this.level;
+        let numTasks = 3 + 2 * this.level;
+        console.log(numTasks);
         let tasks = [];
         let previousObjects = [];
         let places = this.json["characters"][this.character]["places"];
@@ -439,7 +442,6 @@ class MapScreen extends Phaser.Scene {
             let coords = this.json["places"][place.texture]["coords"];
             let x1 = coords[0];
             let x2 = coords[1];
-            //this.player.keys = this.input.keyboard.createCursorKeys();
             if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2) && place.wasEntered === false) {
                 console.log("entering place");
                 localStorage.setItem("time", JSON.stringify({"count": this.timer.count}));
@@ -476,7 +478,7 @@ class MapScreen extends Phaser.Scene {
             if (level+1 <= 7) {
                 this.scene.start("phoneScreen", {phone: ttr, level: level});
             } else {
-                this.scene.start("mainMenu");
+                this.scene.start("credits");
             }
         }
     }
@@ -593,7 +595,6 @@ class Main extends Phaser.Game {
     }
 
     launch() {
-        localStorage.clear();
         this.scene.getScene("mainMenu");
         this.scene.start("mainMenu");
     }
