@@ -198,11 +198,44 @@ export class Place extends Phaser.Scene {
             this.player.x = 1060;
         }
     }
+    
+    /* Set to next level */
+    updateLevel() {
+        if (this.timeIsUp() || (this.allTasksDone() && !this.timeIsUp())){
+            /* Update player info */
+            let playerInfo = JSON.parse(localStorage.getItem("player"));
+            let ttr = playerInfo["texture"];
+            let level = playerInfo["level"];
+            if (this.allTasksDone()) {
+                level++;
+            }
+            let points = playerInfo["points"];
+            points += this.level * 10;
+            localStorage.setItem("player", JSON.stringify({"texture": playerInfo.texture, "points": points, "level": level}))
+
+            /* start new level or end game */
+            if (level+1 <= 7) {
+                this.scene.start("phoneScreen", {phone: ttr, level: level});
+            } else {
+                this.scene.start("mainMenu");
+            }
+        }
+    }
+
+    timeIsUp() {
+        return (this.timer !== undefined && this.timer.count === -1);
+    }
+
+    allTasksDone() {
+        let tasks = JSON.parse(localStorage.getItem("tasks"));
+        return tasks.length === 0;
+    }
 
     update(time, delta) {
         if (this.wasEntered === true) {
             this.player.update(time);
             this.updateScreen();
         }
+        this.updateLevel();
     }
 }
