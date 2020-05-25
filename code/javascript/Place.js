@@ -101,22 +101,19 @@ export class Place extends Phaser.Scene {
             let set = Math.round(1 + Math.random() * (this.objects.length-1));
             sets.push(set);
         }
-        console.log(sets);
 
         for (let i = 0; i < objects.length; i++) {
             /* Distribute objects by the screens */
             let thing = new Thing(this, -1, -1, objects[i]).setScale(0.5, 0.5).setDepth(1);
             let set = sets[i];
             let space = setsMin[set-1];
-            console.log(space);
             let coords = this.placeObject(thing, set, space);
 
             thing.setPos(coords[0], coords[1]);
-            //console.log([coords[0], coords[1]]);
             (this.objects[set-1]).push(thing);
             this.add.existing(thing);
 
-            space += 100; //FIXME
+            setsMin[set-1] += 120;
         }
     }
 
@@ -128,7 +125,7 @@ export class Place extends Phaser.Scene {
         let xMin = objectWidth + space;
         let xMax = this.game.config.width - objectWidth;
 
-        //console.log([xMin, xMax, space, set]);
+        console.log([xMin, xMax, space, set]);
         if (set === 1) {
             xMin += 450;
         } else if (set === 3) {
