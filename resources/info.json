@@ -3,8 +3,8 @@
         "pastry-shop": {
             "coords": [796, 1060],
             "screen": 1,
-            "textures": ["pastryshop-inside-1", "pastryshop-inside-2", "pastryshop-inside-3"],
-            "objects": ["baguette", "chocolate-cake", "cinnamon-roll", "strawberry-cake"],
+            "textures": ["pastry-shop-inside-1", "pastry-shop-inside-2", "pastry-shop-inside-3"],
+            "objects": ["chocolate-cake", "cinnamon-roll", "strawberry-cake"],
             "shelves": [220, 340, 460],
             "door": "door-2"
         },
@@ -19,7 +19,7 @@
         "laundry-shop": {
             "coords": [650, 963],
             "screen": 2,
-            "textures": ["laundryshop-inside-1", "laundryshop-inside-2", "laundryshop-inside-3"],
+            "textures": ["laundry-shop-inside-1", "laundry-shop-inside-2", "laundry-shop-inside-3"],
             "objects": ["dirty-clothing"],
             "shelves": [460],
             "door": "door-2"
@@ -27,7 +27,7 @@
         "candy-shop": {
             "coords": [0, 273],
             "screen": 3,
-            "textures": ["candyshop-inside-1", "candyshop-inside-2", "candyshop-inside-3"],
+            "textures": ["candy-shop-inside-1", "candy-shop-inside-2", "candy-shop-inside-3"],
             "objects": ["lollipop-jar", "wars-chocolate", "green-candy", "yellow-candy", "orange-candy", "red-candy", "pink-candy", "purple.candy"],
             "shelves": [220, 340, 460],
             "door": "door-2"
@@ -35,7 +35,7 @@
         "book-shop": {
             "coords": [30, 310],
             "screen": 1,
-            "textures": ["bookshop-inside-1", "bookshop-inside-2", "bookshop-inside-3"],
+            "textures": ["book-shop-inside-1", "book-shop-inside-2", "book-shop-inside-3"],
             "objects": ["black-pen", "blue-pen", "dictionary", "green-pen", "maths-book", "notebook", "pencil", "physics-book", "red-pen", "rubber"],
             "shelves": [220, 340, 460],
             "door": "door-2"
@@ -43,7 +43,7 @@
         "clothes-shop": {
             "coords": [663, 940],
             "screen": 3,
-            "textures": ["clothesshop-inside-1", "clothesshop-inside-2", "clothesshop-inside-3"],
+            "textures": ["clothes-shop-inside-1", "clothes-shop-inside-2", "clothes-shop-inside-3"],
             "objects": ["blue-jeans", "green-jeans", "green-tshirt", "hanger", "red-tshirt", "white-tracksuit", "black-tracksuit", "university-sweater"],
             "shelves": [338],
             "door": "door-2"

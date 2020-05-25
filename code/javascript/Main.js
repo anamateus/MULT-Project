@@ -165,15 +165,36 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-        let instructions = this.add.text(config.width / 2 - 155, 140,
-            "- You are going to have a given amount of\n" +
-            "time to complete all of the tasks.\n\n" +
-            "- The tasks' list is going to be shown to\n" +
-            "you only at the start of each level.\n\n" +
-            "- You can only enter each place once.\n\n" +
-            "- Each level will be a different day\n\n" +
-            "that goes from 8am to 8pm.\n\n"
-            , textConfigs);
+        let text = "- You are going to have a given amount of\n" +
+            "time to complete all of your tasks.\n" +
+            "- Each level will be a different day\n" +
+            "of the week that goes from 8am to 8pm.\n" +
+            "- Each day you will get a new list of\n" +
+            "tasks to do.\n" +
+            "\t\t\t(Hope your memory is well-trained!)\n\n\n" +
+            "Now pay attention:\n" +
+            "You can only enter each place once.\n\n\n" +
+            "Once you press the next button\n" +
+            "the time starts counting,\n" +
+            "so hurry up! Let's tick some tasks!\n\n\n\n";
+
+        switch (this.character) {
+            case ("father") : {
+                text += "Love,\n\nYour wife";
+                break;
+            }
+            case ("student") : {
+                text += "(Don't worry, you'll study\n for that test later)";
+                break;
+            }
+            case ("tourist") : {
+                text += "Enjoy exploring Coimbra!";
+                break;
+            }
+        }
+
+        let instructions = this.add.text(config.width / 2 - 165, 130,
+            text, textConfigs);
 
         content.push(title);
         content.push(instructions);
@@ -208,7 +229,7 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-        let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\nLevel " + this.level + "\n\n", titleConfigs);
+        let title = this.add.text(config.width / 2 - 70, 80, "Your Tasks\n\t\tLevel " + this.level + "\n\n", titleConfigs);
 
         content.push(title);
 
@@ -239,16 +260,20 @@ class PhoneScreen extends Phaser.Scene {
 
         /* Listing tasks on screen */
         let textConfigs = {
-            font: "10pt",
+            font: "9pt",
             fontFamily: "Comic Sans",
             color: "black"
         };
-       
+
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
             let ts = task.thing.replace("-", " ");
             let pl = task.place.replace("-", " ");
-            this.add.text(config.width / 2 - 160, 130 + 20 * i, "- Get " + ts + " from the " + pl, textConfigs);
+            if (this.level < 4) {
+                this.add.text(config.width / 2 - 165, 130 + 20 * i, "- Get " + ts + " from the " + pl, textConfigs);
+            } else {
+                this.add.text(config.width / 2 - 165, 130 + 20 * i, "- Get " + ts, textConfigs);
+            }
         }
         return content;
     }
@@ -276,15 +301,15 @@ class PhoneScreen extends Phaser.Scene {
             if (title.text === "Instructions\n") {
                 content.map(elem => elem.setVisible(false));
                 content = this.createTasksList(this.backButton);
-            } else if (title.text === ("Your Tasks\nLevel " + this.level + "\n\n")) {              // go to Map to start each level
+            } else if (title.text === ("Your Tasks\n\t\tLevel " + this.level + "\n\n")) {              // go to Map to start each level
                 this.timer.endTimer();
                 this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level, time: 0});
             }
         }, this);
     }
     
-    update(){
-        if (this.timer != undefined && this.timer.count === -1){
+    update(time, delta){
+        if (this.timer !== undefined && this.timer.count === -1){
             console.log("entrou");
             this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level, time: 0});
         }
@@ -350,10 +375,11 @@ class MapScreen extends Phaser.Scene {
         });
 
         /* Settings for level 1 */
-        if (this.level === 1 && (this.player === undefined)) {
+        if (this.level === 1 || (this.player === undefined)) {
             this.player = new Player(this, 60, 490, this.character, 0, 1);
             let playerInfo = {"texture": this.player.texture, "points": this.player.points, "level": this.player.level};
             localStorage.setItem("player", JSON.stringify(playerInfo));
+
             this.timer = new Timing({}, this.level, this, 0);
         /* Settings for other levels */
         } else {
@@ -366,7 +392,7 @@ class MapScreen extends Phaser.Scene {
 
         this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
         this.background.setDepth(0);
-        this.helpButton = this.add.image( config.width -50,  50, "helpButton").setScale(0.30).setInteractive({useHandCursor: true, pixelPerfect: true});
+        //this.helpButton = this.add.image( config.width -50,  50, "helpButton").setScale(0.30).setInteractive({useHandCursor: true, pixelPerfect: true});
 
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
@@ -415,7 +441,7 @@ class MapScreen extends Phaser.Scene {
         this.player.update(time);
         this.updateScreen();
         this.placeEntrance();
-        if (this.timer != undefined && this.timer.count === -1){
+        if (this.timer !== undefined && this.timer.count === -1){
             this.level++;
             this.scene.start("phoneScreen", {phone: this.character, level: this.level});
         }
