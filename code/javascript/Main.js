@@ -92,6 +92,7 @@ class ChooseCharacterScreen extends Phaser.Scene {
 
     create() {
         localStorage.clear();
+        localStorage.setItem("firstTime", JSON.stringify({"firstTime": 1}));
 
         let textConfigs = {
             font: "16pt",
@@ -209,10 +210,19 @@ class PhoneScreen extends Phaser.Scene {
             this.game.scene.add(place, p);
             this.placesList.push(p);
         }
+        localStorage.setItem("firstTime", JSON.stringify({"firstTime": 0}));
     }
 
     createTasksList(backButton) {
-        this.preloadObjects();
+        let firstTime = JSON.parse(localStorage.getItem("firstTime"))["firstTime"];
+        if (firstTime) {
+            this.preloadObjects();
+        }
+
+        /* resetting */
+        for (let p of this.placesList) {
+            p.wasEntered = false;
+        }
 
         /* Handling back button */
         backButton.setVisible(false);
@@ -220,6 +230,7 @@ class PhoneScreen extends Phaser.Scene {
 
         /* Timer */
         this.timer = new Timing({}, 0, this, 0);
+        localStorage.setItem("time", JSON.stringify({"count": this.timer.count}));
 
         /* Title */
         let content = [];
@@ -440,10 +451,39 @@ class MapScreen extends Phaser.Scene {
         this.player.update(time);
         this.updateScreen();
         this.placeEntrance();
-        if (this.timer !== undefined && this.timer.count === -1){
-            this.level++;
-            this.scene.start("phoneScreen", {phone: this.character, level: this.level});
+        this.updateLevel();
+    }
+
+    /* Set to next level */
+    updateLevel() {
+        if (this.timeIsUp() || (this.allTasksDone() && !this.timeIsUp())){
+            /* Update player info */
+            let playerInfo = JSON.parse(localStorage.getItem("player"));
+            let ttr = playerInfo["texture"];
+            let level = playerInfo["level"];
+            if (this.allTasksDone()) {
+                level++;
+            }
+            let points = playerInfo["points"];
+            points += this.level * 10;
+            localStorage.setItem("player", JSON.stringify({"texture": playerInfo.texture, "points": points, "level": level}))
+
+            /* start new level or end game */
+            if (level+1 <= 7) {
+                this.scene.start("phoneScreen", {phone: ttr, level: level});
+            } else {
+                this.scene.start("mainMenu");
+            }
         }
+    }
+
+    timeIsUp() {
+        return (this.timer !== undefined && this.timer.count === -1);
+    }
+
+    allTasksDone() {
+        let tasks = JSON.parse(localStorage.getItem("tasks"));
+        return tasks.length === 0;
     }
 }
 

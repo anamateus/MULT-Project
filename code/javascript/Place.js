@@ -39,6 +39,8 @@ export class Place extends Phaser.Scene {
         this.background = this.add.image(540, 300, this.texture + this.currentScreen);
         this.background.setDepth(0);
 
+        let aux = JSON.parse(localStorage.getItem("firstTime"))["firstTime"];
+
         this.createObjects();
         this.showObjects();
 
