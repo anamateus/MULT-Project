@@ -113,7 +113,7 @@ export class Place extends Phaser.Scene {
             (this.objects[set-1]).push(thing);
             this.add.existing(thing);
 
-            setsMin[set-1] += 120;
+            setsMin[set-1] += 40;
         }
     }
 
@@ -122,8 +122,8 @@ export class Place extends Phaser.Scene {
         let objectWidth = object.width * 0.5;
         let objectHeight = object.height * 0.5;
 
-        let xMin = objectWidth + space;
-        let xMax = this.game.config.width - objectWidth;
+        let xMin = objectWidth ;
+        let xMax = this.game.config.width - objectWidth ;
 
         console.log([xMin, xMax, space, set]);
         if (set === 1) {
@@ -132,7 +132,7 @@ export class Place extends Phaser.Scene {
             xMax -= 450;
         }
 
-        let x =  Math.round( xMin + Math.random() * (xMax - xMin));
+        let x =  Math.round( xMin + Math.random() * (xMax - xMin)) + space;
         let y = shelves[Math.round(Math.random() * (shelves.length-1))] - objectHeight/10;
         return [x,y];
     }

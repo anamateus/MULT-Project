@@ -28,7 +28,7 @@ export class Timing extends Phaser.Time.TimerEvent{
         } else {
             this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs);
                 if (this.level === 1 || this.level === 2){
-                    this.countdown = 0.25*60; //5 minutes -> change by 0.25 for quick trial
+                    this.countdown = 4*60; //5 minutes -> change by 0.25 for quick trial
                 } else if (this.level === 3 || this.level === 4){
                     this.countdown = 4.5*60; //4.5 minutes
                 } else if (this.level === 5 || this.level === 6){
