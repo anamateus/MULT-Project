@@ -1,5 +1,4 @@
 "use strict";
-import {Place} from "./Place.js"
 
 export class Thing extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture) {
@@ -7,7 +6,7 @@ export class Thing extends Phaser.GameObjects.Sprite {
         this.scene = scene;
         this.disableInteractive();
         this.setVisible(false);
-        this.wasSelected = false;
+        this.checkSelection();
     }
 
     setPos(x,y) {
@@ -15,9 +14,10 @@ export class Thing extends Phaser.GameObjects.Sprite {
         this.y = y;
     }
 
-    checkSelection(place){
+    checkSelection(){
         this.on('pointerdown', function (event) {
-            this.wasSelected = true;
+            this.removeFrom(this.scene);
+            this.checkTask(this.scene);
         }, this);
     }
 
@@ -25,8 +25,6 @@ export class Thing extends Phaser.GameObjects.Sprite {
         let tasks = JSON.parse(localStorage.getItem("tasks"));
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
-            console.log(place.texture);
-            console.log(this.texture.key);
             if (task["place"] === place.texture && task["object"] === this.texture.key) {
                 tasks.splice(i,1);
                 localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -42,7 +40,7 @@ export class Thing extends Phaser.GameObjects.Sprite {
                 if (this === set[i]) {
                     this.setVisible(false);
                     this.removeInteractive();
-                    set.splice(i);
+                    set.splice(i,1);
                     break;
                 }
             }

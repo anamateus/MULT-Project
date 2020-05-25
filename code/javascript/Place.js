@@ -40,7 +40,6 @@ export class Place extends Phaser.Scene {
         this.background.setDepth(0);
 
         this.createObjects();
-        console.log(this.objects);
         this.showObjects();
 
         this.door = this.add.sprite(210, 298, this.json["places"][this.texture]["door"]);
@@ -52,7 +51,6 @@ export class Place extends Phaser.Scene {
         if (this.player !== undefined) {
             this.add.existing(this.player);
             this.player.setDepth(3);
-
             this.physics.world.enable(this.player);
         }
     }
@@ -92,13 +90,6 @@ export class Place extends Phaser.Scene {
             frameRate: 5,
             repeat: -1
         });
-        /*
-        this.add.existing(this.player);
-        this.player.setDepth(3);
-
-        this.physics.world.enable(this.player);
-
-         */
     }
 
     createObjects() {
@@ -161,18 +152,20 @@ export class Place extends Phaser.Scene {
         }
     }
 
+    /*
     updateObjects() {
         for (let i = 0; i < this.objects.length; i++) {
             let set = this.objects[i];
             for (let object of set) {
-                object.checkSelection(this);
                 if (object.wasSelected) {
-                    object.removeFrom(this);
-                    object.checkTask(this);
+                    //object.removeFrom(this);
+                    //object.checkTask(this);
                 }
             }
         }
     }
+
+     */
 
     showObjects() { // show the correct object sprites when changing screens
         for (let i = 0; i < this.objects.length; i++) {
@@ -219,7 +212,6 @@ export class Place extends Phaser.Scene {
     update(time, delta) {
         if (this.wasEntered === true) {
             this.player.update(time);
-            this.updateObjects();
             this.updateScreen();
         }
     }
