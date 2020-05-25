@@ -198,7 +198,7 @@ export class Place extends Phaser.Scene {
             this.player.x = 1060;
         }
     }
-    
+
     /* Set to next level */
     updateLevel() {
         if (this.timeIsUp() || (this.allTasksDone() && !this.timeIsUp())){
@@ -235,7 +235,7 @@ export class Place extends Phaser.Scene {
         if (this.wasEntered === true) {
             this.player.update(time);
             this.updateScreen();
+            this.updateLevel();
         }
-        this.updateLevel();
     }
 }
