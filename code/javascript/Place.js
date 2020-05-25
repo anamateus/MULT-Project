@@ -110,11 +110,10 @@ export class Place extends Phaser.Scene {
             let coords = this.placeObject(thing, set, space);
 
             thing.setPos(coords[0], coords[1]);
-            //console.log([coords[0], coords[1]]);
             (this.objects[set-1]).push(thing);
             this.add.existing(thing);
 
-            setsMin[set-1] += 100;
+            setsMin[set-1] += 120;
         }
     }
 
