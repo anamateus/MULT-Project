@@ -1,6 +1,5 @@
 import {Player} from "./Player.js";
 import {Place} from "./Place.js";
-import {Thing} from "./Thing.js";
 import {Task} from "./Task.js";
 import {Timing} from "./Timing.js";
 
@@ -448,7 +447,6 @@ class MapScreen extends Phaser.Scene {
     }
 }
 
-
 class HowToPlayScreen extends Phaser.Scene {
     constructor() {
         super({key: "howToPlay"});
@@ -544,7 +542,6 @@ class Main extends Phaser.Game {
         this.scene.add("map", MapScreen);
         this.scene.add("howToPlay", HowToPlayScreen);
         this.scene.add("credits", CreditsScreen);
-        // add the rest
     }
 
     launch() {

@@ -51,7 +51,7 @@
         "garden-shop": {
             "coords": [310, 623],
             "screen": 3,
-            "textures": ["gardenshop-inside-1", "gardenshop-inside-2", "gardenshop-inside-3"],
+            "textures": ["garden-shop-inside-1", "garden-shop-inside-2", "garden-shop-inside-3"],
             "objects": ["aloe-vera-plant", "dracaena", "gardening-kit", "seeds-bag", "soil-bag", "tomatoes-plant"],
             "shelves": [220, 340, 460],
             "door": "door-2"
