@@ -165,15 +165,36 @@ class PhoneScreen extends Phaser.Scene {
             fontFamily: "Comic Sans",
             color: "black"
         };
-        let instructions = this.add.text(config.width / 2 - 155, 140,
-            "- You are going to have a given amount of\n" +
-            "time to complete all of the tasks.\n\n" +
-            "- The tasks' list is going to be shown to\n" +
-            "you only at the start of each level.\n\n" +
-            "- You can only enter each place once.\n\n" +
-            "- Each level will be a different day\n\n" +
-            "that goes from 8am to 8pm.\n\n"
-            , textConfigs);
+        let text = "- You are going to have a given amount of\n" +
+            "time to complete all of your tasks.\n" +
+            "- Each level will be a different day\n" +
+            "of the week that goes from 8am to 8pm.\n" +
+            "- Each day you will get a new list of\n" +
+            "tasks to do.\n" +
+            "\t\t\t(Hope your memory is well-trained!)\n\n\n" +
+            "Now pay attention:\n" +
+            "You can only enter each place once.\n\n\n" +
+            "Once you press the next button\n" +
+            "the time starts counting,\n" +
+            "so hurry up! Let's tick some tasks!\n\n\n\n";
+
+        switch (this.character) {
+            case ("father") : {
+                text += "Love,\n\nYour wife";
+                break;
+            }
+            case ("student") : {
+                text += "(Don't worry, you'll study\n for that test later)";
+                break;
+            }
+            case ("tourist") : {
+                text += "Enjoy exploring Coimbra!";
+                break;
+            }
+        }
+
+        let instructions = this.add.text(config.width / 2 - 165, 130,
+            text, textConfigs);
 
         content.push(title);
         content.push(instructions);
@@ -239,7 +260,7 @@ class PhoneScreen extends Phaser.Scene {
 
         /* Listing tasks on screen */
         let textConfigs = {
-            font: "10pt",
+            font: "9pt",
             fontFamily: "Comic Sans",
             color: "black"
         };
@@ -420,7 +441,7 @@ class MapScreen extends Phaser.Scene {
         this.player.update(time);
         this.updateScreen();
         this.placeEntrance();
-        if (this.timer != undefined && this.timer.count === -1){
+        if (this.timer !== undefined && this.timer.count === -1){
             this.level++;
             this.scene.start("phoneScreen", {phone: this.character, level: this.level});
         }
