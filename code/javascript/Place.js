@@ -142,8 +142,7 @@ export class Place extends Phaser.Scene {
 
         let xMin = objectWidth ;
         let xMax = this.game.config.width - objectWidth ;
-
-        //console.log([xMin, xMax, space, set]);
+        
         if (set === 1) {
             xMin += 450;
         } else if (set === 3) {
