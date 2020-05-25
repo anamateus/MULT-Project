@@ -115,7 +115,7 @@ export class Place extends Phaser.Scene {
             (this.objects[set-1]).push(thing);
             this.add.existing(thing);
 
-            setsMin[set-1] += 40;
+            setsMin[set-1] += 100;
         }
     }
 

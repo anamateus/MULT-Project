@@ -28,13 +28,13 @@ export class Timing extends Phaser.Time.TimerEvent{
         } else {
             this.txt = this.scene.add.text(50,20,"Time: ", this.textConfigs);
                 if (this.level === 1 || this.level === 2){
-                    this.countdown = 4*60; //5 minutes
+                    this.countdown = 2.5*60; //2.5 minutes
                 } else if (this.level === 3 || this.level === 4){
-                    this.countdown = 4.5*60; //4.5 minutes
+                    this.countdown = 2*60; //2 minutes
                 } else if (this.level === 5 || this.level === 6){
-                    this.countdown = 4*60; //4 minutes
+                    this.countdown = 1.5*60; //1.5 minutes
                 } else if (this.level === 7){
-                    this.countdown = 3.5*60; //3.5 minutes
+                    this.countdown = 60; //1 minute
                 }
 
 	    if (this.count !== 0) {    //changing screens
