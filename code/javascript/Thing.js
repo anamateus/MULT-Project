@@ -22,7 +22,7 @@ export class Thing extends Phaser.GameObjects.Sprite {
         }, this);
     }
 
-    /* Check if object selected and place entered correspond to an assigned task,
+    /* Check if selected object and place correspond to an assigned task,
     /* and if so, remove the task from the list */
     checkTask(place) {
         let tasks = JSON.parse(localStorage.getItem("tasks"));

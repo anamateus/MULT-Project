@@ -34,15 +34,15 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 	}
 
 	getPoints(){	
-		return points;
+		return this.points;
 	}
 
 	getNLevel(){		
-		return nLevel;
+		return this.level;
 	}
 
 	getTasks(){
-		return tasks;
+		return this.tasks;
 	}
 
 	setPos(x, y){
