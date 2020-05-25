@@ -460,19 +460,23 @@ class HowToPlayScreen extends Phaser.Scene {
 
     instructions(){
         let titleConfigs = {
-            font: "18pt Comic Sans",
+            font: "16pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };
-        this.add.text(config.width / 2 - 50, 80, "How to play\n", titleConfigs);
+        this.add.text(config.width / 2 - 65, 80, "How to play\n", titleConfigs);
         
         let textConfigs = {
-            font: "12pt Comic Sans",
+            font: "12pt",
+            fontFamily: "Comic Sans",
             color: "black"
         };
-        this.add.text(config.width / 2 - 150, 140,
-            "-Press the <- and -> arrows in your\n" +
-            "keyboard to walk in the map.\n\n" +
-            "-Use the up arrow to enter a place.\n\n", textConfigs);
+        this.add.text(config.width / 2 - 160, 180,
+            "- Press the left and right arrows\n" +
+            "in your keyboard to walk in\n" + "the map.\n\n" +
+            "- Use the up arrow to enter a place\n" +
+            "and the down arrow to leave and\n"
+            + "return to the map.", textConfigs);
     }
     
     create() {
