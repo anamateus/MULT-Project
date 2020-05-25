@@ -152,21 +152,6 @@ export class Place extends Phaser.Scene {
         }
     }
 
-    /*
-    updateObjects() {
-        for (let i = 0; i < this.objects.length; i++) {
-            let set = this.objects[i];
-            for (let object of set) {
-                if (object.wasSelected) {
-                    //object.removeFrom(this);
-                    //object.checkTask(this);
-                }
-            }
-        }
-    }
-
-     */
-
     showObjects() { // show the correct object sprites when changing screens
         for (let i = 0; i < this.objects.length; i++) {
             let set = this.objects[i];
@@ -194,12 +179,14 @@ export class Place extends Phaser.Scene {
             this.player.setVelocityX(0);
             this.showObjects();
             this.updateDoor();
+
         } else if(this.player.x >= 1060 && 1 <= this.currentScreen < 3){
             this.currentScreen++;
             this.background.setTexture(this.texture + this.currentScreen);
             this.showObjects();
             this.updateDoor();
             this.player.x = 20;
+
         } else if (this.player.x <= 20 && 1 < this.currentScreen <= 3) {
             this.currentScreen--;
             this.background.setTexture(this.texture + this.currentScreen);
