@@ -314,7 +314,7 @@ class PhoneScreen extends Phaser.Scene {
             if (title.text === "Instructions\n") {
                 content.map(elem => elem.setVisible(false));
                 content = this.createTasksList(this.backButton);
-            } else if (title.text === ("Your Tasks\n\t\tLevel " + this.level + "\n\n")) {              // go to Map to start each level
+            } else if (title.text === ("Your Tasks\n\t\tLevel " + this.level + "\n\n")) { // go to Map to start each level
                 this.timer.endTimer();
                 this.scene.start("map", {character: this.character, placesList: this.placesList, level: this.level, time: 0});
             }
@@ -386,6 +386,9 @@ class MapScreen extends Phaser.Scene {
             frameRate:5,
             repeat:-1
         });
+        
+        this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
+        this.background.setDepth(0);
 
         /* Settings for level 1 */
         let firstTime = JSON.parse(localStorage.getItem("firstTime"))["firstTime"];
@@ -395,6 +398,7 @@ class MapScreen extends Phaser.Scene {
             localStorage.setItem("player", JSON.stringify(playerInfo));
 
             this.timer = new Timing({}, this.level, this, 0);
+            
         /* Settings for other levels */
         } else {
             this.playerInfo = JSON.parse(localStorage.getItem("player"));
@@ -403,19 +407,9 @@ class MapScreen extends Phaser.Scene {
             this.timeInfo = JSON.parse(localStorage.getItem("time"));
             this.timer = new Timing({}, this.playerInfo["level"], this, this.timeInfo["count"]);
         }
-
-        this.background = this.add.image(config.width / 2, config.height / 2, "street" + this.currentStreet);
-        this.background.setDepth(0);
-        //this.helpButton = this.add.image( config.width -50,  50, "helpButton").setScale(0.30).setInteractive({useHandCursor: true, pixelPerfect: true});
-
+        
         this.add.existing(this.player.setScale(0.75,0.75));
         this.physics.world.enable(this.player);
-
-        /*
-        this.helpButton.on('pointerdown', function (event) {
-            this.scene.start("howToPlay");
-        }, this);
-         */
     }
 
     updateScreen() {
@@ -439,7 +433,7 @@ class MapScreen extends Phaser.Scene {
             let coords = this.json["places"][place.texture]["coords"];
             let x1 = coords[0];
             let x2 = coords[1];
-            //this.player.keys = this.input.keyboard.createCursorKeys();
+            
             if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2) && place.wasEntered === false) {
                 console.log("entering place");
                 localStorage.setItem("time", JSON.stringify({"count": this.timer.count}));
