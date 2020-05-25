@@ -115,7 +115,23 @@ export class Place extends Phaser.Scene {
             (this.objects[set-1]).push(thing);
             this.add.existing(thing);
 
-            setsMin[set-1] += 100;
+            setsMin[set-1] += thing.width*0.11;
+        }
+    }
+
+    showObjects() { // show the correct object sprites when changing screens
+        for (let i = 0; i < this.objects.length; i++) {
+            let set = this.objects[i];
+            console.log(this.objects);
+
+            if (i+1 !== this.currentScreen) {
+                for (let object of set) {
+                    object.setVisible(false);
+                    object.disableInteractive();
+                }
+            } else {
+                set.map((object => {object.setVisible(true).setInteractive({"useHandCursor": true, "pixelPerfect": true})}));
+            }
         }
     }
 
@@ -127,7 +143,7 @@ export class Place extends Phaser.Scene {
         let xMin = objectWidth ;
         let xMax = this.game.config.width - objectWidth ;
 
-        console.log([xMin, xMax, space, set]);
+        //console.log([xMin, xMax, space, set]);
         if (set === 1) {
             xMin += 450;
         } else if (set === 3) {
@@ -148,21 +164,6 @@ export class Place extends Phaser.Scene {
         } else if (this.currentScreen === 3) {
             this.door.setVisible(true);
             this.door.x = 870;
-        }
-    }
-
-    showObjects() { // show the correct object sprites when changing screens
-        for (let i = 0; i < this.objects.length; i++) {
-            let set = this.objects[i];
-
-            if (i+1 !== this.currentScreen) {
-                for (let object of set) {
-                    object.setVisible(false);
-                    object.disableInteractive();
-                }
-            } else {
-                set.map((object => {object.setVisible(true).setInteractive({"useHandCursor": true, "pixelPerfect": true})}));
-            }
         }
     }
 

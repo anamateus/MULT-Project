@@ -204,7 +204,6 @@ class PhoneScreen extends Phaser.Scene {
     }
 
     preloadObjects() {
-        this.json = this.cache.json.get("info");
         this.placesList = []
         let places = this.json["places"];
         for (let place of Object.keys(places)) {
@@ -222,6 +221,7 @@ class PhoneScreen extends Phaser.Scene {
         }
 
         /* resetting */
+        console.log(this.placesList);
         for (let p of this.placesList) {
             p.wasEntered = false;
         }
@@ -291,6 +291,7 @@ class PhoneScreen extends Phaser.Scene {
     }
 
     create() {
+        this.json = this.cache.json.get("info");
         this.background = this.add.image(config.width / 2, config.height / 2, "backgroundPhone-" + this.character);
         this.backButton = this.add.sprite(100, config.height / 10, "backButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
         this.nextButton = this.add.sprite(config.width - 100, config.height / 10, "nextButton").setScale(0.50).setInteractive({useHandCursor: true, pixelPerfect: true});
@@ -438,7 +439,7 @@ class MapScreen extends Phaser.Scene {
             let coords = this.json["places"][place.texture]["coords"];
             let x1 = coords[0];
             let x2 = coords[1];
-            this.player.keys = this.input.keyboard.createCursorKeys(); // resetting keys
+            //this.player.keys = this.input.keyboard.createCursorKeys();
             if (this.currentStreet === screen && this.player.keys.up.isDown && (x1 < this.player.x && this.player.x < x2) && place.wasEntered === false) {
                 console.log("entering place");
                 localStorage.setItem("time", JSON.stringify({"count": this.timer.count}));
@@ -592,6 +593,7 @@ class Main extends Phaser.Game {
     }
 
     launch() {
+        localStorage.clear();
         this.scene.getScene("mainMenu");
         this.scene.start("mainMenu");
     }
