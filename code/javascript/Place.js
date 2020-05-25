@@ -143,7 +143,7 @@ export class Place extends Phaser.Scene {
     showObjects() {
         for (let i = 0; i < this.objects.length; i++) {
             let set = this.objects[i];
-            console.log(this.objects);
+            //console.log(this.objects);
 
             if (i+1 !== this.currentScreen) {
                 for (let object of set) {
