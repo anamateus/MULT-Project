@@ -24,7 +24,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
 	removeTask(task){
 		for (let i = 0; i < this.tasks.length; i++){
 			if (this.tasks[i] === task){
-				this.tasks.splice(i, 1);	//splice(i, 1) -> removes 1 element in position i
+				this.tasks.splice(i, 1);
 			}
 		}
 	}
