@@ -1,6 +1,6 @@
 ## Tick Task
 2D web game for the Multimedia subject of the Bachelor's degree in Informatics Engineering at University of Coimbra
-Framework used: Phaser
+We used Phaser and designed all the sprites and backgrounds used in the game.
 
 
 ![main menu](https://github.com/anamateus/MULT-Project/blob/master/game-screenshots/Screenshot%20from%202021-04-07%2015-55-06.png)
